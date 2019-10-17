@@ -1,0 +1,78 @@
+body{
+    font-family: Helvetica;
+}
+
+#navLogo{
+    width: 141px;
+}
+
+.navLinks {
+    color: black !important;
+    font-weight: 600;
+}
+
+.navSearch{
+    border-radius: 20px;
+    padding-left: 30px;
+}
+
+.searchIcon{
+    position: absolute;
+    margin-left: 10px;
+}
+
+.loginLogo{
+    text-align: center;
+}
+
+.loginLogo img{
+    width: 500px;
+}
+
+.loginBlurb{
+    text-align: center;
+    font-size: 18px;
+}
+
+.formInputs{
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid black;
+    outline: none !important;
+    background: none;
+    width: 100%;
+    padding-bottom: 10px;
+}
+
+.fname{
+    margin-right: 5%;
+    width: 55%;
+}
+
+.lname{
+    width: 38%;
+}
+
+.formInputName{
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid black;
+    outline: none !important;
+    background: none;
+    padding-bottom: 10px;
+}
+
+.loginTitles{
+    font-weight: 600;
+    color:#06497B;
+}
+
+.formSubmit{
+    font-weight: 600;
+    padding: 5px;
+    color: white;
+    padding-left: 25px;
+    padding-right: 25px;
+    background:#0093FF;
+    float: right;
+}
