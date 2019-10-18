@@ -6,12 +6,15 @@
     <% include ./partials/navbar %>
     <div class="container">
         <div class="row justify-content-center mt-5 mb-4">
-            <div class="col-12 loginLogo">
+            <div class="col-xs-12 d-md-none loginLogoMobile">  
+                <img class="img-responsive " src="/Assets/logo_regular.svg" /> 
+            </div>
+            <div class="col-sm-12 d-none d-md-block loginLogo">
                 <img src="/Assets/logo_regular.svg" alt="">
             </div>
         </div>
         <div class="row justify-content-center">
-            <div class="col-6 loginBlurb">
+            <div class="col-10 col-lg-6 col-md-7 loginBlurb">
                 <p>
                     ClassStats is a course review website created for students, by students. Made to assist during the
                     course registration process through the evaluation of several key statistics.
@@ -19,7 +22,7 @@
             </div>
         </div>
         <div class="row justify-content-center mb-5">
-            <div class="col-4">
+            <div class="col-10 col-lg-4 col-md-6">
                 <form>
                     <h4 class="loginTitles">Login</h4>
                     <div class="form-group">
@@ -42,8 +45,8 @@
             </div>
         </div>
 
-        <div class="row justify-content-center">
-            <div class="col-4">
+        <div class="row justify-content-center mb-5">
+            <div class="col-10 col-lg-4 col-md-6">
                 <form>
                     <h4 class="loginTitles">Sign Up Now!</h4>
                     <div class="form-group">

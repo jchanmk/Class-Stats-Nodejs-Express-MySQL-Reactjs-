@@ -10,6 +10,9 @@ body{
     color: black !important;
     font-weight: 600;
 }
+.navLinks:hover {
+    color: #707070 !important;
+}
 
 .navSearch{
     border-radius: 20px;
@@ -28,6 +31,11 @@ body{
 .loginLogo img{
     width: 500px;
 }
+
+.loginLogoMobile img{
+    width: 400px;
+}
+
 
 .loginBlurb{
     text-align: center;
@@ -75,4 +83,5 @@ body{
     padding-right: 25px;
     background:#0093FF;
     float: right;
+    border-radius: 0;
 }
