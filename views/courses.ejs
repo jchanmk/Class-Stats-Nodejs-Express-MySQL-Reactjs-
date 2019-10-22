@@ -1,0 +1,17 @@
+<% include ./partials/header %>
+<title>ClassStats: Courses</title>
+</head>
+
+<body>
+    <% include ./partials/navbar %>
+    <% include ./partials/announcement %>
+    <h1 class="pageHeaders">COURSES</h1>
+
+    <% print.forEach(function(courses) { %>
+        <div class="pageLinks">
+            <a class="" href="/courses/<%= courses.Name %>"><%= courses.Name %></a>
+        </div>
+    <% }) %>
+</body>
+
+</html>

@@ -1,0 +1,42 @@
+.announcement{
+    position: fixed;
+    right: 15px;
+    background: #008DD5;
+    color: white;
+    font-weight: 300;
+    font-size: 14px;
+    width: 200px;
+    height: 210px;
+    border-radius: 28px;
+}
+
+.announcementInner{
+    width: 150px;
+    margin-top: 15px;
+    margin-left: 35px;
+}
+
+.announcement img{
+    width: 40px;
+    margin-left: 15px;
+    margin-top: 10px;
+}
+
+.pageHeaders{
+    font-weight: 800;
+    margin-left: 15%;
+    margin-top: 30px;    
+}
+
+.pageLinks{
+    margin-top: 10px;
+}
+
+.pageLinks a{
+    color: black;
+    margin-left: 17%;
+    font-size: 20px;
+}
+.pageLinks a:hover{
+    text-decoration: none;;
+}
