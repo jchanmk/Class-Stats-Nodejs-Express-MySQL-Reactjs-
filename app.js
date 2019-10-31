@@ -2,17 +2,14 @@ const express = require("express"),
     app = express(),
     bodyParser = require("body-parser"),
     cors = require('cors'),
-    // mysql = require('mysql'),
     session = require('express-session'),
     cookieParser = require('cookie-parser'),
     morgan = require('morgan'),
+    passport = require('passport'),
+    flash = require('connect-flash'),
     dbconfig = require('./config/database');
 
-const passport = require('passport');
-const flash = require('connect-flash');
-
 require('./config/passport')(passport);
-
 
 // Routes
 const departmentRoutes = require("./routes/departments");

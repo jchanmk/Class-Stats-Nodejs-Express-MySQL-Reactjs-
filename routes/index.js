@@ -38,7 +38,7 @@ router.get('/home', middleware.isLoggedIn, function (req, res) {
 });
 
 var obj = {};
-router.get("/departments", function (req, res) {
+router.get("/departments", middleware.isLoggedIn, function (req, res) {
     const SELECT_ALL_DEPARTMENTS_QUERY = "SELECT * FROM Department;";
     connection.query(SELECT_ALL_DEPARTMENTS_QUERY, (err, results) => {
         if (err) {
