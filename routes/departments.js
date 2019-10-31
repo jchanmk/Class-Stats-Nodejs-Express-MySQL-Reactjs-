@@ -1,18 +1,10 @@
 const express = require("express");
 const router = express.Router();
+const dbconfig = require("../config/database")
+const mysql = require('mysql');
 
-
-const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'p56230101P',
-    database: 'ClassStats'
-})
-// connection.connect(err => {
-//     if(err){
-//         return err;
-//     } 
-// });
+const connection = mysql.createConnection(dbconfig.connection);
+connection.query('USE ' + dbconfig.database);
 
 
 // Show courses by that department
@@ -25,7 +17,7 @@ router.get("/:id", function(req, res){
                 "SELECT DepartmentID " +
                 "FROM Department " + 
                 "WHERE Department.name = ?" +
-                ")"; 
+                ")";
 
         connection.query(SELECT_ALL_COURSES_QUERY, [req.params.id.toString()] ,(err,results) => {
             if(err){
