@@ -36,10 +36,10 @@ module.exports = function (passport) {
                             return done(err);
                         }
                         if (!rows.length) {   // if email was not found in database
-                            return done(null, false, req.flash('signupMessage', 'You are not in the database'));
+                            return done(null, false, req.flash('loginMessage', 'You are not in the database'));
                         }
                         if (rows.length && rows[0].Password != null) {
-                            return done(null, false, req.flash('signupMessage', 'You already have an account with us'));
+                            return done(null, false, req.flash('loginMessage', 'You already have an account with us! Please login instead'));
                         } else {
                             const newUserMysql = {
                                 Email: email,
