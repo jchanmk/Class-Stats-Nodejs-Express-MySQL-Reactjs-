@@ -13,7 +13,8 @@ require('./config/passport')(passport);
 
 // Routes
 const findCourseRoutes = require("./routes/findCourses");
-const indexRoutes = require("./routes");
+const indexRoutes = require("./routes/index");
+const courseRoutes = require("./routes/course");
 
 // app.use(cors());
 app.use(morgan('dev'));
@@ -34,7 +35,7 @@ app.use(flash());
 
 app.use(indexRoutes);
 app.use("/findcourse", findCourseRoutes);
-
+app.use("/course", courseRoutes);
 
 app.listen(process.env.PORT || 3000, function () {
     console.log("ClassStats Server has started...")

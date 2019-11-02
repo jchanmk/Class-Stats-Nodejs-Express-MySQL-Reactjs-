@@ -2,13 +2,14 @@ const express = require("express");
 const router = express.Router();
 const dbconfig = require("../config/database")
 const mysql = require('mysql');
+const middleware = require("../middleware");
 
 const connection = mysql.createConnection(dbconfig.connection);
 connection.query('USE ' + dbconfig.database);
 
 
 // Show courses by that department
-router.get("/:department", function (req, res) {
+router.get("/:department", middleware.isLoggedIn, function (req, res) {
     // console.log(req.params);
 
     // Similar to SQL Prepared Statement 
@@ -42,14 +43,14 @@ router.get("/:department", function (req, res) {
 });
 
 // Show Professors for a specific course
-router.get("/:department/:course", function (req, res) {
-    console.log(req.params);
+router.get("/:department/:course", middleware.isLoggedIn, function (req, res) {
+    // console.log(req.params);
     // Similar to SQL Prepared Statement 
 
     // Note: may need to manipulate this query to make sure the previous pathways are recorded
     // Ask celia about how to record previous pathway/url
     const SELECT_ALL_PROFESSORS_QUERY =
-        "SELECT Lname " +
+        "SELECT Instructors.InstructorID, Lname, Courses.CourseID " +
         "FROM Instructors, Courses, Teaches " +
         "WHERE Instructors.InstructorID = Teaches.InstructorID AND " +
             "Courses.CourseID = (" +
