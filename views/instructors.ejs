@@ -9,7 +9,7 @@
 
     <% print.forEach(function(professors) { %>
         <div class="pageLinks">
-            <a class="" href="/findcourse/<%= %>"><%= professors.Lname %></a>
+            <a class="" href="/course?instructorid=<%= professors.InstructorID %>&courseid=<%= professors.CourseID %>"><%= professors.Lname %></a>
         </div>
     <% }) %>
 </body>
