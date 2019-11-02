@@ -5,15 +5,14 @@
 <body>
     <% include ./partials/navbar %>
     <% include ./partials/announcement %>
+
     <h1 class="pageHeaders">COURSES</h1>
 
     <% print.forEach(function(courses) { %>
         <div class="pageLinks">
-                <!-- Work on this -->
-            <a class="" href="/courses/<% courses.Name %>"><%= courses.Name %></a>
+            <a class="" href="/findcourse/<%= courses.Department %>/<%= courses.Name %>"><%= courses.Name %></a>
         </div>
     <% }) %>
-
 
 </body>
 

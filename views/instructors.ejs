@@ -7,11 +7,9 @@
     <% include ./partials/announcement %>
     <h1 class="pageHeaders">Professors</h1>
 
-<!-- WORK ON THIS -->
-
     <% print.forEach(function(professors) { %>
         <div class="pageLinks">
-            <a class="" href="/courses/<%= courses.Name %>"><%= professors.Lname %></a>
+            <a class="" href="/findcourse/<%= %>"><%= professors.Lname %></a>
         </div>
     <% }) %>
 </body>

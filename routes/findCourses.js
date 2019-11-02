@@ -8,24 +8,33 @@ connection.query('USE ' + dbconfig.database);
 
 
 // Show courses by that department
-router.get("/:id", function (req, res) {
-    console.log("in find department");
+router.get("/:department", function (req, res) {
+    // console.log(req.params);
 
     // Similar to SQL Prepared Statement 
     const SELECT_ALL_COURSES_QUERY =
-        "SELECT Name " +
-        "FROM Courses " +
+    "SELECT Courses.Name, Departments.Name AS Department " +
+        "FROM Courses, Departments " +
         "WHERE Courses.DeptID = (" +
-        "SELECT DepartmentID " +
-        "FROM Departments " +
-        "WHERE Departments.name = ?" +
-        ")";
+            "SELECT DepartmentID " +
+            "FROM Departments " +
+            "WHERE Departments.name = ?" +
+        ") AND Departments.Name = ?";    
+    // "SELECT Name " +
+        // "FROM Courses " +
+        // "WHERE Courses.DeptID = (" +
+        //     "SELECT DepartmentID " +
+        //     "FROM Departments " +
+        //     "WHERE Departments.name = ?" +
+        // ")";
 
-    connection.query(SELECT_ALL_COURSES_QUERY, [req.params.id.toString()], (err, results) => {
+    connection.query(SELECT_ALL_COURSES_QUERY, [req.params.department.toString(), req.params.department.toString()], (err, results) => {
         if (err) {
             return res.send(err)
         } else {
             obj = { print: results };
+            // console.log(results);
+      
             res.render('courses', obj)
             // console.log(results);
         }
@@ -33,29 +42,31 @@ router.get("/:id", function (req, res) {
 });
 
 // Show Professors for a specific course
-// router.get("/courses/:id", function (req, res) {
-//     console.log("in the correct get method");
-//     // Similar to SQL Prepared Statement 
-//     const SELECT_ALL_PROFESSORS_QUERY =
-//         "SELECT Lname " +
-//         "FROM Instructors, Courses, Teaches " +
-//         "WHERE Instructors.InstructorID = Teaches.InstructorID AND " +
-//             "Courses.CouseID = (" +
-//                 "SELECT CourseID " +
-//                 "FROM Courses " +
-//                 "WHERE Courses.name = ?" +
-//             ")";
+router.get("/:department/:course", function (req, res) {
+    console.log(req.params);
+    // Similar to SQL Prepared Statement 
 
-//     connection.query(SELECT_ALL_PROFESSORS_QUERY, [req.params.id.toString()], (err, results) => {
-//         if (err) {
-//             return res.send(err)
-//         } else {
-//             obj = { print: results };
-//             res.render('instructors', obj)
-//             // console.log(results);
-//         }
-//     });
-// });
+    // Note: may need to manipulate this query to make sure the previous pathways are recorded
+    // Ask celia about how to record previous pathway/url
+    const SELECT_ALL_PROFESSORS_QUERY =
+        "SELECT Lname " +
+        "FROM Instructors, Courses, Teaches " +
+        "WHERE Instructors.InstructorID = Teaches.InstructorID AND " +
+            "Courses.CourseID = (" +
+                "SELECT CourseID " +
+                "FROM Courses " +
+                "WHERE Courses.name = ?" +
+            ")";
+
+    connection.query(SELECT_ALL_PROFESSORS_QUERY, [req.params.course.toString()], (err, results) => {
+        if (err) {
+            return res.send(err)
+        } else {
+            obj = { print: results };
+            res.render('instructors', obj)
+        }
+    });
+});
 
 
 module.exports = router;

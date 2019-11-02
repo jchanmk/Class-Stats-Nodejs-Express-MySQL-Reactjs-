@@ -12,7 +12,7 @@ const express = require("express"),
 require('./config/passport')(passport);
 
 // Routes
-const departmentRoutes = require("./routes/findCourses");
+const findCourseRoutes = require("./routes/findCourses");
 const indexRoutes = require("./routes");
 
 // app.use(cors());
@@ -33,12 +33,11 @@ app.use(passport.session());
 app.use(flash());
 
 app.use(indexRoutes);
-app.use("/courses", departmentRoutes);
-app.use("/courses/:id", departmentRoutes, function(){
-    console.log("hi");
-});
+app.use("/findcourse", findCourseRoutes);
 
 
 app.listen(process.env.PORT || 3000, function () {
     console.log("ClassStats Server has started...")
 })
+
+    // Ask celiia about hwo to record previous pathway/url
