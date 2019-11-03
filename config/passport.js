@@ -9,12 +9,12 @@ connection.query('USE ' + dbconfig.database);
 
 module.exports = function (passport) {
     passport.serializeUser(function (user, done) {
-        console.log("in serialize")
+        // console.log("in serialize")
         done(null, user.Email);
     });
 
     passport.deserializeUser(function (email, done) {
-        console.log("in deserialize")
+        // console.log("in deserialize")
         connection.query("SELECT * FROM Students WHERE email = ? ", [email],
             function (err, rows) {
                 done(err, rows[0]);

@@ -10,11 +10,12 @@ connection.query('USE ' + dbconfig.database);
 
 
 // THIS NEEDS TO BE REACTJS. LOOK INTO IT SOON
+
 router.get("/", function (req, res) {
     var instructorID = req.query.instructorid;
     var courseID = req.query.courseid;
-    console.log(instructorID);
-    console.log(courseID);
+    // console.log(instructorID);
+    // console.log(courseID);
 
     const SELECT_ALL_RATINGS_QUERY =
         "SELECT Name, Lname " +
@@ -32,6 +33,12 @@ router.get("/", function (req, res) {
             res.render('courseRatings', obj)
         }
     });
+})
+
+router.get("/findratings", (req, res) =>{
+    // work on this include a call to the database and return some data
+    console.log("in this API, react has made contact");
+    console.log("query params = " + req.query.instructorid);
 })
 
 

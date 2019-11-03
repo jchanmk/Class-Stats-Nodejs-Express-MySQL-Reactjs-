@@ -6,15 +6,45 @@
     <% include ./partials/navbar %>
     <% include ./partials/announcement %>
     <div class="container">
-        <div class="row">
+        <div class="row mb-4">
             <div class="col-12">
                 <h1 class="courseHeaders mb-3"><%= classInfo[0].Name %></h1>
                 <h4>Professer <%= classInfo[0].Lname %></h4>
             </div>
         </div>
+        <div class="row mb-3">   
+            <div class="col-12">
+                <h4>STATS</h4>
+            </div>
+        </div>
     </div>
+    <!-- <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <span>Class Enjoyment: </span><span>4/5</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <span>Class Usefulness: </span><span>15% useful, 80% not useful</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <span>Exam/Midterm Difficulty: </span><span>20% Easy, 10% Medium, 70% Hard</span>
+            </div>
+        </div>
+    </div> -->
+
+    <div class="container" id="like_button_container"></div>
 
 
+<!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+<script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script>
+
+<!-- Load our React component. -->
+<script src="/like_button.js"></script>
 </body>
 
 </html>

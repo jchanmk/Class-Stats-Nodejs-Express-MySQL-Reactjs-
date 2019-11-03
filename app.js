@@ -37,6 +37,7 @@ app.use(indexRoutes);
 app.use("/findcourse", findCourseRoutes);
 app.use("/course", courseRoutes);
 
+
 app.listen(process.env.PORT || 3000, function () {
     console.log("ClassStats Server has started...")
 })
