@@ -17,13 +17,13 @@ router.get("/", function (req, res) {
     // console.log(instructorID);
     // console.log(courseID);
 
-    const SELECT_ALL_RATINGS_QUERY =
+    const SELECT_COURSENAME_QUERY =
         "SELECT Name, Lname " +
         "FROM Instructors, Courses " +
         "WHERE Instructors.InstructorID = ? AND " +
             "Courses.CourseID = ? ";
 
-    connection.query(SELECT_ALL_RATINGS_QUERY, [instructorID, courseID], (err, results) => {
+    connection.query(SELECT_COURSENAME_QUERY, [instructorID, courseID], (err, results) => {
         if (err) {
             return res.send(err)
         } else {
@@ -38,8 +38,24 @@ router.get("/", function (req, res) {
 router.get("/findratings", (req, res) =>{
     // work on this include a call to the database and return some data
     console.log("in this API, react has made contact");
-    console.log("query params = " + req.query.instructorid);
-})
+    const instructorID = req.query.instructorid;
+    const courseID = req.query.courseid;
+    const SELECT_ALL_RATINGS = 
+        "SELECT AVG(Rating) AS ClassEnjoyment, Useful/Count AS Useful, NotUseful/Count AS NotUseful " +
+        "FROM Class_Enjoyment, Class_Usefulness " +
+        "WHERE Class_Enjoyment.CourseID = Class_Usefulness.CourseID AND Class_Usefulness.CourseID = ? ";
+
+    connection.query(SELECT_ALL_RATINGS, [courseID], (err, results) =>{
+        // console.log(results)
+        if(err){
+            return res.send(err)
+        } else {
+            return res.json({
+                data: results
+            })
+        }
+    });
+});
 
 
 

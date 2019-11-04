@@ -14,7 +14,7 @@ router.get("/:department", middleware.isLoggedIn, function (req, res) {
     var departmentName = req.params.department.toString();
     // Similar to SQL Prepared Statement 
     const SELECT_ALL_COURSES_QUERY =
-    "SELECT Courses.Name, Departments.Name AS Department " +
+    "SELECT DISTINCT Courses.Name, Departments.Name AS Department " +
         "FROM Courses, Departments " +
         "WHERE Courses.DeptID = (" +
             "SELECT DepartmentID " +
@@ -50,11 +50,7 @@ router.get("/:department/:course", middleware.isLoggedIn, function (req, res) {
         "FROM Instructors, Courses, Teaches " +
         "WHERE Instructors.InstructorID = Teaches.InstructorID AND " +
         "Teaches.CourseID = Courses.CourseID AND " +
-            "Courses.CourseID = (" +
-                "SELECT CourseID " +
-                "FROM Courses " +
-                "WHERE Courses.name = ?" +
-            ")";
+            "Courses.Name = ? ";
 
     connection.query(SELECT_ALL_PROFESSORS_QUERY, [courseName], (err, results) => {
         if (err) {
