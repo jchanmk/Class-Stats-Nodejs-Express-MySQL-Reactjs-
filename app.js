@@ -43,3 +43,5 @@ app.listen(process.env.PORT || 3000, function () {
 })
 
     // Ask celiia about hwo to record previous pathway/url
+    // Ask celiea about how to create react app with only one server, because react is only for a
+    // specific part of the website, not the page
