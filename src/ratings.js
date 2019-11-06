@@ -50,7 +50,7 @@ class LikeButton extends React.Component {
                 height="2.0em"
                 className="star"
                 onClick={() => {
-                    if( type == "Class_Enjoyment")
+                    if (type == "Class_Enjoyment")
                         this.setState({ classEnjoyment: index }, this.postRatings())
                     else
                         console.log("different rating");
@@ -62,6 +62,7 @@ class LikeButton extends React.Component {
                         stroke="rgba(0,0,0,.85)"
                         stroke-width="30"
                         fill={full ? 'gold' : 'transparent'}
+                        onMouseEnter={ () => this.fill = "transparent"}
                         d="M492.867,181.444l-149.825-21.785L276.014,23.861c-8.187-16.59-31.844-16.589-40.031,0l-67.026,135.799L19.133,181.445c-18.306,2.662-25.615,25.158-12.369,38.071l108.408,105.682L89.592,474.44c-3.125,18.232,16.012,32.136,32.386,23.528l132.475-70.452l134.025,70.451c17.914,8.607,37.051-5.296,33.926-23.528l-25.578-149.241l108.409-105.685C518.482,206.601,511.173,184.105,492.867,181.444z"
                     />
                 </g>
@@ -71,6 +72,7 @@ class LikeButton extends React.Component {
 
     // Create the star ratings based on the score, and the type of rating
     createStarRatings(rating, type) {
+        console.log("yp")
         let stars = []
         for (var i = 1; i < 6; i++) {
             if (i <= rating)
@@ -83,14 +85,14 @@ class LikeButton extends React.Component {
 
     // This renders the stars for class enjoyment, based on current state of the rating based on data from
     // database, it renders filled stars based on the rating, eg. rating = 4, then 4 gold stars
-    renderClassEnjoyment = ({ ClassEnjoyment }) => 
-    <div>
-        Class Enjoyment: {(ClassEnjoyment)}     
-        {this.createStarRatings(Math.round(ClassEnjoyment), "Class_Enjoyment")}
-    </div>;
+    renderClassEnjoyment = ({ ClassEnjoyment }) =>
+        <div className="ratings">
+            Class Enjoyment: {this.createStarRatings(Math.round(ClassEnjoyment), "Class_Enjoyment")}
+            {(ClassEnjoyment)}
+        </div>;
 
 
-    renderClassUsefulness = ({ Useful, NotUseful }) => <div>Class Usefulness: Useful = {Useful}, Not Useful = {NotUseful}</div>;
+    renderClassUsefulness = ({ Useful, NotUseful }) => <div className="ratings">Class Usefulness: Useful = {Useful}, Not Useful = {NotUseful}</div>;
 
     render() {
         const ratings = this.state.ratings;

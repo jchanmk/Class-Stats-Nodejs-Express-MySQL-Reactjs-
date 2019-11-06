@@ -25,10 +25,10 @@ var LikeButton = function (_React$Component) {
             var ClassEnjoyment = _ref.ClassEnjoyment;
             return React.createElement(
                 'div',
-                null,
+                { className: 'ratings' },
                 'Class Enjoyment: ',
-                ClassEnjoyment,
-                _this.createStarRatings(Math.round(ClassEnjoyment), "Class_Enjoyment")
+                _this.createStarRatings(Math.round(ClassEnjoyment), "Class_Enjoyment"),
+                ClassEnjoyment
             );
         };
 
@@ -37,7 +37,7 @@ var LikeButton = function (_React$Component) {
                 NotUseful = _ref2.NotUseful;
             return React.createElement(
                 'div',
-                null,
+                { className: 'ratings' },
                 'Class Usefulness: Useful = ',
                 Useful,
                 ', Not Useful = ',
@@ -120,6 +120,9 @@ var LikeButton = function (_React$Component) {
                         stroke: 'rgba(0,0,0,.85)',
                         'stroke-width': '30',
                         fill: full ? 'gold' : 'transparent',
+                        onMouseEnter: function onMouseEnter() {
+                            return _this4.fill = "transparent";
+                        },
                         d: 'M492.867,181.444l-149.825-21.785L276.014,23.861c-8.187-16.59-31.844-16.589-40.031,0l-67.026,135.799L19.133,181.445c-18.306,2.662-25.615,25.158-12.369,38.071l108.408,105.682L89.592,474.44c-3.125,18.232,16.012,32.136,32.386,23.528l132.475-70.452l134.025,70.451c17.914,8.607,37.051-5.296,33.926-23.528l-25.578-149.241l108.409-105.685C518.482,206.601,511.173,184.105,492.867,181.444z'
                     })
                 )
@@ -131,6 +134,7 @@ var LikeButton = function (_React$Component) {
     }, {
         key: 'createStarRatings',
         value: function createStarRatings(rating, type) {
+            console.log("yp");
             var stars = [];
             for (var i = 1; i < 6; i++) {
                 if (i <= rating) stars.push(this.star(true, i, type));else stars.push(this.star(false, i, type));
