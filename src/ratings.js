@@ -1,5 +1,57 @@
 'use strict';
 
+class StarList extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            index: -1
+        };
+    }
+
+    mouseEnter = (num) => {
+        this.setState({ index: num }), 
+        setTimeout( () =>console.log(this.state.index), 
+            1000);
+    }
+    render() {
+        return (
+            [1, 2, 3, 4, 5].map(num => (
+                <Star
+                    onMouseEnter={() => this.mouseEnter(num)}
+                    isHover={num <= this.state.index}
+                />
+            ))
+        )
+    }
+}
+
+const Star = (props) => {
+    return (
+        <svg
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlnsXlink="http://www.w3.org/1999/xlink"
+            viewBox="0 0 512 512"
+            height="2.0em"
+            className="star"
+        >
+            <g transform="scale(.95) translate(15,15)">
+                <path
+                    stroke="rgba(0,0,0,.85)"
+                    stroke-width="30"
+                    // fill={full ? 'gold' : 'transparent'}
+                    onMouseEnter={props.onMouseEnter}
+                    d="M492.867,181.444l-149.825-21.785L276.014,23.861c-8.187-16.59-31.844-16.589-40.031,0l-67.026,135.799L19.133,181.445c-18.306,2.662-25.615,25.158-12.369,38.071l108.408,105.682L89.592,474.44c-3.125,18.232,16.012,32.136,32.386,23.528l132.475-70.452l134.025,70.451c17.914,8.607,37.051-5.296,33.926-23.528l-25.578-149.241l108.409-105.685C518.482,206.601,511.173,184.105,492.867,181.444z"
+                />
+            </g>
+        </svg>
+    )
+}
+
+
+
+
+
 class LikeButton extends React.Component {
     //   constructor(props) {
     //     super(props);
@@ -62,7 +114,7 @@ class LikeButton extends React.Component {
                         stroke="rgba(0,0,0,.85)"
                         stroke-width="30"
                         fill={full ? 'gold' : 'transparent'}
-                        onMouseEnter={ () => this.fill = "transparent"}
+                        onMouseEnter={() => this.fill = "transparent"}
                         d="M492.867,181.444l-149.825-21.785L276.014,23.861c-8.187-16.59-31.844-16.589-40.031,0l-67.026,135.799L19.133,181.445c-18.306,2.662-25.615,25.158-12.369,38.071l108.408,105.682L89.592,474.44c-3.125,18.232,16.012,32.136,32.386,23.528l132.475-70.452l134.025,70.451c17.914,8.607,37.051-5.296,33.926-23.528l-25.578-149.241l108.409-105.685C518.482,206.601,511.173,184.105,492.867,181.444z"
                     />
                 </g>
@@ -87,7 +139,8 @@ class LikeButton extends React.Component {
     // database, it renders filled stars based on the rating, eg. rating = 4, then 4 gold stars
     renderClassEnjoyment = ({ ClassEnjoyment }) =>
         <div className="ratings">
-            Class Enjoyment: {this.createStarRatings(Math.round(ClassEnjoyment), "Class_Enjoyment")}
+            Class Enjoyment: <StarList />
+            {/* {this.createStarRatings(Math.round(ClassEnjoyment), "Class_Enjoyment")} */}
             {(ClassEnjoyment)}
         </div>;
 
