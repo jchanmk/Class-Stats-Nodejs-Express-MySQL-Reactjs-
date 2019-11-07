@@ -11,19 +11,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var StarList = function (_React$Component) {
     _inherits(StarList, _React$Component);
 
-    function StarList() {
+    function StarList(props) {
         _classCallCheck(this, StarList);
 
-        var _this = _possibleConstructorReturn(this, (StarList.__proto__ || Object.getPrototypeOf(StarList)).call(this));
+        console.log(props);
+
+        var _this = _possibleConstructorReturn(this, (StarList.__proto__ || Object.getPrototypeOf(StarList)).call(this, props));
 
         _this.mouseEnter = function (num) {
-            _this.setState({ index: num }), setTimeout(function () {
-                return console.log(_this.state.index);
-            }, 1000);
+            _this.setState({ index: num });
         };
 
         _this.state = {
-            index: -1
+            index: -1,
+            rating: props.rating
         };
         return _this;
     }
@@ -38,7 +39,8 @@ var StarList = function (_React$Component) {
                     onMouseEnter: function onMouseEnter() {
                         return _this2.mouseEnter(num);
                     },
-                    isHover: num <= _this2.state.index
+                    isHover: num <= _this2.state.index,
+                    isFull: num <= _this2.state.rating
                 });
             });
         }
@@ -63,9 +65,10 @@ var Star = function Star(props) {
             { transform: "scale(.95) translate(15,15)" },
             React.createElement("path", {
                 stroke: "rgba(0,0,0,.85)",
-                "stroke-width": "30"
-                // fill={full ? 'gold' : 'transparent'}
-                , onMouseEnter: props.onMouseEnter,
+                "stroke-width": "30",
+                fill: props.isFull ? 'gold' : 'transparent',
+                onMouseEnter: props.onMouseEnter,
+                className: props.isHover ? 'starHover' : null,
                 d: "M492.867,181.444l-149.825-21.785L276.014,23.861c-8.187-16.59-31.844-16.589-40.031,0l-67.026,135.799L19.133,181.445c-18.306,2.662-25.615,25.158-12.369,38.071l108.408,105.682L89.592,474.44c-3.125,18.232,16.012,32.136,32.386,23.528l132.475-70.452l134.025,70.451c17.914,8.607,37.051-5.296,33.926-23.528l-25.578-149.241l108.409-105.685C518.482,206.601,511.173,184.105,492.867,181.444z"
             })
         )
@@ -91,7 +94,7 @@ var LikeButton = function (_React$Component2) {
                 "div",
                 { className: "ratings" },
                 "Class Enjoyment: ",
-                React.createElement(StarList, null),
+                React.createElement(StarList, { rating: 1 }),
                 ClassEnjoyment
             );
         };
