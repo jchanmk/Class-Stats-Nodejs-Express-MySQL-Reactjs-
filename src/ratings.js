@@ -1,8 +1,48 @@
 'use strict';
 
-class StarList extends React.Component {
+class PercentageRating extends React.Component {
     constructor(props) {
         console.log(props)
+        super(props);
+        this.state = {
+            isHover: false
+        };
+    }
+    componentWillReceiveProps(props) {
+        this.setState({ rating: props.rating });
+    }
+    mouseEnter = (num) => {
+        this.setState({ index: num })
+    }
+    mouseLeave = () => {
+        this.setState({ index: -1 })
+    }
+    render() {
+        return (
+            <button className="percentageButtons align-middle"
+                style={ !this.state.isHover ? 
+                    { background: `linear-gradient(to right, ${this.props.color} ${this.props.rating}%, white 0%)`} 
+                    : { background: "none"}}
+                onMouseEnter={() => this.setState({isHover: true})}
+                onMouseLeave={() => this.setState({isHover: false})}
+            >
+                <span className="percentageName" style={ !this.state.isHover ? {display: "block"} : {display: "none"}}>
+                    {this.props.type}
+                </span>
+                <span className="percentage" style={ !this.state.isHover ? {display: "block"} : {display: "none"}}>
+                    {this.props.rating}%
+                </span>
+                <span className="submit" style={ this.state.isHover ? {display: "block"} : {display: "none"}}>
+                    submit<i class="fas fa-arrow-right" style={{position: "absolute", right:"10px", bottom:"6px"}}></i>
+                </span>
+            </button>
+        )
+    }
+}
+
+class StarList extends React.Component {
+    constructor(props) {
+        // console.log(props)
         super(props);
         this.state = {
             index: -1,
@@ -17,7 +57,7 @@ class StarList extends React.Component {
     }
     mouseLeave = () => {
         this.setState({ index: -1 })
-        console.log(this.state.rating);
+        // console.log(this.state.rating);
     }
     render() {
         return (
@@ -101,22 +141,41 @@ class Ratings extends React.Component {
     // database, it renders filled stars based on the rating, eg. rating = 4, then 4 gold stars
     renderClassEnjoyment = ({ ClassEnjoyment }) =>
         <div className="ratings">
-            <span className="ratingsName">Class Enjoyment: </span>
-            <StarList
-                key={ClassEnjoyment}
-                rating={Math.round(ClassEnjoyment)}
-                onClick={(rating) => this.userRating(rating)}
-            />
-            {(ClassEnjoyment)}  
+            <div className="row">
+                <div className="col-5">
+                    <span className="ratingsName">Class Enjoyment: </span>
+                </div>
+                <div className="col-5">
+                    <StarList
+                        key={ClassEnjoyment}
+                        rating={Math.round(ClassEnjoyment)}
+                        onClick={(rating) => this.userRating(rating)}
+                    />
+                    {/* {(ClassEnjoyment)} */}
+                </div>
+            </div>
         </div>;
 
-    // to do:
-    // For this one, look at the html button in the other file, make it here, and do inline styling for the 
-    // color
+
     renderClassUsefulness = ({ Useful, NotUseful }) =>
         <div className="ratings">
-            <span className="ratingsName">Class Usefulness: </span>
-             Useful = {Useful}, Not Useful = {NotUseful}
+            <div className="row">
+                <div className="col-5">
+                    <span className="ratingsName">Class Usefulness: </span>
+                </div>
+                <div className="col-4">
+                    <PercentageRating
+                        type="useful"
+                        color="#27FF9B"
+                        rating={Math.round(Useful * 100)}
+                    />
+                    <PercentageRating
+                        type="not useful"
+                        color="#DB6E6E"
+                        rating={Math.round(NotUseful * 100)}
+                    />
+                </div>
+            </div>
         </div>;
 
     render() {

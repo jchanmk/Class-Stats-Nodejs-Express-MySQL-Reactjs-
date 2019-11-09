@@ -8,15 +8,15 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var StarList = function (_React$Component) {
-    _inherits(StarList, _React$Component);
+var PercentageRating = function (_React$Component) {
+    _inherits(PercentageRating, _React$Component);
 
-    function StarList(props) {
-        _classCallCheck(this, StarList);
+    function PercentageRating(props) {
+        _classCallCheck(this, PercentageRating);
 
         console.log(props);
 
-        var _this = _possibleConstructorReturn(this, (StarList.__proto__ || Object.getPrototypeOf(StarList)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (PercentageRating.__proto__ || Object.getPrototypeOf(PercentageRating)).call(this, props));
 
         _this.mouseEnter = function (num) {
             _this.setState({ index: num });
@@ -24,14 +24,83 @@ var StarList = function (_React$Component) {
 
         _this.mouseLeave = function () {
             _this.setState({ index: -1 });
-            console.log(_this.state.rating);
         };
 
         _this.state = {
+            isHover: false
+        };
+        return _this;
+    }
+
+    _createClass(PercentageRating, [{
+        key: "componentWillReceiveProps",
+        value: function componentWillReceiveProps(props) {
+            this.setState({ rating: props.rating });
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            var _this2 = this;
+
+            return React.createElement(
+                "button",
+                { className: "percentageButtons align-middle",
+                    style: !this.state.isHover ? { background: "linear-gradient(to right, " + this.props.color + " " + this.props.rating + "%, white 0%)" } : { background: "none" },
+                    onMouseEnter: function onMouseEnter() {
+                        return _this2.setState({ isHover: true });
+                    },
+                    onMouseLeave: function onMouseLeave() {
+                        return _this2.setState({ isHover: false });
+                    }
+                },
+                React.createElement(
+                    "span",
+                    { className: "percentageName", style: !this.state.isHover ? { display: "block" } : { display: "none" } },
+                    this.props.type
+                ),
+                React.createElement(
+                    "span",
+                    { className: "percentage", style: !this.state.isHover ? { display: "block" } : { display: "none" } },
+                    this.props.rating,
+                    "%"
+                ),
+                React.createElement(
+                    "span",
+                    { className: "submit", style: this.state.isHover ? { display: "block" } : { display: "none" } },
+                    "submit",
+                    React.createElement("i", { "class": "fas fa-arrow-right", style: { position: "absolute", right: "10px", bottom: "6px" } })
+                )
+            );
+        }
+    }]);
+
+    return PercentageRating;
+}(React.Component);
+
+var StarList = function (_React$Component2) {
+    _inherits(StarList, _React$Component2);
+
+    function StarList(props) {
+        _classCallCheck(this, StarList);
+
+        var _this3 = _possibleConstructorReturn(this, (StarList.__proto__ || Object.getPrototypeOf(StarList)).call(this, props));
+        // console.log(props)
+
+
+        _this3.mouseEnter = function (num) {
+            _this3.setState({ index: num });
+        };
+
+        _this3.mouseLeave = function () {
+            _this3.setState({ index: -1 });
+            // console.log(this.state.rating);
+        };
+
+        _this3.state = {
             index: -1,
             rating: props.rating
         };
-        return _this;
+        return _this3;
     }
 
     _createClass(StarList, [{
@@ -42,21 +111,21 @@ var StarList = function (_React$Component) {
     }, {
         key: "render",
         value: function render() {
-            var _this2 = this;
+            var _this4 = this;
 
             return [1, 2, 3, 4, 5].map(function (num) {
                 return React.createElement(Star, {
                     onMouseEnter: function onMouseEnter() {
-                        return _this2.mouseEnter(num);
+                        return _this4.mouseEnter(num);
                     },
                     onMouseLeave: function onMouseLeave() {
-                        return _this2.mouseLeave();
+                        return _this4.mouseLeave();
                     },
                     onClick: function onClick() {
-                        return _this2.props.onClick(num);
+                        return _this4.props.onClick(num);
                     },
-                    isHover: num <= _this2.state.index,
-                    isFull: num <= _this2.state.rating && _this2.state.index == -1
+                    isHover: num <= _this4.state.index,
+                    isFull: num <= _this4.state.rating && _this4.state.index == -1
                 });
             });
         }
@@ -93,58 +162,87 @@ var Star = function Star(props) {
     );
 };
 
-var Ratings = function (_React$Component2) {
-    _inherits(Ratings, _React$Component2);
+var Ratings = function (_React$Component3) {
+    _inherits(Ratings, _React$Component3);
 
     function Ratings() {
         _classCallCheck(this, Ratings);
 
-        var _this3 = _possibleConstructorReturn(this, (Ratings.__proto__ || Object.getPrototypeOf(Ratings)).call(this));
+        var _this5 = _possibleConstructorReturn(this, (Ratings.__proto__ || Object.getPrototypeOf(Ratings)).call(this));
 
-        _this3.renderClassEnjoyment = function (_ref) {
+        _this5.renderClassEnjoyment = function (_ref) {
             var ClassEnjoyment = _ref.ClassEnjoyment;
             return React.createElement(
                 "div",
                 { className: "ratings" },
                 React.createElement(
-                    "span",
-                    { className: "ratingsName" },
-                    "Class Enjoyment: "
-                ),
-                React.createElement(StarList, {
-                    key: ClassEnjoyment,
-                    rating: Math.round(ClassEnjoyment),
-                    onClick: function onClick(rating) {
-                        return _this3.userRating(rating);
-                    }
-                }),
-                ClassEnjoyment
+                    "div",
+                    { className: "row" },
+                    React.createElement(
+                        "div",
+                        { className: "col-5" },
+                        React.createElement(
+                            "span",
+                            { className: "ratingsName" },
+                            "Class Enjoyment: "
+                        )
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "col-5" },
+                        React.createElement(StarList, {
+                            key: ClassEnjoyment,
+                            rating: Math.round(ClassEnjoyment),
+                            onClick: function onClick(rating) {
+                                return _this5.userRating(rating);
+                            }
+                        })
+                    )
+                )
             );
         };
 
-        _this3.renderClassUsefulness = function (_ref2) {
+        _this5.renderClassUsefulness = function (_ref2) {
             var Useful = _ref2.Useful,
                 NotUseful = _ref2.NotUseful;
             return React.createElement(
                 "div",
                 { className: "ratings" },
                 React.createElement(
-                    "span",
-                    { className: "ratingsName" },
-                    "Class Usefulness: "
-                ),
-                "Useful = ",
-                Useful,
-                ", Not Useful = ",
-                NotUseful
+                    "div",
+                    { className: "row" },
+                    React.createElement(
+                        "div",
+                        { className: "col-5" },
+                        React.createElement(
+                            "span",
+                            { className: "ratingsName" },
+                            "Class Usefulness: "
+                        )
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "col-4" },
+                        React.createElement(PercentageRating, {
+                            type: "useful",
+                            color: "#27FF9B",
+                            rating: Math.round(Useful * 100)
+                        }),
+                        React.createElement(PercentageRating, {
+                            type: "not useful",
+                            color: "#DB6E6E",
+                            rating: Math.round(NotUseful * 100)
+                        })
+                    )
+                )
             );
         };
 
-        _this3.state = {
+        _this5.state = {
             ratings: [],
             classEnjoyment: null
         };
-        return _this3;
+        return _this5;
     }
 
     _createClass(Ratings, [{
@@ -158,14 +256,14 @@ var Ratings = function (_React$Component2) {
     }, {
         key: "getRatings",
         value: function getRatings() {
-            var _this4 = this;
+            var _this6 = this;
 
             var search = window.location.search;
             fetch('http://localhost:3000/course/findratings' + search).then(function (res) {
                 return res.json();
             }).then(function (response) {
-                return _this4.setState({ ratings: response.data }, function () {
-                    return console.log("ratings fetched...", _this4.state.ratings);
+                return _this6.setState({ ratings: response.data }, function () {
+                    return console.log("ratings fetched...", _this6.state.ratings);
                 });
             });
         }
@@ -176,12 +274,12 @@ var Ratings = function (_React$Component2) {
     }, {
         key: "postRatings",
         value: function postRatings() {
-            var _this5 = this;
+            var _this7 = this;
 
             setTimeout(function () {
-                var classEnjoyment = _this5.state.classEnjoyment;
+                var classEnjoyment = _this7.state.classEnjoyment;
 
-                fetch("http://localhost:3000/course/addrating?courseid=1609&type=Class_Enjoyment&rating=" + classEnjoyment).then(_this5.getRatings()).catch(function (err) {
+                fetch("http://localhost:3000/course/addrating?courseid=1609&type=Class_Enjoyment&rating=" + classEnjoyment).then(_this7.getRatings()).catch(function (err) {
                     return console.log(err);
                 });
             }, 500);
@@ -195,11 +293,6 @@ var Ratings = function (_React$Component2) {
 
         // This renders the stars for class enjoyment, based on current state of the rating based on data from
         // database, it renders filled stars based on the rating, eg. rating = 4, then 4 gold stars
-
-
-        // to do:
-        // For this one, look at the html button in the other file, make it here, and do inline styling for the 
-        // color
 
     }, {
         key: "render",

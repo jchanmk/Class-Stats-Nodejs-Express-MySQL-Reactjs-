@@ -5,43 +5,66 @@
     font-size: 30px;
 }
 
-.ratingsName{
+.ratingsName {
     margin-right: 10px;
 }
 
-.star{
+.star {
     padding: 1px;
 }
 
-.starHover:active{
+.starHover:active {
     transform: scale(0.95);
 }
 
-.starHover{
+.starHover {
     fill: gold;
     cursor: pointer;
 }
 
-.ratings{
+.ratings {
     margin-bottom: 30px;
     font-size: 20px;
 }
 
-
-.test{
-    margin-left: 50px;
-    padding: 10px;
+.percentageButtons {
+    position: relative;
+    padding: 2px;
     padding-left: 10px;
     padding-right: 10px;
     width: 200px;
-    background: linear-gradient(to right, #27FF9B 12%, white 0%);
+    margin-bottom: 10px;
+    display: inline-block;
     border: 1px solid #707070;
+    font-weight: 300;
+    transition:color 0.5s ease;
 }
 
-.percentageName{
+.percentageButtons:hover{
+    color: white;
+}
+
+.percentageButtons::after {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background-color: #0093FF;
+    transform-origin: left;
+    transition: width 0.5s ease;
+    z-index: -1;
+}
+
+.percentageButtons:hover::after {
+    width: 100%;
+  }
+
+.percentageName {
     float: left;
 }
 
-.percentage{
+.percentage {
     float: right;
 }
