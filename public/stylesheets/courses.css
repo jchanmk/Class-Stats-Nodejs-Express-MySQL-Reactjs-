@@ -9,6 +9,10 @@
     padding: 1px;
 }
 
+.starHover:active{
+    transform: scale(0.95);
+}
+
 .starHover{
     fill: gold;
     cursor: pointer;

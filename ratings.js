@@ -14,9 +14,9 @@ var StarList = function (_React$Component) {
     function StarList(props) {
         _classCallCheck(this, StarList);
 
-        var _this = _possibleConstructorReturn(this, (StarList.__proto__ || Object.getPrototypeOf(StarList)).call(this, props));
-        // console.log(props)
+        console.log(props);
 
+        var _this = _possibleConstructorReturn(this, (StarList.__proto__ || Object.getPrototypeOf(StarList)).call(this, props));
 
         _this.mouseEnter = function (num) {
             _this.setState({ index: num });
@@ -24,6 +24,7 @@ var StarList = function (_React$Component) {
 
         _this.mouseLeave = function () {
             _this.setState({ index: -1 });
+            console.log(_this.state.rating);
         };
 
         _this.state = {
@@ -34,6 +35,11 @@ var StarList = function (_React$Component) {
     }
 
     _createClass(StarList, [{
+        key: "componentWillReceiveProps",
+        value: function componentWillReceiveProps(props) {
+            this.setState({ rating: props.rating });
+        }
+    }, {
         key: "render",
         value: function render() {
             var _this2 = this;
@@ -102,6 +108,7 @@ var LikeButton = function (_React$Component2) {
                 { className: "ratings" },
                 "Class Enjoyment:",
                 React.createElement(StarList, {
+                    key: ClassEnjoyment,
                     rating: Math.round(ClassEnjoyment),
                     onClick: function onClick(rating) {
                         return _this3.userRating(rating);
@@ -183,7 +190,6 @@ var LikeButton = function (_React$Component2) {
         key: "render",
         value: function render() {
             var ratings = this.state.ratings;
-
             return React.createElement(
                 "div",
                 { className: "row" },

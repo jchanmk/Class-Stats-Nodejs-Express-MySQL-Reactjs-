@@ -2,18 +2,22 @@
 
 class StarList extends React.Component {
     constructor(props) {
-        // console.log(props)
+        console.log(props)
         super(props);
         this.state = {
             index: -1,
             rating: props.rating
         };
     }
+    componentWillReceiveProps(props) {
+        this.setState({ rating: props.rating });  
+      }
     mouseEnter = (num) => {
         this.setState({ index: num })
     }
     mouseLeave = () => {
         this.setState({ index: -1 })
+        console.log(this.state.rating);
     }
     render() {
         return (
@@ -98,6 +102,7 @@ class LikeButton extends React.Component {
         <div className="ratings">
             Class Enjoyment: 
                 <StarList 
+                    key = {ClassEnjoyment}
                     rating={Math.round(ClassEnjoyment)} 
                     onClick={(rating) => this.userRating(rating)}
                 />
@@ -109,7 +114,6 @@ class LikeButton extends React.Component {
 
     render() {
         const ratings = this.state.ratings;
-
         return (
             <div className="row">
                 <div className="col-6">
