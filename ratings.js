@@ -81,7 +81,7 @@ var Star = function Star(props) {
             { transform: "scale(.95) translate(15,15)" },
             React.createElement("path", {
                 stroke: "rgba(0,0,0,.85)",
-                "stroke-width": "30",
+                "stroke-width": "20",
                 fill: props.isFull ? 'gold' : 'transparent',
                 onMouseEnter: props.onMouseEnter,
                 onMouseLeave: props.onMouseLeave,
@@ -93,20 +93,24 @@ var Star = function Star(props) {
     );
 };
 
-var LikeButton = function (_React$Component2) {
-    _inherits(LikeButton, _React$Component2);
+var Ratings = function (_React$Component2) {
+    _inherits(Ratings, _React$Component2);
 
-    function LikeButton() {
-        _classCallCheck(this, LikeButton);
+    function Ratings() {
+        _classCallCheck(this, Ratings);
 
-        var _this3 = _possibleConstructorReturn(this, (LikeButton.__proto__ || Object.getPrototypeOf(LikeButton)).call(this));
+        var _this3 = _possibleConstructorReturn(this, (Ratings.__proto__ || Object.getPrototypeOf(Ratings)).call(this));
 
         _this3.renderClassEnjoyment = function (_ref) {
             var ClassEnjoyment = _ref.ClassEnjoyment;
             return React.createElement(
                 "div",
                 { className: "ratings" },
-                "Class Enjoyment:",
+                React.createElement(
+                    "span",
+                    { className: "ratingsName" },
+                    "Class Enjoyment: "
+                ),
                 React.createElement(StarList, {
                     key: ClassEnjoyment,
                     rating: Math.round(ClassEnjoyment),
@@ -124,7 +128,12 @@ var LikeButton = function (_React$Component2) {
             return React.createElement(
                 "div",
                 { className: "ratings" },
-                "Class Usefulness: Useful = ",
+                React.createElement(
+                    "span",
+                    { className: "ratingsName" },
+                    "Class Usefulness: "
+                ),
+                "Useful = ",
                 Useful,
                 ", Not Useful = ",
                 NotUseful
@@ -138,7 +147,7 @@ var LikeButton = function (_React$Component2) {
         return _this3;
     }
 
-    _createClass(LikeButton, [{
+    _createClass(Ratings, [{
         key: "componentDidMount",
         value: function componentDidMount() {
             this.getRatings();
@@ -162,7 +171,7 @@ var LikeButton = function (_React$Component2) {
         }
 
         // This sends ratings to the server
-        // ****** This needs to be changed to adapt to any type of rating *****
+        // ****** This needs to be changed to adapt to any type of rating to send *****
 
     }, {
         key: "postRatings",
@@ -183,28 +192,38 @@ var LikeButton = function (_React$Component2) {
             this.setState({ classEnjoyment: rating });
             this.postRatings();
         }
+
         // This renders the stars for class enjoyment, based on current state of the rating based on data from
         // database, it renders filled stars based on the rating, eg. rating = 4, then 4 gold stars
+
+
+        // to do:
+        // For this one, look at the html button in the other file, make it here, and do inline styling for the 
+        // color
 
     }, {
         key: "render",
         value: function render() {
             var ratings = this.state.ratings;
-            return React.createElement(
-                "div",
-                { className: "row" },
+            return (
+                // Later, when you add more ratings, to have it be 2 columns, simply put ratings in 2 
+                // columns
                 React.createElement(
                     "div",
-                    { className: "col-6" },
-                    ratings.map(this.renderClassEnjoyment),
-                    ratings.map(this.renderClassUsefulness)
+                    { className: "row" },
+                    React.createElement(
+                        "div",
+                        { className: "col-6" },
+                        ratings.map(this.renderClassEnjoyment),
+                        ratings.map(this.renderClassUsefulness)
+                    )
                 )
             );
         }
     }]);
 
-    return LikeButton;
+    return Ratings;
 }(React.Component);
 
 var domContainer = document.querySelector('#like_button_container');
-ReactDOM.render(React.createElement(LikeButton, null), domContainer);
+ReactDOM.render(React.createElement(Ratings, null), domContainer);

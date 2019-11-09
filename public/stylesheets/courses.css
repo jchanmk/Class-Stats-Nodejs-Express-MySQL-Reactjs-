@@ -5,6 +5,10 @@
     font-size: 30px;
 }
 
+.ratingsName{
+    margin-right: 10px;
+}
+
 .star{
     padding: 1px;
 }
@@ -21,4 +25,23 @@
 .ratings{
     margin-bottom: 30px;
     font-size: 20px;
+}
+
+
+.test{
+    margin-left: 50px;
+    padding: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 200px;
+    background: linear-gradient(to right, #27FF9B 12%, white 0%);
+    border: 1px solid #707070;
+}
+
+.percentageName{
+    float: left;
+}
+
+.percentage{
+    float: right;
 }
