@@ -124,6 +124,7 @@ class Ratings extends React.Component {
 
     // This sends ratings to the server
     // ****** This needs to be changed to adapt to any type of rating to send *****
+    // Also need to change to course ID parameter to dynamic 
     postRatings() {
         setTimeout(() => {
             const { classEnjoyment } = this.state;

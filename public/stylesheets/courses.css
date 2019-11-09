@@ -37,12 +37,16 @@
     display: inline-block;
     border: 1px solid #707070;
     font-weight: 300;
-    transition:color 0.5s ease;
+    transition: color 0.5s ease;
 }
 
-.percentageButtons:hover{
+.percentageButtons:hover {
     color: white;
 }
+.percentageButtons:focus {
+    outline:0;
+}
+
 
 .percentageButtons::after {
     position: absolute;
@@ -59,7 +63,11 @@
 
 .percentageButtons:hover::after {
     width: 100%;
-  }
+}
+
+.percentageButtons:active{
+    transform: scale(0.95);
+}
 
 .percentageName {
     float: left;
