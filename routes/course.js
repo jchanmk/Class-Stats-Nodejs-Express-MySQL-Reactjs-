@@ -66,18 +66,43 @@ router.get('/addrating', (req, res) => {
     const rating = req.query.rating;
 
     if (type === "classEnjoyment") {
-        const INSERT_INTO_RATINGS =
+        const INSERT_INTO_ClASS_ENJOYMENT =
             "INSERT INTO Class_Enjoyment (CourseID, Rating, StudentID)" +
             "VALUES (?, ?, '1234')";
-        connection.query(INSERT_INTO_RATINGS, [courseID, rating], (err, results) => {
+        connection.query(INSERT_INTO_ClASS_ENJOYMENT, [courseID, rating], (err, results) => {
             if (err) {
                 return res.send(err)
             } else {
                 return res.send("succesfully added rating");
             }
         });
-    } else if (type === "classUsefulness"){
+    } else if (type === "classUsefulness") {
         // code to insert into Class_Usefulness based on 1 or 0
+        if (rating == 1) {
+            const UPDATE_CLASS_USEFULNESS =
+                "UPDATE Class_Usefulness " +
+                "SET Useful = Useful + 1, Count = Count + 1 " +
+                "WHERE CourseID = ? ";
+            connection.query(UPDATE_CLASS_USEFULNESS, [courseID], (err, results) => {
+                if (err) {
+                    return res.send(err)
+                } else {
+                    return res.send("succesfully added rating");
+                }
+            });
+        } else {
+            const UPDATE_CLASS_USEFULNESS =
+                "UPDATE Class_Usefulness " +
+                "SET NotUseful = NotUseful + 1, Count = Count + 1 " +
+                "WHERE CourseID = ? ";
+            connection.query(UPDATE_CLASS_USEFULNESS, [courseID], (err, results) => {
+                if (err) {
+                    return res.send(err)
+                } else {
+                    return res.send("succesfully added rating");
+                }
+            });
+        }
     }
 
 })
