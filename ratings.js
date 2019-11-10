@@ -14,9 +14,9 @@ var PercentageRating = function (_React$Component) {
     function PercentageRating(props) {
         _classCallCheck(this, PercentageRating);
 
-        console.log(props);
-
         var _this = _possibleConstructorReturn(this, (PercentageRating.__proto__ || Object.getPrototypeOf(PercentageRating)).call(this, props));
+        // console.log(props)
+
 
         _this.mouseEnter = function (num) {
             _this.setState({ index: num });
@@ -51,7 +51,8 @@ var PercentageRating = function (_React$Component) {
                     },
                     onMouseLeave: function onMouseLeave() {
                         return _this2.setState({ isHover: false });
-                    }
+                    },
+                    onClick: this.props.onClick
                 },
                 React.createElement(
                     "span",
@@ -194,7 +195,7 @@ var Ratings = function (_React$Component3) {
                             key: ClassEnjoyment,
                             rating: Math.round(ClassEnjoyment),
                             onClick: function onClick(rating) {
-                                return _this5.userRating(rating);
+                                return _this5.userRating("classEnjoyment", rating);
                             }
                         })
                     )
@@ -226,12 +227,18 @@ var Ratings = function (_React$Component3) {
                         React.createElement(PercentageRating, {
                             type: "useful",
                             color: "#27FF9B",
-                            rating: Math.round(Useful * 100)
+                            rating: Math.round(Useful * 100),
+                            onClick: function onClick() {
+                                return _this5.userRating("classUsefulness", 1);
+                            }
                         }),
                         React.createElement(PercentageRating, {
                             type: "not useful",
                             color: "#DB6E6E",
-                            rating: Math.round(NotUseful * 100)
+                            rating: Math.round(NotUseful * 100),
+                            onClick: function onClick() {
+                                return _this5.userRating("classUsefulness", 0);
+                            }
                         })
                     )
                 )
@@ -239,8 +246,11 @@ var Ratings = function (_React$Component3) {
         };
 
         _this5.state = {
+            courseID: null,
             ratings: [],
-            classEnjoyment: null
+            classEnjoyment: null,
+            classUsefulness: null,
+            userRating: null
         };
         return _this5;
     }
@@ -259,37 +269,43 @@ var Ratings = function (_React$Component3) {
             var _this6 = this;
 
             var search = window.location.search;
-            fetch('http://localhost:3000/course/findratings' + search).then(function (res) {
-                return res.json();
+            fetch('http://localhost:3000/course/findratings' + search).then(function (response) {
+                return response.json();
             }).then(function (response) {
-                return _this6.setState({ ratings: response.data }, function () {
+                return _this6.setState({ courseID: response.courseID, ratings: response.data }, function () {
                     return console.log("ratings fetched...", _this6.state.ratings);
                 });
             });
         }
 
         // This sends ratings to the server
-        // ****** This needs to be changed to adapt to any type of rating to send *****
-        // Also need to change to course ID parameter to dynamic 
+        // consider changing rating submission to one parameter instead of one for each
+        // then differentiate between ratings based on type in server code
 
     }, {
         key: "postRatings",
-        value: function postRatings() {
+        value: function postRatings(type) {
             var _this7 = this;
 
             setTimeout(function () {
-                var classEnjoyment = _this7.state.classEnjoyment;
+                var _state = _this7.state,
+                    courseID = _state.courseID,
+                    userRating = _state.userRating;
 
-                fetch("http://localhost:3000/course/addrating?courseid=1609&type=Class_Enjoyment&rating=" + classEnjoyment).then(_this7.getRatings()).catch(function (err) {
+                fetch("http://localhost:3000/course/addrating?courseid=" + courseID + "&type=" + type + "&rating=" + userRating).then(_this7.getRatings()).catch(function (err) {
                     return console.log(err);
                 });
             }, 500);
         }
     }, {
         key: "userRating",
-        value: function userRating(rating) {
-            this.setState({ classEnjoyment: rating });
-            this.postRatings();
+        value: function userRating(type, rating) {
+            if (type === "classEnjoyment") {
+                this.setState({ userRating: rating });
+            } else if (type === "classUsefulness") {
+                this.setState({ userRating: rating });
+            }
+            this.postRatings(type);
         }
 
         // This renders the stars for class enjoyment, based on current state of the rating based on data from

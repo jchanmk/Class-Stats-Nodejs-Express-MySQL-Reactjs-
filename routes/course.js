@@ -36,7 +36,6 @@ router.get("/", function (req, res) {
 })
 
 router.get("/findratings", (req, res) => {
-    // work on this include a call to the database and return some data
     console.log("in this API, react has made contact");
     const instructorID = req.query.instructorid;
     const courseID = req.query.courseid;
@@ -51,7 +50,8 @@ router.get("/findratings", (req, res) => {
             return res.send(err)
         } else {
             return res.json({
-                data: results
+                data: results,
+                courseID: courseID
             })
         }
     });
@@ -65,7 +65,7 @@ router.get('/addrating', (req, res) => {
     const type = req.query.type;
     const rating = req.query.rating;
 
-    if (type === "Class_Enjoyment") {
+    if (type === "classEnjoyment") {
         const INSERT_INTO_RATINGS =
             "INSERT INTO Class_Enjoyment (CourseID, Rating, StudentID)" +
             "VALUES (?, ?, '1234')";
@@ -76,6 +76,8 @@ router.get('/addrating', (req, res) => {
                 return res.send("succesfully added rating");
             }
         });
+    } else if (type === "classUsefulness"){
+        // code to insert into Class_Usefulness based on 1 or 0
     }
 
 })

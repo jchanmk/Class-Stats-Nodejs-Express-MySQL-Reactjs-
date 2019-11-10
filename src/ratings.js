@@ -2,7 +2,7 @@
 
 class PercentageRating extends React.Component {
     constructor(props) {
-        console.log(props)
+        // console.log(props)
         super(props);
         this.state = {
             isHover: false
@@ -25,6 +25,7 @@ class PercentageRating extends React.Component {
                     : { background: "none"}}
                 onMouseEnter={() => this.setState({isHover: true})}
                 onMouseLeave={() => this.setState({isHover: false})}
+                onClick={this.props.onClick}
             >
                 <span className="percentageName" style={ !this.state.isHover ? {display: "block"} : {display: "none"}}>
                     {this.props.type}
@@ -104,8 +105,11 @@ class Ratings extends React.Component {
     constructor() {
         super();
         this.state = {
+            courseID: null,
             ratings: [],
-            classEnjoyment: null
+            classEnjoyment: null,
+            classUsefulness: null,
+            userRating: null
         };
     }
 
@@ -117,25 +121,29 @@ class Ratings extends React.Component {
     getRatings() {
         let search = window.location.search;
         fetch('http://localhost:3000/course/findratings' + search)
-            .then(res => res.json())
-            .then(response => this.setState({ ratings: response.data }, () => console.log("ratings fetched...",
+            .then(response => response.json())
+            .then(response => this.setState({ courseID: response.courseID, ratings: response.data }, () => console.log("ratings fetched...",
                 this.state.ratings)));
     }
 
     // This sends ratings to the server
-    // ****** This needs to be changed to adapt to any type of rating to send *****
-    // Also need to change to course ID parameter to dynamic 
-    postRatings() {
+    // consider changing rating submission to one parameter instead of one for each
+    // then differentiate between ratings based on type in server code
+    postRatings(type) {
         setTimeout(() => {
-            const { classEnjoyment } = this.state;
-            fetch(`http://localhost:3000/course/addrating?courseid=1609&type=Class_Enjoyment&rating=${classEnjoyment}`)
+            const { courseID, userRating } = this.state;
+            fetch(`http://localhost:3000/course/addrating?courseid=${courseID}&type=${type}&rating=${userRating}`)
                 .then(this.getRatings())
                 .catch(err => console.log(err))
         }, 500)
     }
-    userRating(rating) {
-        this.setState({ classEnjoyment: rating })
-        this.postRatings();
+    userRating(type, rating) {
+        if(type === "classEnjoyment"){
+            this.setState({ userRating: rating })
+        } else if(type === "classUsefulness"){
+            this.setState({ userRating: rating })
+        }
+        this.postRatings(type);
     }
 
     // This renders the stars for class enjoyment, based on current state of the rating based on data from
@@ -150,7 +158,7 @@ class Ratings extends React.Component {
                     <StarList
                         key={ClassEnjoyment}
                         rating={Math.round(ClassEnjoyment)}
-                        onClick={(rating) => this.userRating(rating)}
+                        onClick={(rating) => this.userRating("classEnjoyment", rating)}
                     />
                     {/* {(ClassEnjoyment)} */}
                 </div>
@@ -169,11 +177,13 @@ class Ratings extends React.Component {
                         type="useful"
                         color="#27FF9B"
                         rating={Math.round(Useful * 100)}
+                        onClick={() => this.userRating("classUsefulness", 1)}
                     />
                     <PercentageRating
                         type="not useful"
                         color="#DB6E6E"
                         rating={Math.round(NotUseful * 100)}
+                        onClick={() => this.userRating("classUsefulness", 0)}
                     />
                 </div>
             </div>
