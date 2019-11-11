@@ -64,7 +64,6 @@ router.get('/addrating', (req, res) => {
     const courseID = req.query.courseid;
     const type = req.query.type;
     const rating = req.query.rating;
-
     if (type === "classEnjoyment") {
         const INSERT_INTO_ClASS_ENJOYMENT =
             "INSERT INTO Class_Enjoyment (CourseID, Rating, StudentID)" +
@@ -107,5 +106,8 @@ router.get('/addrating', (req, res) => {
 
 })
 
+function test(){
+    console.log("yoyoyoyooy")
+}
 
 module.exports = router;

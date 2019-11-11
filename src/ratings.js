@@ -20,21 +20,21 @@ class PercentageRating extends React.Component {
     render() {
         return (
             <button className="percentageButtons align-middle"
-                style={ !this.state.isHover ? 
-                    { background: `linear-gradient(to right, ${this.props.color} ${this.props.rating}%, white 0%)`} 
-                    : { background: "none"}}
-                onMouseEnter={() => this.setState({isHover: true})}
-                onMouseLeave={() => this.setState({isHover: false})}
+                style={!this.state.isHover ?
+                    { background: `linear-gradient(to right, ${this.props.color} ${this.props.rating}%, white 0%)` }
+                    : { background: "none" }}
+                onMouseEnter={() => this.setState({ isHover: true })}
+                onMouseLeave={() => this.setState({ isHover: false })}
                 onClick={this.props.onClick}
             >
-                <span className="percentageName" style={ !this.state.isHover ? {display: "block"} : {display: "none"}}>
+                <span className="percentageName" style={!this.state.isHover ? { display: "block" } : { display: "none" }}>
                     {this.props.type}
                 </span>
-                <span className="percentage" style={ !this.state.isHover ? {display: "block"} : {display: "none"}}>
+                <span className="percentage" style={!this.state.isHover ? { display: "block" } : { display: "none" }}>
                     {this.props.rating}%
                 </span>
-                <span className="submit" style={ this.state.isHover ? {display: "block"} : {display: "none"}}>
-                    submit<i class="fas fa-arrow-right" style={{position: "absolute", right:"10px", bottom:"6px"}}></i>
+                <span className="submit" style={this.state.isHover ? { display: "block" } : { display: "none" }}>
+                    submit<i class="fas fa-arrow-right" style={{ position: "absolute", right: "10px", bottom: "6px" }}></i>
                 </span>
             </button>
         )
@@ -138,10 +138,16 @@ class Ratings extends React.Component {
         }, 500)
     }
     userRating(type, rating) {
-        if(type === "classEnjoyment"){
-            this.setState({ userRating: rating })
-        } else if(type === "classUsefulness"){
-            this.setState({ userRating: rating })
+        if (type === "classEnjoyment") {
+            if(this.state.classEnjoyment){
+                return;
+            }
+            this.setState({ classEnjoyment: true, userRating: rating })
+        } else if (type === "classUsefulness") {
+            if(this.state.classUsefulness){
+                return;
+            }
+            this.setState({ classUsefulness: true, userRating: rating })
         }
         this.postRatings(type);
     }
@@ -161,6 +167,14 @@ class Ratings extends React.Component {
                         onClick={(rating) => this.userRating("classEnjoyment", rating)}
                     />
                     {/* {(ClassEnjoyment)} */}
+                    <span
+                        class="submitted"
+                        style={this.state.classEnjoyment ?
+                            { display: "block" } :
+                            { display: "none" }}
+                    >
+                        submitted!
+                        </span>
                 </div>
             </div>
         </div>;
@@ -172,7 +186,7 @@ class Ratings extends React.Component {
                 <div className="col-5">
                     <span className="ratingsName">Class Usefulness: </span>
                 </div>
-                <div className="col-4">
+                <div className="col-5">
                     <PercentageRating
                         type="useful"
                         color="#27FF9B"
@@ -185,6 +199,14 @@ class Ratings extends React.Component {
                         rating={Math.round(NotUseful * 100)}
                         onClick={() => this.userRating("classUsefulness", 0)}
                     />
+                    <span
+                        class="submitted"
+                        style={this.state.classUsefulness ?
+                            { display: "block", marginTop: "0"} :
+                            { display: "none"}}
+                    >
+                        submitted!
+                        </span>
                 </div>
             </div>
         </div>;

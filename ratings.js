@@ -197,7 +197,15 @@ var Ratings = function (_React$Component3) {
                             onClick: function onClick(rating) {
                                 return _this5.userRating("classEnjoyment", rating);
                             }
-                        })
+                        }),
+                        React.createElement(
+                            "span",
+                            {
+                                "class": "submitted",
+                                style: _this5.state.classEnjoyment ? { display: "block" } : { display: "none" }
+                            },
+                            "submitted!"
+                        )
                     )
                 )
             );
@@ -223,7 +231,7 @@ var Ratings = function (_React$Component3) {
                     ),
                     React.createElement(
                         "div",
-                        { className: "col-4" },
+                        { className: "col-5" },
                         React.createElement(PercentageRating, {
                             type: "useful",
                             color: "#27FF9B",
@@ -239,7 +247,15 @@ var Ratings = function (_React$Component3) {
                             onClick: function onClick() {
                                 return _this5.userRating("classUsefulness", 0);
                             }
-                        })
+                        }),
+                        React.createElement(
+                            "span",
+                            {
+                                "class": "submitted",
+                                style: _this5.state.classUsefulness ? { display: "block", marginTop: "0" } : { display: "none" }
+                            },
+                            "submitted!"
+                        )
                     )
                 )
             );
@@ -301,9 +317,15 @@ var Ratings = function (_React$Component3) {
         key: "userRating",
         value: function userRating(type, rating) {
             if (type === "classEnjoyment") {
-                this.setState({ userRating: rating });
+                if (this.state.classEnjoyment) {
+                    return;
+                }
+                this.setState({ classEnjoyment: true, userRating: rating });
             } else if (type === "classUsefulness") {
-                this.setState({ userRating: rating });
+                if (this.state.classUsefulness) {
+                    return;
+                }
+                this.setState({ classUsefulness: true, userRating: rating });
             }
             this.postRatings(type);
         }
