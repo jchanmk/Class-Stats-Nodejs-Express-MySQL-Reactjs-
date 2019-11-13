@@ -85,7 +85,7 @@ const Star = (props) => {
             height="2.0em"
             className="star"
         >
-            <g transform="scale(.95) translate(15,15)">
+            <g transform="scale(.85) translate(14,14)">
                 <path
                     stroke="rgba(0,0,0,.85)"
                     stroke-width="20"
@@ -157,7 +157,7 @@ class Ratings extends React.Component {
     renderClassEnjoyment = ({ ClassEnjoyment }) =>
         <div className="ratings">
             <div className="row">
-                <div className="col-5">
+                <div className="col-4">
                     <span className="ratingsName">Class Enjoyment: </span>
                 </div>
                 <div className="col-5">
@@ -183,7 +183,7 @@ class Ratings extends React.Component {
     renderClassUsefulness = ({ Useful, NotUseful }) =>
         <div className="ratings">
             <div className="row">
-                <div className="col-5">
+                <div className="col-4">
                     <span className="ratingsName">Class Usefulness: </span>
                 </div>
                 <div className="col-5">
@@ -216,6 +216,9 @@ class Ratings extends React.Component {
         return (
             // Later, when you add more ratings, to have it be 2 columns, simply put ratings in 2 
             // columns
+
+            // To do: 
+            // Change sizing of stats to smaller 
             <div className="row">
                 <div className="col-6">
                     {ratings.map(this.renderClassEnjoyment)}

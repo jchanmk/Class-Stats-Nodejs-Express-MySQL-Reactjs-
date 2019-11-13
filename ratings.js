@@ -148,7 +148,7 @@ var Star = function Star(props) {
         },
         React.createElement(
             "g",
-            { transform: "scale(.95) translate(15,15)" },
+            { transform: "scale(.85) translate(14,14)" },
             React.createElement("path", {
                 stroke: "rgba(0,0,0,.85)",
                 "stroke-width": "20",
@@ -181,7 +181,7 @@ var Ratings = function (_React$Component3) {
                     { className: "row" },
                     React.createElement(
                         "div",
-                        { className: "col-5" },
+                        { className: "col-4" },
                         React.createElement(
                             "span",
                             { className: "ratingsName" },
@@ -222,7 +222,7 @@ var Ratings = function (_React$Component3) {
                     { className: "row" },
                     React.createElement(
                         "div",
-                        { className: "col-5" },
+                        { className: "col-4" },
                         React.createElement(
                             "span",
                             { className: "ratingsName" },
@@ -340,6 +340,9 @@ var Ratings = function (_React$Component3) {
             return (
                 // Later, when you add more ratings, to have it be 2 columns, simply put ratings in 2 
                 // columns
+
+                // To do: 
+                // Change sizing of stats to smaller 
                 React.createElement(
                     "div",
                     { className: "row" },

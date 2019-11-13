@@ -7,10 +7,11 @@
 
 .ratingsName {
     margin-right: 10px;
+    font-size: 16px;
 }
 
 .star {
-    padding: 1px;
+    /* padding: px; */
 }
 
 .starHover:active {
@@ -24,15 +25,15 @@
 
 .ratings {
     margin-bottom: 30px;
-    font-size: 20px;
+    font-size: 16px;
 }
 
 .percentageButtons {
     position: relative;
-    padding: 2px;
+    padding: 1px;
     padding-left: 10px;
     padding-right: 10px;
-    width: 200px;
+    width: 165px;
     margin-bottom: 10px;
     display: inline-block;
     border: 1px solid #707070;
