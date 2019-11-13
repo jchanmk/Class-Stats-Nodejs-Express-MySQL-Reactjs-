@@ -35,7 +35,7 @@ router.get("/", function (req, res) {
     });
 })
 
-router.get("/findratings", (req, res) => {
+router.get("/findratings1", (req, res) => {
     console.log("in this API, react has made contact");
     const instructorID = req.query.instructorid;
     const courseID = req.query.courseid;
@@ -57,6 +57,29 @@ router.get("/findratings", (req, res) => {
     });
 });
 
+router.get("/findratings2", (req, res) => {
+    console.log("in this API, react has made contact");
+    const instructorID = req.query.instructorid;
+    const courseID = req.query.courseid;
+    const SELECT_ALL_RATINGS =
+        "SELECT Easy/Count AS Easy, Medium/Count AS Medium, Hard/Count AS Hard " +
+        "FROM Exam_Difficulty " +
+        "WHERE Exam_Difficulty.CourseID = ? ";
+
+    connection.query(SELECT_ALL_RATINGS, [courseID], (err, results) => {
+        // console.log(results)
+        if (err) {
+            return res.send(err)
+        } else {
+            return res.json({
+                data: results,
+                courseID: courseID
+            })
+        }
+    });
+});
+
+
 router.get('/addrating', (req, res) => {
     console.log(req.query.type);
     console.log(req.query.rating);
@@ -65,49 +88,75 @@ router.get('/addrating', (req, res) => {
     const type = req.query.type;
     const rating = req.query.rating;
     if (type === "classEnjoyment") {
-        const INSERT_INTO_ClASS_ENJOYMENT =
-            "INSERT INTO Class_Enjoyment (CourseID, Rating, StudentID)" +
-            "VALUES (?, ?, '1234')";
-        connection.query(INSERT_INTO_ClASS_ENJOYMENT, [courseID, rating], (err, results) => {
-            if (err) {
-                return res.send(err)
-            } else {
-                return res.send("succesfully added rating");
-            }
-        });
+        return res.send(addClassEnjoyment(courseID, rating));
     } else if (type === "classUsefulness") {
-        // code to insert into Class_Usefulness based on 1 or 0
-        if (rating == 1) {
-            const UPDATE_CLASS_USEFULNESS =
-                "UPDATE Class_Usefulness " +
-                "SET Useful = Useful + 1, Count = Count + 1 " +
-                "WHERE CourseID = ? ";
-            connection.query(UPDATE_CLASS_USEFULNESS, [courseID], (err, results) => {
-                if (err) {
-                    return res.send(err)
-                } else {
-                    return res.send("succesfully added rating");
-                }
-            });
-        } else {
-            const UPDATE_CLASS_USEFULNESS =
-                "UPDATE Class_Usefulness " +
-                "SET NotUseful = NotUseful + 1, Count = Count + 1 " +
-                "WHERE CourseID = ? ";
-            connection.query(UPDATE_CLASS_USEFULNESS, [courseID], (err, results) => {
-                if (err) {
-                    return res.send(err)
-                } else {
-                    return res.send("succesfully added rating");
-                }
-            });
-        }
+        return res.send(addClassUsefulness(courseID, rating));
+    } else if (type === "examDifficulty") {
+        return res.send(addExamDifficulty(courseID, rating));
     }
 
 })
 
-function test(){
-    console.log("yoyoyoyooy")
+function addClassEnjoyment(courseID, rating) {
+    const INSERT_INTO_ClASS_ENJOYMENT =
+        "INSERT INTO Class_Enjoyment (CourseID, Rating, StudentID)" +
+        "VALUES (?, ?, '1234')";
+    connection.query(INSERT_INTO_ClASS_ENJOYMENT, [courseID, rating], (err, results) => {
+        if (err) {
+            return err
+        } else {
+            return "succesfully added rating";
+        }
+    });
+}
+
+function addClassUsefulness(courseID, rating) {
+    var UPDATE_CLASS_USEFULNESS = "";
+    if (rating == 1) {
+        UPDATE_CLASS_USEFULNESS =
+            "UPDATE Class_Usefulness " +
+            "SET Useful = Useful + 1, Count = Count + 1 " +
+            "WHERE CourseID = ? ";
+    } else {
+        UPDATE_CLASS_USEFULNESS =
+            "UPDATE Class_Usefulness " +
+            "SET NotUseful = NotUseful + 1, Count = Count + 1 " +
+            "WHERE CourseID = ? ";
+    }
+    connection.query(UPDATE_CLASS_USEFULNESS, [courseID], (err, results) => {
+        if (err) {
+            return err
+        } else {
+            return "succesfully added rating";
+        }
+    });
+}
+
+function addExamDifficulty(courseID, rating) {
+    var UPDATE_EXAM_DIFFICULTY = "";
+    if (rating == 1) {
+        UPDATE_EXAM_DIFFICULTY =
+            "UPDATE Exam_Difficulty " +
+            "SET Easy = Easy + 1, Count = Count + 1 " +
+            "WHERE CourseID = ? ";
+    } else if (rating == 0){
+        UPDATE_EXAM_DIFFICULTY =
+            "UPDATE Exam_Difficulty " +
+            "SET Medium = Medium + 1, Count = Count + 1 " +
+            "WHERE CourseID = ? ";
+    } else if (rating == -1){
+        UPDATE_EXAM_DIFFICULTY =
+            "UPDATE Exam_Difficulty " +
+            "SET Hard = Hard + 1, Count = Count + 1 " +
+            "WHERE CourseID = ? ";
+    }
+    connection.query(UPDATE_EXAM_DIFFICULTY, [courseID], (err, results) => {
+        if (err) {
+            return err
+        } else {
+            return "succesfully added rating";
+        }
+    });
 }
 
 module.exports = router;

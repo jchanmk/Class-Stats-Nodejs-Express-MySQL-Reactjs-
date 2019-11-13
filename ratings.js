@@ -261,11 +261,72 @@ var Ratings = function (_React$Component3) {
             );
         };
 
+        _this5.renderExamDifficulty = function (_ref3) {
+            var Easy = _ref3.Easy,
+                Medium = _ref3.Medium,
+                Hard = _ref3.Hard;
+            return React.createElement(
+                "div",
+                { className: "ratings" },
+                React.createElement(
+                    "div",
+                    { className: "row" },
+                    React.createElement(
+                        "div",
+                        { className: "col-4" },
+                        React.createElement(
+                            "span",
+                            { className: "ratingsName" },
+                            "Exam/Midterm Difficulty: "
+                        )
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "col-5" },
+                        React.createElement(PercentageRating, {
+                            type: "easy",
+                            color: "#27FF9B",
+                            rating: Easy != null ? Math.round(Easy * 100) : 0,
+                            onClick: function onClick() {
+                                return _this5.userRating("examDifficulty", 1);
+                            }
+                        }),
+                        React.createElement(PercentageRating, {
+                            type: "medium",
+                            color: "#27B4FF",
+                            rating: Medium != null ? Math.round(Medium * 100) : 0,
+                            onClick: function onClick() {
+                                return _this5.userRating("examDifficulty", 0);
+                            }
+                        }),
+                        React.createElement(PercentageRating, {
+                            type: "hard",
+                            color: "#DB6E6E",
+                            rating: Hard != null ? Math.round(Hard * 100) : 0,
+                            onClick: function onClick() {
+                                return _this5.userRating("examDifficulty", -1);
+                            }
+                        }),
+                        React.createElement(
+                            "span",
+                            {
+                                "class": "submitted",
+                                style: _this5.state.examDifficulty ? { display: "block", marginTop: "0" } : { display: "none" }
+                            },
+                            "submitted!"
+                        )
+                    )
+                )
+            );
+        };
+
         _this5.state = {
             courseID: null,
             ratings: [],
+            ratings2: [],
             classEnjoyment: null,
             classUsefulness: null,
+            examDifficulty: null,
             userRating: null
         };
         return _this5;
@@ -285,11 +346,19 @@ var Ratings = function (_React$Component3) {
             var _this6 = this;
 
             var search = window.location.search;
-            fetch('http://localhost:3000/course/findratings' + search).then(function (response) {
+            fetch('http://localhost:3000/course/findratings1' + search).then(function (response) {
                 return response.json();
             }).then(function (response) {
                 return _this6.setState({ courseID: response.courseID, ratings: response.data }, function () {
                     return console.log("ratings fetched...", _this6.state.ratings);
+                });
+            });
+
+            fetch('http://localhost:3000/course/findratings2' + search).then(function (response) {
+                return response.json();
+            }).then(function (response) {
+                return _this6.setState({ ratings2: response.data }, function () {
+                    return console.log("ratings fetched...", _this6.state.ratings2);
                 });
             });
         }
@@ -326,6 +395,11 @@ var Ratings = function (_React$Component3) {
                     return;
                 }
                 this.setState({ classUsefulness: true, userRating: rating });
+            } else if (type === "examDifficulty") {
+                if (this.state.examDifficulty) {
+                    return;
+                }
+                this.setState({ examDifficulty: true, userRating: rating });
             }
             this.postRatings(type);
         }
@@ -337,21 +411,21 @@ var Ratings = function (_React$Component3) {
         key: "render",
         value: function render() {
             var ratings = this.state.ratings;
-            return (
-                // Later, when you add more ratings, to have it be 2 columns, simply put ratings in 2 
-                // columns
-
-                // To do: 
-                // Change sizing of stats to smaller 
+            var ratings2 = this.state.ratings2;
+            return React.createElement(
+                "div",
+                { className: "row" },
                 React.createElement(
                     "div",
-                    { className: "row" },
-                    React.createElement(
-                        "div",
-                        { className: "col-6" },
-                        ratings.map(this.renderClassEnjoyment),
-                        ratings.map(this.renderClassUsefulness)
-                    )
+                    { className: "col-6 pl-5" },
+                    ratings.map(this.renderClassEnjoyment),
+                    ratings.map(this.renderClassUsefulness),
+                    ratings2.map(this.renderExamDifficulty)
+                ),
+                React.createElement(
+                    "div",
+                    { className: "col-6" },
+                    ratings.map(this.renderClassEnjoyment)
                 )
             );
         }
@@ -362,3 +436,6 @@ var Ratings = function (_React$Component3) {
 
 var domContainer = document.querySelector('#like_button_container');
 ReactDOM.render(React.createElement(Ratings, null), domContainer);
+
+// To do:
+// Add other ratings, change databases if needed, add more tables for other ratings

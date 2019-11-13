@@ -107,8 +107,10 @@ class Ratings extends React.Component {
         this.state = {
             courseID: null,
             ratings: [],
+            ratings2: [],
             classEnjoyment: null,
             classUsefulness: null,
+            examDifficulty: null,
             userRating: null
         };
     }
@@ -120,10 +122,15 @@ class Ratings extends React.Component {
     // Retrieves data from database, upon loading the webpage 
     getRatings() {
         let search = window.location.search;
-        fetch('http://localhost:3000/course/findratings' + search)
+        fetch('http://localhost:3000/course/findratings1' + search)
             .then(response => response.json())
             .then(response => this.setState({ courseID: response.courseID, ratings: response.data }, () => console.log("ratings fetched...",
                 this.state.ratings)));
+
+        fetch('http://localhost:3000/course/findratings2' + search)
+            .then(response => response.json())
+            .then(response => this.setState({ ratings2: response.data }, () => console.log("ratings fetched...",
+                this.state.ratings2)));
     }
 
     // This sends ratings to the server
@@ -139,15 +146,20 @@ class Ratings extends React.Component {
     }
     userRating(type, rating) {
         if (type === "classEnjoyment") {
-            if(this.state.classEnjoyment){
+            if (this.state.classEnjoyment) {
                 return;
             }
             this.setState({ classEnjoyment: true, userRating: rating })
         } else if (type === "classUsefulness") {
-            if(this.state.classUsefulness){
+            if (this.state.classUsefulness) {
                 return;
             }
             this.setState({ classUsefulness: true, userRating: rating })
+        } else if (type === "examDifficulty") {
+            if (this.state.examDifficulty) {
+                return;
+            }
+            this.setState({ examDifficulty: true, userRating: rating })
         }
         this.postRatings(type);
     }
@@ -179,7 +191,6 @@ class Ratings extends React.Component {
             </div>
         </div>;
 
-
     renderClassUsefulness = ({ Useful, NotUseful }) =>
         <div className="ratings">
             <div className="row">
@@ -202,8 +213,8 @@ class Ratings extends React.Component {
                     <span
                         class="submitted"
                         style={this.state.classUsefulness ?
-                            { display: "block", marginTop: "0"} :
-                            { display: "none"}}
+                            { display: "block", marginTop: "0" } :
+                            { display: "none" }}
                     >
                         submitted!
                         </span>
@@ -211,18 +222,55 @@ class Ratings extends React.Component {
             </div>
         </div>;
 
+    renderExamDifficulty = ({ Easy, Medium, Hard }) =>
+        <div className="ratings">
+            <div className="row">
+                <div className="col-4">
+                    <span className="ratingsName">Exam/Midterm Difficulty: </span>
+                </div>
+                <div className="col-5">
+                    <PercentageRating
+                        type="easy"
+                        color="#27FF9B"
+                        rating={ Easy != null ? Math.round(Easy * 100) : 0}
+                        onClick={() => this.userRating("examDifficulty", 1)}
+                    />
+                    <PercentageRating
+                        type="medium"
+                        color="#27B4FF"
+                        rating={ Medium != null ? Math.round(Medium * 100) : 0}
+                        onClick={() => this.userRating("examDifficulty", 0)}
+                    />
+                     <PercentageRating
+                        type="hard"
+                        color="#DB6E6E"
+                        rating={ Hard != null ? Math.round(Hard * 100) : 0}
+                        onClick={() => this.userRating("examDifficulty", -1)}
+                    />
+                    <span
+                        class="submitted"
+                        style={this.state.examDifficulty ?
+                            { display: "block", marginTop: "0" } :
+                            { display: "none" }}
+                    >
+                        submitted!
+                </span>
+                </div>
+            </div>
+        </div>;
+
     render() {
         const ratings = this.state.ratings;
+        const ratings2 = this.state.ratings2;
         return (
-            // Later, when you add more ratings, to have it be 2 columns, simply put ratings in 2 
-            // columns
-
-            // To do: 
-            // Change sizing of stats to smaller 
             <div className="row">
-                <div className="col-6">
+                <div className="col-6 pl-5">
                     {ratings.map(this.renderClassEnjoyment)}
                     {ratings.map(this.renderClassUsefulness)}
+                    {ratings2.map(this.renderExamDifficulty)}
+                </div>
+                <div className="col-6">
+                    {ratings.map(this.renderClassEnjoyment)}
                 </div>
             </div>
         );
@@ -231,3 +279,6 @@ class Ratings extends React.Component {
 
 let domContainer = document.querySelector('#like_button_container');
 ReactDOM.render(<Ratings />, domContainer);
+
+// To do:
+// Add other ratings, change databases if needed, add more tables for other ratings
