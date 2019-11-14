@@ -353,24 +353,21 @@ var Ratings = function (_React$Component) {
                 return _this2.setState({ courseID: response.courseID, ratings: response.data });
             });
 
-            fetch('http://localhost:3000/course/findratings2' + search).then(function (response) {
-                return response.json();
-            }).then(function (response) {
-                return _this2.setState({ ratings2: response.data });
+            fetch('http://localhost:3000/course/findratings2' + search).then(function (response2) {
+                return response2.json();
+            }).then(function (response2) {
+                return _this2.setState({ ratings2: response2.data });
             });
 
-            fetch('http://localhost:3000/course/findratings3' + search).then(function (response) {
-                return response.json();
-            }).then(function (response) {
-                return _this2.setState({ ratings3: response.data }, function () {
-                    return console.log("ratings fetched...", _this2.state.ratings3);
-                });
+            fetch('http://localhost:3000/course/findratings3' + search).then(function (response3) {
+                return response3.json();
+            }).then(function (response3) {
+                return _this2.setState({ ratings3: response3.data });
             });
         }
 
         // This sends ratings to the server
-        // consider changing rating submission to one parameter instead of one for each
-        // then differentiate between ratings based on type in server code
+        // figure out a way to do without setTimeout, maybe do a promise 
 
     }, {
         key: "postRatings",
@@ -382,7 +379,11 @@ var Ratings = function (_React$Component) {
                     courseID = _state.courseID,
                     userRating = _state.userRating;
 
-                fetch("http://localhost:3000/course/addrating?courseid=" + courseID + "&type=" + type + "&rating=" + userRating).then(_this3.getRatings()).catch(function (err) {
+                fetch("http://localhost:3000/course/addrating?courseid=" + courseID + "&type=" + type + "&rating=" + userRating).then(function (response) {
+                    return response;
+                }).then(function (response) {
+                    return _this3.getRatings();
+                }).catch(function (err) {
                     return console.log(err);
                 });
             }, 500);

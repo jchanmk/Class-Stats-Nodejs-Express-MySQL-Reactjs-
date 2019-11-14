@@ -32,23 +32,22 @@ class Ratings extends React.Component {
             .then(response => this.setState({ courseID: response.courseID, ratings: response.data }));
 
         fetch('http://localhost:3000/course/findratings2' + search)
-            .then(response => response.json())
-            .then(response => this.setState({ ratings2: response.data }));
+            .then(response2 => response2.json())
+            .then(response2 => this.setState({ ratings2: response2.data }));
 
         fetch('http://localhost:3000/course/findratings3' + search)
-            .then(response => response.json())
-            .then(response => this.setState({ ratings3: response.data }, () => console.log("ratings fetched...",
-                this.state.ratings3)));
+            .then(response3 => response3.json())
+            .then(response3 => this.setState({ ratings3: response3.data }));
     }
 
     // This sends ratings to the server
-    // consider changing rating submission to one parameter instead of one for each
-    // then differentiate between ratings based on type in server code
+    // figure out a way to do without setTimeout, maybe do a promise 
     postRatings(type) {
         setTimeout(() => {
             const { courseID, userRating } = this.state;
             fetch(`http://localhost:3000/course/addrating?courseid=${courseID}&type=${type}&rating=${userRating}`)
-                .then(this.getRatings())
+                .then( response => response)
+                .then( response => this.getRatings())
                 .catch(err => console.log(err))
         }, 500)
     }
