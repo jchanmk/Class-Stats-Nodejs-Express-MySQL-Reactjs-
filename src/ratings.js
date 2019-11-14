@@ -1,105 +1,6 @@
 'use strict';
-
-class PercentageRating extends React.Component {
-    constructor(props) {
-        // console.log(props)
-        super(props);
-        this.state = {
-            isHover: false
-        };
-    }
-    componentWillReceiveProps(props) {
-        this.setState({ rating: props.rating });
-    }
-    mouseEnter = (num) => {
-        this.setState({ index: num })
-    }
-    mouseLeave = () => {
-        this.setState({ index: -1 })
-    }
-    render() {
-        return (
-            <button className="percentageButtons align-middle"
-                style={!this.state.isHover ?
-                    { background: `linear-gradient(to right, ${this.props.color} ${this.props.rating}%, white 0%)` }
-                    : { background: "none" }}
-                onMouseEnter={() => this.setState({ isHover: true })}
-                onMouseLeave={() => this.setState({ isHover: false })}
-                onClick={this.props.onClick}
-            >
-                <span className="percentageName" style={!this.state.isHover ? { display: "block" } : { display: "none" }}>
-                    {this.props.type}
-                </span>
-                <span className="percentage" style={!this.state.isHover ? { display: "block" } : { display: "none" }}>
-                    {this.props.rating}%
-                </span>
-                <span className="submit" style={this.state.isHover ? { display: "block" } : { display: "none" }}>
-                    submit<i class="fas fa-arrow-right" style={{ position: "absolute", right: "10px", bottom: "6px" }}></i>
-                </span>
-            </button>
-        )
-    }
-}
-
-class StarList extends React.Component {
-    constructor(props) {
-        // console.log(props)
-        super(props);
-        this.state = {
-            index: -1,
-            rating: props.rating
-        };
-    }
-    componentWillReceiveProps(props) {
-        this.setState({ rating: props.rating });
-    }
-    mouseEnter = (num) => {
-        this.setState({ index: num })
-    }
-    mouseLeave = () => {
-        this.setState({ index: -1 })
-        // console.log(this.state.rating);
-    }
-    render() {
-        return (
-            [1, 2, 3, 4, 5].map(num => (
-                <Star
-                    onMouseEnter={() => this.mouseEnter(num)}
-                    onMouseLeave={() => this.mouseLeave()}
-                    onClick={() => this.props.onClick(num)}
-                    isHover={num <= this.state.index}
-                    isFull={num <= this.state.rating && this.state.index == -1}
-                />
-            ))
-        )
-    }
-}
-
-const Star = (props) => {
-    return (
-        <svg
-            version="1.1"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlnsXlink="http://www.w3.org/1999/xlink"
-            viewBox="0 0 512 512"
-            height="2.0em"
-            className="star"
-        >
-            <g transform="scale(.85) translate(14,14)">
-                <path
-                    stroke="rgba(0,0,0,.85)"
-                    stroke-width="20"
-                    fill={props.isFull ? 'gold' : 'transparent'}
-                    onMouseEnter={props.onMouseEnter}
-                    onMouseLeave={props.onMouseLeave}
-                    onClick={props.onClick}
-                    className={props.isHover ? 'starHover' : null}
-                    d="M492.867,181.444l-149.825-21.785L276.014,23.861c-8.187-16.59-31.844-16.589-40.031,0l-67.026,135.799L19.133,181.445c-18.306,2.662-25.615,25.158-12.369,38.071l108.408,105.682L89.592,474.44c-3.125,18.232,16.012,32.136,32.386,23.528l132.475-70.452l134.025,70.451c17.914,8.607,37.051-5.296,33.926-23.528l-25.578-149.241l108.409-105.685C518.482,206.601,511.173,184.105,492.867,181.444z"
-                />
-            </g>
-        </svg>
-    )
-}
+import PercentageRating from "./PercentageRating.js";
+import StarList from "./StarList.js"
 
 class Ratings extends React.Component {
     constructor() {
@@ -108,9 +9,12 @@ class Ratings extends React.Component {
             courseID: null,
             ratings: [],
             ratings2: [],
+            ratings3: [],
             classEnjoyment: null,
             classUsefulness: null,
             examDifficulty: null,
+            attendanceAttn: null,
+            profRating: null,
             userRating: null
         };
     }
@@ -131,6 +35,11 @@ class Ratings extends React.Component {
             .then(response => response.json())
             .then(response => this.setState({ ratings2: response.data }, () => console.log("ratings fetched...",
                 this.state.ratings2)));
+
+        fetch('http://localhost:3000/course/findratings3' + search)
+            .then(response => response.json())
+            .then(response => this.setState({ ratings3: response.data }, () => console.log("ratings fetched...",
+                this.state.ratings3)));
     }
 
     // This sends ratings to the server
@@ -160,6 +69,11 @@ class Ratings extends React.Component {
                 return;
             }
             this.setState({ examDifficulty: true, userRating: rating })
+        } else if (type === "attendanceAttn") {
+            if (this.state.attendanceAttn) {
+                return;
+            }
+            this.setState({ attendanceAttn: true, userRating: rating })
         }
         this.postRatings(type);
     }
@@ -191,6 +105,31 @@ class Ratings extends React.Component {
             </div>
         </div>;
 
+    renderProfRating = ({ ProfRating }) =>
+        <div className="ratings">
+            <div className="row">
+                <div className="col-4">
+                    <span className="ratingsName">Professor Rating: </span>
+                </div>
+                <div className="col-5">
+                    <StarList
+                        key={ProfRating}
+                        rating={Math.round(ProfRating)}
+                        onClick={(rating) => this.userRating("classEnjoyment", rating)}
+                    />
+                    {/* {(ClassEnjoyment)} */}
+                    <span
+                        class="submitted"
+                        style={this.state.profRating ?
+                            { display: "block" } :
+                            { display: "none" }}
+                    >
+                        submitted!
+                        </span>
+                </div>
+            </div>
+        </div>;
+
     renderClassUsefulness = ({ Useful, NotUseful }) =>
         <div className="ratings">
             <div className="row">
@@ -201,13 +140,13 @@ class Ratings extends React.Component {
                     <PercentageRating
                         type="useful"
                         color="#27FF9B"
-                        rating={Math.round(Useful * 100)}
+                        rating={Useful != null ? Math.round(Useful * 100) : 0}
                         onClick={() => this.userRating("classUsefulness", 1)}
                     />
                     <PercentageRating
                         type="not useful"
                         color="#DB6E6E"
-                        rating={Math.round(NotUseful * 100)}
+                        rating={NotUseful != null ? Math.round(NotUseful * 100) : 0}
                         onClick={() => this.userRating("classUsefulness", 0)}
                     />
                     <span
@@ -232,19 +171,19 @@ class Ratings extends React.Component {
                     <PercentageRating
                         type="easy"
                         color="#27FF9B"
-                        rating={ Easy != null ? Math.round(Easy * 100) : 0}
+                        rating={Easy != null ? Math.round(Easy * 100) : 0}
                         onClick={() => this.userRating("examDifficulty", 1)}
                     />
                     <PercentageRating
                         type="medium"
                         color="#27B4FF"
-                        rating={ Medium != null ? Math.round(Medium * 100) : 0}
+                        rating={Medium != null ? Math.round(Medium * 100) : 0}
                         onClick={() => this.userRating("examDifficulty", 0)}
                     />
-                     <PercentageRating
+                    <PercentageRating
                         type="hard"
                         color="#DB6E6E"
-                        rating={ Hard != null ? Math.round(Hard * 100) : 0}
+                        rating={Hard != null ? Math.round(Hard * 100) : 0}
                         onClick={() => this.userRating("examDifficulty", -1)}
                     />
                     <span
@@ -259,18 +198,52 @@ class Ratings extends React.Component {
             </div>
         </div>;
 
+    renderAttendanceAttn = ({ Inattentive, Attentive }) =>
+        <div className="ratings">
+            <div className="row">
+                <div className="col-4">
+                    <span className="ratingsName">Professors Attention to Attendance/ Tardies: </span>
+                </div>
+                <div className="col-5">
+                    <PercentageRating
+                        type="inattentive"
+                        color="#27FF9B"
+                        rating={Inattentive != null ? Math.round(Inattentive * 100) : 0}
+                        onClick={() => this.userRating("attendanceAttn", 1)}
+                    />
+                    <PercentageRating
+                        type="attentive"
+                        color="#DB6E6E"
+                        rating={Attentive != null ? Math.round(Attentive * 100) : 0}
+                        onClick={() => this.userRating("attendanceAttn", 0)}
+                    />
+                    <span
+                        class="submitted"
+                        style={this.state.attendanceAttn ?
+                            { display: "block", marginTop: "0" } :
+                            { display: "none" }}
+                    >
+                        submitted!
+                        </span>
+                </div>
+            </div>
+        </div>;
+
     render() {
         const ratings = this.state.ratings;
         const ratings2 = this.state.ratings2;
+        const ratings3 = this.state.ratings3;
+
         return (
             <div className="row">
                 <div className="col-6 pl-5">
                     {ratings.map(this.renderClassEnjoyment)}
                     {ratings.map(this.renderClassUsefulness)}
                     {ratings2.map(this.renderExamDifficulty)}
+                    {ratings2.map(this.renderAttendanceAttn)}
                 </div>
                 <div className="col-6">
-                    {ratings.map(this.renderClassEnjoyment)}
+                    {ratings3.map(this.renderProfRating)}
                 </div>
             </div>
         );

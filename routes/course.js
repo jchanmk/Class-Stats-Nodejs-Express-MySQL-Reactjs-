@@ -36,11 +36,13 @@ router.get("/", function (req, res) {
 })
 
 router.get("/findratings1", (req, res) => {
-    console.log("in this API, react has made contact");
+    // console.log("in this API, react has made contact");
     const instructorID = req.query.instructorid;
     const courseID = req.query.courseid;
     const SELECT_ALL_RATINGS =
-        "SELECT AVG(Rating) AS ClassEnjoyment, Useful/Count AS Useful, NotUseful/Count AS NotUseful " +
+        "SELECT Rating/Class_Enjoyment.Count AS ClassEnjoyment, " +
+        "Useful/Class_Usefulness.Count AS Useful, " +
+        "NotUseful/Class_Usefulness.Count AS NotUseful " +
         "FROM Class_Enjoyment, Class_Usefulness " +
         "WHERE Class_Enjoyment.CourseID = Class_Usefulness.CourseID AND Class_Usefulness.CourseID = ? ";
 
@@ -58,13 +60,40 @@ router.get("/findratings1", (req, res) => {
 });
 
 router.get("/findratings2", (req, res) => {
+    // console.log("in this API, react has made contact");
+    const instructorID = req.query.instructorid;
+    const courseID = req.query.courseid;
+    const SELECT_ALL_RATINGS =
+        "SELECT Easy/Exam_Difficulty.Count AS Easy, " +
+        "Medium/Exam_Difficulty.Count AS Medium, " +
+        "Hard/Exam_Difficulty.Count AS Hard, " +
+        "Inattentive/Attendance_Attn.Count AS Inattentive, " +
+        "Attentive/Attendance_Attn.Count AS Attentive " +
+        "FROM Exam_Difficulty, Attendance_Attn " +
+        "WHERE Exam_Difficulty.CourseID = Attendance_Attn.CourseID " + 
+        "AND Attendance_Attn.CourseID = ?";
+
+    connection.query(SELECT_ALL_RATINGS, [courseID], (err, results) => {
+        // console.log(results)
+        if (err) {
+            return res.send(err)
+        } else {
+            return res.json({
+                data: results,
+                courseID: courseID
+            })
+        }
+    });
+});
+
+router.get("/findratings3", (req, res) => {
     console.log("in this API, react has made contact");
     const instructorID = req.query.instructorid;
     const courseID = req.query.courseid;
     const SELECT_ALL_RATINGS =
-        "SELECT Easy/Count AS Easy, Medium/Count AS Medium, Hard/Count AS Hard " +
-        "FROM Exam_Difficulty " +
-        "WHERE Exam_Difficulty.CourseID = ? ";
+        "SELECT Rating/Count AS ProfRating " + 
+        "FROM Prof_Rating " + 
+        "WHERE CourseID = ? ";
 
     connection.query(SELECT_ALL_RATINGS, [courseID], (err, results) => {
         // console.log(results)
@@ -93,15 +122,18 @@ router.get('/addrating', (req, res) => {
         return res.send(addClassUsefulness(courseID, rating));
     } else if (type === "examDifficulty") {
         return res.send(addExamDifficulty(courseID, rating));
-    }
+    } else if (type === "attendanceAttn") {
+        return res.send(addAttendanceAttn(courseID, rating));
+    } 
 
 })
 
 function addClassEnjoyment(courseID, rating) {
     const INSERT_INTO_ClASS_ENJOYMENT =
-        "INSERT INTO Class_Enjoyment (CourseID, Rating, StudentID)" +
-        "VALUES (?, ?, '1234')";
-    connection.query(INSERT_INTO_ClASS_ENJOYMENT, [courseID, rating], (err, results) => {
+        "UPDATE Class_Enjoyment " + 
+        "SET Rating = Rating + ?, Count = Count + 1 " +
+        "WHERE CourseID = ? "
+    connection.query(INSERT_INTO_ClASS_ENJOYMENT, [rating, courseID], (err, results) => {
         if (err) {
             return err
         } else {
@@ -139,18 +171,40 @@ function addExamDifficulty(courseID, rating) {
             "UPDATE Exam_Difficulty " +
             "SET Easy = Easy + 1, Count = Count + 1 " +
             "WHERE CourseID = ? ";
-    } else if (rating == 0){
+    } else if (rating == 0) {
         UPDATE_EXAM_DIFFICULTY =
             "UPDATE Exam_Difficulty " +
             "SET Medium = Medium + 1, Count = Count + 1 " +
             "WHERE CourseID = ? ";
-    } else if (rating == -1){
+    } else if (rating == -1) {
         UPDATE_EXAM_DIFFICULTY =
             "UPDATE Exam_Difficulty " +
             "SET Hard = Hard + 1, Count = Count + 1 " +
             "WHERE CourseID = ? ";
     }
     connection.query(UPDATE_EXAM_DIFFICULTY, [courseID], (err, results) => {
+        if (err) {
+            return err
+        } else {
+            return "succesfully added rating";
+        }
+    });
+}
+
+function addAttendanceAttn(courseID, rating) {
+    var UPDATE_ATTENDANCE_ATTN = "";
+    if (rating == 1) {
+        UPDATE_ATTENDANCE_ATTN =
+            "UPDATE Attendance_Attn " +
+            "SET Inattentive = Inattentive + 1, Count = Count + 1 " +
+            "WHERE CourseID = ? ";
+    } else {
+        UPDATE_ATTENDANCE_ATTN =
+            "UPDATE Attendance_Attn " +
+            "SET Attentive = Attentive + 1, Count = Count + 1 " +
+            "WHERE CourseID = ? ";
+    }
+    connection.query(UPDATE_ATTENDANCE_ATTN, [courseID], (err, results) => {
         if (err) {
             return err
         } else {
