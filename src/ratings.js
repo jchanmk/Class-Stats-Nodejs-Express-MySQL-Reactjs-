@@ -13,6 +13,7 @@ class Ratings extends React.Component {
             classEnjoyment: null,
             classUsefulness: null,
             examDifficulty: null,
+            classDifficulty: null,
             attendanceAttn: null,
             profRating: null,
             userRating: null
@@ -28,13 +29,11 @@ class Ratings extends React.Component {
         let search = window.location.search;
         fetch('http://localhost:3000/course/findratings1' + search)
             .then(response => response.json())
-            .then(response => this.setState({ courseID: response.courseID, ratings: response.data }, () => console.log("ratings fetched...",
-                this.state.ratings)));
+            .then(response => this.setState({ courseID: response.courseID, ratings: response.data }));
 
         fetch('http://localhost:3000/course/findratings2' + search)
             .then(response => response.json())
-            .then(response => this.setState({ ratings2: response.data }, () => console.log("ratings fetched...",
-                this.state.ratings2)));
+            .then(response => this.setState({ ratings2: response.data }));
 
         fetch('http://localhost:3000/course/findratings3' + search)
             .then(response => response.json())
@@ -74,6 +73,16 @@ class Ratings extends React.Component {
                 return;
             }
             this.setState({ attendanceAttn: true, userRating: rating })
+        } else if (type === "profRating") {
+            if (this.state.profRating) {
+                return;
+            }
+            this.setState({ profRating: true, userRating: rating })
+        } else if (type === "classDifficulty") {
+            if (this.state.classDifficulty) {
+                return;
+            }
+            this.setState({ classDifficulty: true, userRating: rating })
         }
         this.postRatings(type);
     }
@@ -115,9 +124,8 @@ class Ratings extends React.Component {
                     <StarList
                         key={ProfRating}
                         rating={Math.round(ProfRating)}
-                        onClick={(rating) => this.userRating("classEnjoyment", rating)}
+                        onClick={(rating) => this.userRating("profRating", rating)}
                     />
-                    {/* {(ClassEnjoyment)} */}
                     <span
                         class="submitted"
                         style={this.state.profRating ?
@@ -229,6 +237,43 @@ class Ratings extends React.Component {
             </div>
         </div>;
 
+    renderClassDifficulty = ({ Easy, Medium, Hard }) =>
+        <div className="ratings">
+            <div className="row">
+                <div className="col-4">
+                    <span className="ratingsName">Class Difficulty: </span>
+                </div>
+                <div className="col-5">
+                    <PercentageRating
+                        type="easy"
+                        color="#27FF9B"
+                        rating={Easy != null ? Math.round(Easy * 100) : 0}
+                        onClick={() => this.userRating("classDifficulty", 1)}
+                    />
+                    <PercentageRating
+                        type="medium"
+                        color="#27B4FF"
+                        rating={Medium != null ? Math.round(Medium * 100) : 0}
+                        onClick={() => this.userRating("classDifficulty", 0)}
+                    />
+                    <PercentageRating
+                        type="hard"
+                        color="#DB6E6E"
+                        rating={Hard != null ? Math.round(Hard * 100) : 0}
+                        onClick={() => this.userRating("classDifficulty", -1)}
+                    />
+                    <span
+                        class="submitted"
+                        style={this.state.classDifficulty ?
+                            { display: "block", marginTop: "0" } :
+                            { display: "none" }}
+                    >
+                        submitted!
+        </span>
+                </div>
+            </div>
+        </div>;
+
     render() {
         const ratings = this.state.ratings;
         const ratings2 = this.state.ratings2;
@@ -244,6 +289,7 @@ class Ratings extends React.Component {
                 </div>
                 <div className="col-6">
                     {ratings3.map(this.renderProfRating)}
+                    {ratings3.map(this.renderClassDifficulty)}
                 </div>
             </div>
         );

@@ -91,9 +91,13 @@ router.get("/findratings3", (req, res) => {
     const instructorID = req.query.instructorid;
     const courseID = req.query.courseid;
     const SELECT_ALL_RATINGS =
-        "SELECT Rating/Count AS ProfRating " + 
-        "FROM Prof_Rating " + 
-        "WHERE CourseID = ? ";
+        "SELECT Rating/Prof_Rating.Count AS ProfRating, " + 
+        "Easy/Class_Difficulty.Count AS Easy, " + 
+        "Medium/Class_Difficulty.Count AS Medium, " +
+        "Hard/Class_Difficulty.Count AS Hard " + 
+        "FROM Prof_Rating, Class_Difficulty " + 
+        "WHERE Prof_Rating.CourseID = Class_Difficulty.CourseID " + 
+        "AND Prof_Rating.CourseID = ?";
 
     connection.query(SELECT_ALL_RATINGS, [courseID], (err, results) => {
         // console.log(results)
@@ -124,6 +128,10 @@ router.get('/addrating', (req, res) => {
         return res.send(addExamDifficulty(courseID, rating));
     } else if (type === "attendanceAttn") {
         return res.send(addAttendanceAttn(courseID, rating));
+    } else if (type === "profRating") {
+        return res.send(addProfRating(courseID, rating));
+    } else if (type === "classDifficulty") {
+        return res.send(addClassDifficulty(courseID, rating));
     } 
 
 })
@@ -131,6 +139,20 @@ router.get('/addrating', (req, res) => {
 function addClassEnjoyment(courseID, rating) {
     const INSERT_INTO_ClASS_ENJOYMENT =
         "UPDATE Class_Enjoyment " + 
+        "SET Rating = Rating + ?, Count = Count + 1 " +
+        "WHERE CourseID = ? "
+    connection.query(INSERT_INTO_ClASS_ENJOYMENT, [rating, courseID], (err, results) => {
+        if (err) {
+            return err
+        } else {
+            return "succesfully added rating";
+        }
+    });
+}
+
+function addProfRating(courseID, rating) {
+    const INSERT_INTO_ClASS_ENJOYMENT =
+        "UPDATE Prof_Rating " + 
         "SET Rating = Rating + ?, Count = Count + 1 " +
         "WHERE CourseID = ? "
     connection.query(INSERT_INTO_ClASS_ENJOYMENT, [rating, courseID], (err, results) => {
@@ -183,6 +205,33 @@ function addExamDifficulty(courseID, rating) {
             "WHERE CourseID = ? ";
     }
     connection.query(UPDATE_EXAM_DIFFICULTY, [courseID], (err, results) => {
+        if (err) {
+            return err
+        } else {
+            return "succesfully added rating";
+        }
+    });
+}
+
+function addClassDifficulty(courseID, rating) {
+    var UPDATE_CLASS_DIFFICULTY = "";
+    if (rating == 1) {
+        UPDATE_CLASS_DIFFICULTY =
+            "UPDATE Class_Difficulty " +
+            "SET Easy = Easy + 1, Count = Count + 1 " +
+            "WHERE CourseID = ? ";
+    } else if (rating == 0) {
+        UPDATE_CLASS_DIFFICULTY =
+            "UPDATE Class_Difficulty " +
+            "SET Medium = Medium + 1, Count = Count + 1 " +
+            "WHERE CourseID = ? ";
+    } else if (rating == -1) {
+        UPDATE_CLASS_DIFFICULTY =
+            "UPDATE Class_Difficulty " +
+            "SET Hard = Hard + 1, Count = Count + 1 " +
+            "WHERE CourseID = ? ";
+    }
+    connection.query(UPDATE_CLASS_DIFFICULTY, [courseID], (err, results) => {
         if (err) {
             return err
         } else {

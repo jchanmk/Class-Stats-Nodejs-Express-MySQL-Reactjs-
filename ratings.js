@@ -83,7 +83,7 @@ var Ratings = function (_React$Component) {
                             key: ProfRating,
                             rating: Math.round(ProfRating),
                             onClick: function onClick(rating) {
-                                return _this.userRating("classEnjoyment", rating);
+                                return _this.userRating("profRating", rating);
                             }
                         }),
                         React.createElement(
@@ -258,6 +258,65 @@ var Ratings = function (_React$Component) {
             );
         };
 
+        _this.renderClassDifficulty = function (_ref6) {
+            var Easy = _ref6.Easy,
+                Medium = _ref6.Medium,
+                Hard = _ref6.Hard;
+            return React.createElement(
+                "div",
+                { className: "ratings" },
+                React.createElement(
+                    "div",
+                    { className: "row" },
+                    React.createElement(
+                        "div",
+                        { className: "col-4" },
+                        React.createElement(
+                            "span",
+                            { className: "ratingsName" },
+                            "Class Difficulty: "
+                        )
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "col-5" },
+                        React.createElement(PercentageRating, {
+                            type: "easy",
+                            color: "#27FF9B",
+                            rating: Easy != null ? Math.round(Easy * 100) : 0,
+                            onClick: function onClick() {
+                                return _this.userRating("classDifficulty", 1);
+                            }
+                        }),
+                        React.createElement(PercentageRating, {
+                            type: "medium",
+                            color: "#27B4FF",
+                            rating: Medium != null ? Math.round(Medium * 100) : 0,
+                            onClick: function onClick() {
+                                return _this.userRating("classDifficulty", 0);
+                            }
+                        }),
+                        React.createElement(PercentageRating, {
+                            type: "hard",
+                            color: "#DB6E6E",
+                            rating: Hard != null ? Math.round(Hard * 100) : 0,
+                            onClick: function onClick() {
+                                return _this.userRating("classDifficulty", -1);
+                            }
+                        }),
+                        React.createElement(
+                            "span",
+                            {
+                                "class": "submitted",
+                                style: _this.state.classDifficulty ? { display: "block", marginTop: "0" } : { display: "none" }
+                            },
+                            "submitted!"
+                        )
+                    )
+                )
+            );
+        };
+
         _this.state = {
             courseID: null,
             ratings: [],
@@ -266,6 +325,7 @@ var Ratings = function (_React$Component) {
             classEnjoyment: null,
             classUsefulness: null,
             examDifficulty: null,
+            classDifficulty: null,
             attendanceAttn: null,
             profRating: null,
             userRating: null
@@ -290,17 +350,13 @@ var Ratings = function (_React$Component) {
             fetch('http://localhost:3000/course/findratings1' + search).then(function (response) {
                 return response.json();
             }).then(function (response) {
-                return _this2.setState({ courseID: response.courseID, ratings: response.data }, function () {
-                    return console.log("ratings fetched...", _this2.state.ratings);
-                });
+                return _this2.setState({ courseID: response.courseID, ratings: response.data });
             });
 
             fetch('http://localhost:3000/course/findratings2' + search).then(function (response) {
                 return response.json();
             }).then(function (response) {
-                return _this2.setState({ ratings2: response.data }, function () {
-                    return console.log("ratings fetched...", _this2.state.ratings2);
-                });
+                return _this2.setState({ ratings2: response.data });
             });
 
             fetch('http://localhost:3000/course/findratings3' + search).then(function (response) {
@@ -354,6 +410,16 @@ var Ratings = function (_React$Component) {
                     return;
                 }
                 this.setState({ attendanceAttn: true, userRating: rating });
+            } else if (type === "profRating") {
+                if (this.state.profRating) {
+                    return;
+                }
+                this.setState({ profRating: true, userRating: rating });
+            } else if (type === "classDifficulty") {
+                if (this.state.classDifficulty) {
+                    return;
+                }
+                this.setState({ classDifficulty: true, userRating: rating });
             }
             this.postRatings(type);
         }
@@ -382,7 +448,8 @@ var Ratings = function (_React$Component) {
                 React.createElement(
                     "div",
                     { className: "col-6" },
-                    ratings3.map(this.renderProfRating)
+                    ratings3.map(this.renderProfRating),
+                    ratings3.map(this.renderClassDifficulty)
                 )
             );
         }
