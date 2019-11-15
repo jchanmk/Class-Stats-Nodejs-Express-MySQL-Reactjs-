@@ -10,6 +10,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 import PercentageRating from "./PercentageRating.js";
 import StarList from "./StarList.js";
+import HomeClassEnjoyment from "./HomeClassEnjoyment.js";
 
 var Home = function (_React$Component) {
     _inherits(Home, _React$Component);
@@ -22,6 +23,7 @@ var Home = function (_React$Component) {
         _this.state = {
             courseID: null,
             ratings: [],
+            classEnjoyment: null,
             studentID: document.getElementById('homeHeader').getAttribute('data-name').replace(/ /g, "_")
         };
         return _this;
@@ -30,11 +32,20 @@ var Home = function (_React$Component) {
     _createClass(Home, [{
         key: "componentDidMount",
         value: function componentDidMount() {
+            // fetch data from server, get all current classes this.studentID is taking 
+            // their first 3 ratings, name, instructor
+            // console.log(this.state.studentID)
+            this.getRatings();
+        }
+    }, {
+        key: "getRatings",
+        value: function getRatings() {
             var _this2 = this;
 
             // fetch data from server, get all current classes this.studentID is taking 
             // their first 3 ratings, name, instructor
-            // console.log(this.state.studentID)
+            // then add ratings to state
+            // render ratings
             fetch('http://localhost:3000/home/' + this.state.studentID).then(function (response) {
                 return response.json();
             }).then(function (response) {
@@ -42,32 +53,112 @@ var Home = function (_React$Component) {
             });
         }
     }, {
-        key: "getRatings",
-        value: function getRatings() {
-            // fetch data from server, get all current classes this.studentID is taking 
-            // their first 3 ratings, name, instructor
-            // then add ratings to state
-            // render ratings
+        key: "postRatings",
+        value: function postRatings(type, courseID, rating) {
+            var _this3 = this;
+
+            setTimeout(function () {
+                // const { courseID, userRating } = this.state;
+                fetch("http://localhost:3000/course/addrating?courseid=" + courseID + "&type=" + type + "&rating=" + rating).then(function (response) {
+                    return response;
+                }).then(function (response) {
+                    return _this3.getRatings();
+                }).catch(function (err) {
+                    return console.log(err);
+                });
+            }, 500);
+        }
+    }, {
+        key: "userRating",
+        value: function userRating(type, courseID, rating) {
+            console.log(type);
+            console.log(courseID);
+            console.log(rating);
+            if (type === "classEnjoyment") {
+                // figure out how to only allow one submission for ratings per class
+
+                // if (this.state.classEnjoyment) {
+                //     return;
+                // }
+                // this.setState({ classEnjoyment: true, userRating: rating })
+            }
+            this.postRatings(type, courseID, rating);
         }
     }, {
         key: "render",
         value: function render() {
+            var _this4 = this;
+
             var ratings = this.state.ratings;
             if (!this.state.ratings.length) return null;
+            console.log(ratings);
 
             return ratings.map(function (Courses) {
                 return React.createElement(
                     "div",
-                    { className: "row" },
+                    { className: "mt-3 mb-5 ml-5 homeCourses" },
                     React.createElement(
-                        "h1",
-                        null,
-                        "YOYO MADE CONTACT"
+                        "div",
+                        { className: "row mt-3 mb-3" },
+                        React.createElement(
+                            "div",
+                            { className: "col" },
+                            React.createElement(
+                                "h4",
+                                { className: "homeCourseName" },
+                                Courses.Name
+                            ),
+                            React.createElement(
+                                "span",
+                                { className: "homeSubHeadings" },
+                                "Professor ",
+                                Courses.Lname
+                            )
+                        )
                     ),
                     React.createElement(
-                        "h1",
-                        null,
-                        Courses.CourseID
+                        "div",
+                        { className: "row" },
+                        React.createElement(
+                            "div",
+                            { className: "col-2 homeSubHeadings" },
+                            "STATS: "
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "col-3 homeSubHeadings" },
+                            "Class Enjoyment",
+                            React.createElement(HomeClassEnjoyment, {
+                                ClassEnjoyment: Courses.ClassEnjoyment,
+                                Submitted: _this4.state.classEnjoyment,
+                                onClick: function onClick(rating) {
+                                    return _this4.userRating("classEnjoyment", Courses.CourseID, rating);
+                                }
+                            })
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "col-3 homeSubHeadings" },
+                            "Class Difficulty "
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "col-3 homeSubHeadings" },
+                            "Class Usefulness "
+                        )
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "row" },
+                        React.createElement(
+                            "div",
+                            { className: "col" },
+                            React.createElement(
+                                "a",
+                                { className: "float-right", href: "" },
+                                "VIEW MORE"
+                            )
+                        )
                     )
                 );
             });
@@ -79,3 +170,7 @@ var Home = function (_React$Component) {
 
 var domContainer = document.querySelector('#test');
 ReactDOM.render(React.createElement(Home, null), domContainer);
+
+// To do:
+// - Other homescreen ratings
+// - homescreen only submit one rating per class per rating functionality

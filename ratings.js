@@ -289,6 +289,3 @@ var Ratings = function (_React$Component) {
 
 var domContainer = document.querySelector('#ratings_container');
 ReactDOM.render(React.createElement(Ratings, null), domContainer);
-
-// To do:
-// Add other ratings, change databases if needed, add more tables for other ratings

@@ -60,14 +60,23 @@ router.get('/home/:studentID', function (req, res) {
     var studentID = req.params.studentID;
     console.log("made contact with react api " + studentID)
     const SELECT_HOME_INFO =
-        "SELECT * " +
-        "FROM Courses, Instructors " +
-        "WHERE Instructors.InstructorID = Courses.InstructorID AND " +
-        "CourseID IN ( SELECT CourseID " +
-        "FROM Takes WHERE StudentID = ? ) "
+        "SELECT Name, Lname, Rating/Class_Enjoyment.Count AS ClassEnjoyment, " +
+        "Easy/Class_Difficulty.Count AS Easy, Medium/Class_Difficulty.Count AS Medium, " +
+        "Hard/Class_Difficulty.Count AS Hard, Useful/Class_Usefulness.Count AS Useful, " +
+        "NotUseful/Class_Usefulness.Count AS NotUseful, Courses.CourseID " +  
+        "FROM Courses, Instructors, Class_Enjoyment, Class_Difficulty, Class_Usefulness " + 
+        "WHERE Instructors.InstructorID = Courses.InstructorID " +
+            "AND Courses.CourseID = Class_Enjoyment.CourseID " +
+            "AND Courses.CourseID = Class_Difficulty.CourseID " +
+            "AND Courses.CourseID = Class_Usefulness.CourseID " +
+            "AND Courses.CourseID IN( " +
+                "SELECT CourseID " +
+                "FROM Takes " +
+                "WHERE StudentID = ? )";
 
     connection.query(SELECT_HOME_INFO, [studentID], (err, results) => {
         if (err) {
+            console.log(err)
             return res.send(err)
         } else {
             // res.render('departments', obj)

@@ -216,5 +216,3 @@ class Ratings extends React.Component {
 let domContainer = document.querySelector('#ratings_container');
 ReactDOM.render(<Ratings />, domContainer);
 
-// To do:
-// Add other ratings, change databases if needed, add more tables for other ratings
