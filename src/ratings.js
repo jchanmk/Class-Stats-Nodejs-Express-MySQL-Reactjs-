@@ -10,11 +10,14 @@ class Ratings extends React.Component {
             ratings: [],
             ratings2: [],
             ratings3: [],
+            ratings4: [],
             classEnjoyment: null,
             classUsefulness: null,
             examDifficulty: null,
             classDifficulty: null,
             attendanceAttn: null,
+            classType: null,
+            testHeavy: null,
             profRating: null,
             userRating: null
         };
@@ -38,6 +41,10 @@ class Ratings extends React.Component {
         fetch('http://localhost:3000/course/findratings3' + search)
             .then(response3 => response3.json())
             .then(response3 => this.setState({ ratings3: response3.data }));
+
+        fetch('http://localhost:3000/course/findratings4' + search)
+            .then(response4 => response4.json())
+            .then(response4 => this.setState({ ratings4: response4.data }));
     }
 
     // This sends ratings to the server
@@ -46,8 +53,8 @@ class Ratings extends React.Component {
         setTimeout(() => {
             const { courseID, userRating } = this.state;
             fetch(`http://localhost:3000/course/addrating?courseid=${courseID}&type=${type}&rating=${userRating}`)
-                .then( response => response)
-                .then( response => this.getRatings())
+                .then(response => response)
+                .then(response => this.getRatings())
                 .catch(err => console.log(err))
         }, 500)
     }
@@ -82,6 +89,16 @@ class Ratings extends React.Component {
                 return;
             }
             this.setState({ classDifficulty: true, userRating: rating })
+        } else if (type === "testHeavy") {
+            if (this.state.testHeavy) {
+                return;
+            }
+            this.setState({ testHeavy: true, userRating: rating })
+        } else if (type === "classType") {
+            if (this.state.classType) {
+                return;
+            }
+            this.setState({ classType: true, userRating: rating })
         }
         this.postRatings(type);
     }
@@ -273,10 +290,73 @@ class Ratings extends React.Component {
             </div>
         </div>;
 
+    renderTestHeavy = ({ Light, Heavy }) =>
+        <div className="ratings">
+            <div className="row">
+                <div className="col-4">
+                    <span className="ratingsName">Is the class test heavy? </span>
+                </div>
+                <div className="col-5">
+                    <PercentageRating
+                        type="light"
+                        color="#27FF9B"
+                        rating={Light != null ? Math.round(Light * 100) : 0}
+                        onClick={() => this.userRating("testHeavy", 1)}
+                    />
+                    <PercentageRating
+                        type="heavy"
+                        color="#DB6E6E"
+                        rating={Heavy != null ? Math.round(Heavy * 100) : 0}
+                        onClick={() => this.userRating("testHeavy", 0)}
+                    />
+                    <span
+                        class="submitted"
+                        style={this.state.testHeavy ?
+                            { display: "block", marginTop: "0" } :
+                            { display: "none" }}
+                    >
+                        submitted!
+                </span>
+                </div>
+            </div>
+        </div>;
+
+    renderClassType = ({ Lecture, Discussion }) =>
+        <div className="ratings">
+            <div className="row">
+                <div className="col-4">
+                    <span className="ratingsName">Discussion or Lecture based curriculum? </span>
+                </div>
+                <div className="col-5">
+                    <PercentageRating
+                        type="lecture"
+                        color="#27FF9B"
+                        rating={Lecture != null ? Math.round(Lecture * 100) : 0}
+                        onClick={() => this.userRating("classType", 1)}
+                    />
+                    <PercentageRating
+                        type="discussion"
+                        color="#DB6E6E"
+                        rating={Discussion != null ? Math.round(Discussion * 100) : 0}
+                        onClick={() => this.userRating("classType", 0)}
+                    />
+                    <span
+                        class="submitted"
+                        style={this.state.classType ?
+                            { display: "block", marginTop: "0" } :
+                            { display: "none" }}
+                    >
+                        submitted!
+        </span>
+                </div>
+            </div>
+        </div>;
+
     render() {
         const ratings = this.state.ratings;
         const ratings2 = this.state.ratings2;
         const ratings3 = this.state.ratings3;
+        const ratings4 = this.state.ratings4;
 
         return (
             <div className="row">
@@ -285,10 +365,12 @@ class Ratings extends React.Component {
                     {ratings.map(this.renderClassUsefulness)}
                     {ratings2.map(this.renderExamDifficulty)}
                     {ratings2.map(this.renderAttendanceAttn)}
+                    {ratings4.map(this.renderClassType)}
                 </div>
                 <div className="col-6">
                     {ratings3.map(this.renderProfRating)}
                     {ratings3.map(this.renderClassDifficulty)}
+                    {ratings4.map(this.renderTestHeavy)}
                 </div>
             </div>
         );

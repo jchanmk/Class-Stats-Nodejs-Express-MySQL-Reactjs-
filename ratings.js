@@ -317,16 +317,119 @@ var Ratings = function (_React$Component) {
             );
         };
 
+        _this.renderTestHeavy = function (_ref7) {
+            var Light = _ref7.Light,
+                Heavy = _ref7.Heavy;
+            return React.createElement(
+                "div",
+                { className: "ratings" },
+                React.createElement(
+                    "div",
+                    { className: "row" },
+                    React.createElement(
+                        "div",
+                        { className: "col-4" },
+                        React.createElement(
+                            "span",
+                            { className: "ratingsName" },
+                            "Is the class test heavy? "
+                        )
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "col-5" },
+                        React.createElement(PercentageRating, {
+                            type: "light",
+                            color: "#27FF9B",
+                            rating: Light != null ? Math.round(Light * 100) : 0,
+                            onClick: function onClick() {
+                                return _this.userRating("testHeavy", 1);
+                            }
+                        }),
+                        React.createElement(PercentageRating, {
+                            type: "heavy",
+                            color: "#DB6E6E",
+                            rating: Heavy != null ? Math.round(Heavy * 100) : 0,
+                            onClick: function onClick() {
+                                return _this.userRating("testHeavy", 0);
+                            }
+                        }),
+                        React.createElement(
+                            "span",
+                            {
+                                "class": "submitted",
+                                style: _this.state.testHeavy ? { display: "block", marginTop: "0" } : { display: "none" }
+                            },
+                            "submitted!"
+                        )
+                    )
+                )
+            );
+        };
+
+        _this.renderClassType = function (_ref8) {
+            var Lecture = _ref8.Lecture,
+                Discussion = _ref8.Discussion;
+            return React.createElement(
+                "div",
+                { className: "ratings" },
+                React.createElement(
+                    "div",
+                    { className: "row" },
+                    React.createElement(
+                        "div",
+                        { className: "col-4" },
+                        React.createElement(
+                            "span",
+                            { className: "ratingsName" },
+                            "Discussion or Lecture based curriculum? "
+                        )
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "col-5" },
+                        React.createElement(PercentageRating, {
+                            type: "lecture",
+                            color: "#27FF9B",
+                            rating: Lecture != null ? Math.round(Lecture * 100) : 0,
+                            onClick: function onClick() {
+                                return _this.userRating("classType", 1);
+                            }
+                        }),
+                        React.createElement(PercentageRating, {
+                            type: "discussion",
+                            color: "#DB6E6E",
+                            rating: Discussion != null ? Math.round(Discussion * 100) : 0,
+                            onClick: function onClick() {
+                                return _this.userRating("classType", 0);
+                            }
+                        }),
+                        React.createElement(
+                            "span",
+                            {
+                                "class": "submitted",
+                                style: _this.state.classType ? { display: "block", marginTop: "0" } : { display: "none" }
+                            },
+                            "submitted!"
+                        )
+                    )
+                )
+            );
+        };
+
         _this.state = {
             courseID: null,
             ratings: [],
             ratings2: [],
             ratings3: [],
+            ratings4: [],
             classEnjoyment: null,
             classUsefulness: null,
             examDifficulty: null,
             classDifficulty: null,
             attendanceAttn: null,
+            classType: null,
+            testHeavy: null,
             profRating: null,
             userRating: null
         };
@@ -363,6 +466,12 @@ var Ratings = function (_React$Component) {
                 return response3.json();
             }).then(function (response3) {
                 return _this2.setState({ ratings3: response3.data });
+            });
+
+            fetch('http://localhost:3000/course/findratings4' + search).then(function (response4) {
+                return response4.json();
+            }).then(function (response4) {
+                return _this2.setState({ ratings4: response4.data });
             });
         }
 
@@ -421,6 +530,16 @@ var Ratings = function (_React$Component) {
                     return;
                 }
                 this.setState({ classDifficulty: true, userRating: rating });
+            } else if (type === "testHeavy") {
+                if (this.state.testHeavy) {
+                    return;
+                }
+                this.setState({ testHeavy: true, userRating: rating });
+            } else if (type === "classType") {
+                if (this.state.classType) {
+                    return;
+                }
+                this.setState({ classType: true, userRating: rating });
             }
             this.postRatings(type);
         }
@@ -434,6 +553,7 @@ var Ratings = function (_React$Component) {
             var ratings = this.state.ratings;
             var ratings2 = this.state.ratings2;
             var ratings3 = this.state.ratings3;
+            var ratings4 = this.state.ratings4;
 
             return React.createElement(
                 "div",
@@ -444,13 +564,15 @@ var Ratings = function (_React$Component) {
                     ratings.map(this.renderClassEnjoyment),
                     ratings.map(this.renderClassUsefulness),
                     ratings2.map(this.renderExamDifficulty),
-                    ratings2.map(this.renderAttendanceAttn)
+                    ratings2.map(this.renderAttendanceAttn),
+                    ratings4.map(this.renderClassType)
                 ),
                 React.createElement(
                     "div",
                     { className: "col-6" },
                     ratings3.map(this.renderProfRating),
-                    ratings3.map(this.renderClassDifficulty)
+                    ratings3.map(this.renderClassDifficulty),
+                    ratings4.map(this.renderTestHeavy)
                 )
             );
         }

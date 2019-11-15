@@ -9,7 +9,7 @@ const connection = mysql.createConnection(dbconfig.connection);
 connection.query('USE ' + dbconfig.database);
 
 router.get('/', (req, res) => {
-    // console.log(req.query.type);
+    console.log(req.query.type);
     // console.log(req.query.rating);
     // console.log(req.query.courseid);
     const courseID = req.query.courseid;
@@ -27,8 +27,11 @@ router.get('/', (req, res) => {
         return res.send(addProfRating(courseID, rating));
     } else if (type === "classDifficulty") {
         return res.send(addClassDifficulty(courseID, rating));
+    } else if (type === "testHeavy") {
+        return res.send(addTestHeavy(courseID, rating));
+    } else if (type === "classType") {
+        return res.send(addClassType(courseID, rating));
     } 
-
 })
 
 function addClassEnjoyment(courseID, rating) {
@@ -73,6 +76,50 @@ function addClassUsefulness(courseID, rating) {
             "WHERE CourseID = ? ";
     }
     connection.query(UPDATE_CLASS_USEFULNESS, [courseID], (err, results) => {
+        if (err) {
+            return err
+        } else {
+            return "succesfully added rating";
+        }
+    });
+}
+
+function addClassType(courseID, rating) {
+    var UPDATE_CLASS_TYPE = "";
+    if (rating == 1) {
+        UPDATE_CLASS_TYPE =
+            "UPDATE Class_Type " +
+            "SET Lecture = Lecture + 1, Count = Count + 1 " +
+            "WHERE CourseID = ? ";
+    } else {
+        UPDATE_CLASS_TYPE =
+            "UPDATE Class_Type " +
+            "SET Discussion = Discussion + 1, Count = Count + 1 " +
+            "WHERE CourseID = ? ";
+    }
+    connection.query(UPDATE_CLASS_TYPE, [courseID], (err, results) => {
+        if (err) {
+            return err
+        } else {
+            return "succesfully added rating";
+        }
+    });
+}
+
+function addTestHeavy(courseID, rating) {
+    var UPDATE_TEST_HEAVY = "";
+    if (rating == 1) {
+        UPDATE_TEST_HEAVY =
+            "UPDATE Test_Heavy " +
+            "SET Light = Light + 1, Count = Count + 1 " +
+            "WHERE CourseID = ? ";
+    } else {
+        UPDATE_TEST_HEAVY =
+            "UPDATE Test_Heavy " +
+            "SET Heavy = Heavy + 1, Count = Count + 1 " +
+            "WHERE CourseID = ? ";
+    }
+    connection.query(UPDATE_TEST_HEAVY, [courseID], (err, results) => {
         if (err) {
             return err
         } else {
