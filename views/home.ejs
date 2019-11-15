@@ -5,7 +5,28 @@
 <body>
     <% include ./partials/navbar %>
     <% include ./partials/announcement %>
-    
-</body>
 
-</html>
+    <div class="container">
+        <div class="row mt-4">
+            <div class="col">
+                <h1 id="homeHeader" data-name="<%= user.StudentID %>"><%= user.Fname %>'S CURRENT COURSES</h1>
+            </div>
+        </div>
+    </div>
+
+    <% print.forEach(function(x) { %>
+    <div class="pageLinks">
+        <a class="" href=""><%= x.CourseID %></a>
+    </div>
+    <% }) %>
+
+    <div class="container" id="test"></div>
+
+    <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+    <script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script>
+
+    <!-- Load our React component. -->
+    <script type="module" src="/HomeRatings.js"></script>
+
+    </html>

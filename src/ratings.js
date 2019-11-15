@@ -17,7 +17,7 @@ class Ratings extends React.Component {
         super();
         this.state = {
             courseID: null,
-            ratings: [{ ClassEnjoyment: 0 }],
+            ratings: [],
             ratings2: [],
             ratings3: [],
             ratings4: [],
@@ -135,7 +135,7 @@ class Ratings extends React.Component {
         const ratings3 = this.state.ratings3;
         const ratings4 = this.state.ratings4;
         const ratings5 = this.state.ratings5;
-        console.log(ratings5);
+        // console.log(ratings5);
 
         // need to add conditions for all ratings
         if (!this.state.ratings.length || !this.state.ratings2.length || !this.state.ratings3.length || !this.state.ratings4.length || !this.state.ratings5.length) {
@@ -213,7 +213,7 @@ class Ratings extends React.Component {
     }
 }
 
-let domContainer = document.querySelector('#like_button_container');
+let domContainer = document.querySelector('#ratings_container');
 ReactDOM.render(<Ratings />, domContainer);
 
 // To do:

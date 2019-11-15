@@ -31,9 +31,53 @@ router.post('/signup', passport.authenticate('local-signup', {
     failureFlash: true
 }));
 
-router.get('/home', middleware.isLoggedIn, function (req, res) {
-    res.render('home', {
-        user: req.user
+// commented this out for editing purposes
+// router.get('/home', middleware.isLoggedIn, function (req, res) {
+router.get('/home', function (req, res) {
+    console.log(req.user)
+    const SELECT_ALL_COURSES =
+        "SELECT CourseID " +
+        "FROM Takes, Students " +
+        "WHERE Takes.StudentID = Students.StudentID AND " +
+        "Takes.StudentID = ? ";
+
+    connection.query(SELECT_ALL_COURSES, [req.user.StudentID], (err, results) => {
+        if (err) {
+            return res.send(err)
+        } else {
+            obj = {
+                user: req.user,
+                print: results
+            };
+            // res.render('departments', obj)
+            console.log(obj)
+            res.render('home', obj);
+        }
+    });
+});
+
+router.get('/home/:studentID', function (req, res) {
+    var studentID = req.params.studentID;
+    console.log("made contact with react api " + studentID)
+    const SELECT_HOME_INFO =
+        "SELECT * " +
+        "FROM Courses, Instructors " +
+        "WHERE Instructors.InstructorID = Courses.InstructorID AND " +
+        "CourseID IN ( SELECT CourseID " +
+        "FROM Takes WHERE StudentID = ? ) "
+
+    connection.query(SELECT_HOME_INFO, [studentID], (err, results) => {
+        if (err) {
+            return res.send(err)
+        } else {
+            // res.render('departments', obj)
+            // console.log(obj)
+            // res.render('home', obj);
+            // console.log(results)
+            return res.json({
+                data: results
+            })
+        }
     });
 });
 

@@ -31,7 +31,7 @@ var Ratings = function (_React$Component) {
 
         _this.state = {
             courseID: null,
-            ratings: [{ ClassEnjoyment: 0 }],
+            ratings: [],
             ratings2: [],
             ratings3: [],
             ratings4: [],
@@ -183,7 +183,7 @@ var Ratings = function (_React$Component) {
             var ratings3 = this.state.ratings3;
             var ratings4 = this.state.ratings4;
             var ratings5 = this.state.ratings5;
-            console.log(ratings5);
+            // console.log(ratings5);
 
             // need to add conditions for all ratings
             if (!this.state.ratings.length || !this.state.ratings2.length || !this.state.ratings3.length || !this.state.ratings4.length || !this.state.ratings5.length) {
@@ -287,7 +287,7 @@ var Ratings = function (_React$Component) {
     return Ratings;
 }(React.Component);
 
-var domContainer = document.querySelector('#like_button_container');
+var domContainer = document.querySelector('#ratings_container');
 ReactDOM.render(React.createElement(Ratings, null), domContainer);
 
 // To do:
