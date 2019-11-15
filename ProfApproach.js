@@ -8,25 +8,28 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 import PercentageRating from "./PercentageRating.js";
 
-var ClassType = function (_React$Component) {
-    _inherits(ClassType, _React$Component);
+var ProfApproach = function (_React$Component) {
+    _inherits(ProfApproach, _React$Component);
 
-    function ClassType(props) {
-        _classCallCheck(this, ClassType);
+    function ProfApproach(props) {
+        _classCallCheck(this, ProfApproach);
 
-        var _this = _possibleConstructorReturn(this, (ClassType.__proto__ || Object.getPrototypeOf(ClassType)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (ProfApproach.__proto__ || Object.getPrototypeOf(ProfApproach)).call(this, props));
         // console.log(props)
 
 
         _this.state = {
-            inattentive: props.Inattentive,
-            attentive: props.Attentive,
+            light: props.Light,
+            heavy: props.Heavy,
             submitted: false
         };
         return _this;
     }
+    // componentWillReceiveProps(props) {
+    //     this.setState({ rating: props.TestHeavy});
+    // }
 
-    _createClass(ClassType, [{
+    _createClass(ProfApproach, [{
         key: "render",
         value: function render() {
             var _this2 = this;
@@ -43,27 +46,25 @@ var ClassType = function (_React$Component) {
                         React.createElement(
                             "span",
                             { className: "ratingsName" },
-                            "Discussion or Lecture based curriculum? "
+                            "Is the Professor Approachable? "
                         )
                     ),
                     React.createElement(
                         "div",
                         { className: "col-5" },
                         React.createElement(PercentageRating, {
-                            type: "lecture",
-                            color: "#27B4FF",
-                            rating: this.props.Lecture != null ? Math.round(this.props.Lecture * 100) : 0
-                            // onClick={() => this.userRating("classType", 1)}
-                            , onClick: function onClick() {
+                            type: "light",
+                            color: "#27FF9B",
+                            rating: this.props.Yes != null ? Math.round(this.props.Yes * 100) : 0,
+                            onClick: function onClick() {
                                 return _this2.props.onClick(1);
                             }
                         }),
                         React.createElement(PercentageRating, {
-                            type: "discussion",
-                            color: "#27B4FF",
-                            rating: this.props.Discussion != null ? Math.round(this.props.Discussion * 100) : 0
-                            // onClick={() => this.userRating("classType", 0)}
-                            , onClick: function onClick() {
+                            type: "heavy",
+                            color: "#DB6E6E",
+                            rating: this.props.No != null ? Math.round(this.props.No * 100) : 0,
+                            onClick: function onClick() {
                                 return _this2.props.onClick(0);
                             }
                         }),
@@ -81,7 +82,7 @@ var ClassType = function (_React$Component) {
         }
     }]);
 
-    return ClassType;
+    return ProfApproach;
 }(React.Component);
 
-export default ClassType;
+export default ProfApproach;

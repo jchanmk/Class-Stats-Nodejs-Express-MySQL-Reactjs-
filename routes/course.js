@@ -27,7 +27,7 @@ router.get("/", function (req, res) {
             return res.send(err)
         } else {
             obj = { classInfo: results };
-            console.log(obj);
+            // console.log(obj);
             req.next;
             res.render('courseRatings', obj)
         }
@@ -112,7 +112,7 @@ router.get("/findratings3", (req, res) => {
 });
 
 router.get("/findratings4", (req, res) => {
-    console.log("in this API, react has made contact");
+    // console.log("in this API, react has made contact");
     const instructorID = req.query.instructorid;
     const courseID = req.query.courseid;
     const SELECT_ALL_RATINGS =
@@ -121,6 +121,30 @@ router.get("/findratings4", (req, res) => {
         "FROM Test_Heavy, Class_Type " + 
         "WHERE Test_Heavy.CourseID = Class_Type.CourseID " + 
         "AND Class_Type.CourseID = ? ";
+
+    connection.query(SELECT_ALL_RATINGS, [courseID], (err, results) => {
+        console.log(results)
+        if (err) {
+            return res.send(err)
+        } else {
+            return res.json({
+                data: results,
+                courseID: courseID
+            })
+        }
+    });
+});
+
+router.get("/findratings5", (req, res) => {
+    // console.log("in this API, react has made contact");
+    const instructorID = req.query.instructorid;
+    const courseID = req.query.courseid;
+    const SELECT_ALL_RATINGS =
+    "SELECT Light/Homework_Load.Count AS Light, Heavy/Homework_Load.Count AS Heavy, " +
+    "Yes/Prof_Approach.Count AS Yes, No/Prof_Approach.Count AS No " +
+    "FROM Homework_Load, Prof_Approach " +
+    "WHERE Homework_Load.CourseID = Prof_Approach.CourseID " +
+    "AND Prof_Approach.CourseID = ? ";
 
     connection.query(SELECT_ALL_RATINGS, [courseID], (err, results) => {
         console.log(results)

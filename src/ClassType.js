@@ -21,14 +21,14 @@ class ClassType extends React.Component {
                 <div className="col-5">
                     <PercentageRating
                         type="lecture"
-                        color="#27FF9B"
+                        color="#27B4FF"
                         rating={this.props.Lecture != null ? Math.round(this.props.Lecture * 100) : 0}
                         // onClick={() => this.userRating("classType", 1)}
                         onClick={() => this.props.onClick(1)}
                     />
                     <PercentageRating
                         type="discussion"
-                        color="#DB6E6E"
+                        color="#27B4FF"
                         rating={this.props.Discussion != null ? Math.round(this.props.Discussion * 100) : 0}
                         // onClick={() => this.userRating("classType", 0)}
                         onClick={() => this.props.onClick(0)}

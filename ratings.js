@@ -18,6 +18,8 @@ import ClassType from "./ClassType.js";
 import ProfRating from "./ProfRating.js";
 import ClassDiffuculty from "./ClassDifficulty.js";
 import TestHeavy from "./TestHeavy.js";
+import HomeworkLoad from "./HomeworkLoad.js";
+import ProfApproach from "./ProfApproach.js";
 
 var Ratings = function (_React$Component) {
     _inherits(Ratings, _React$Component);
@@ -33,11 +35,13 @@ var Ratings = function (_React$Component) {
             ratings2: [],
             ratings3: [],
             ratings4: [],
+            ratings5: [],
             classEnjoyment: null,
             classUsefulness: null,
             examDifficulty: null,
             classDifficulty: null,
             attendanceAttn: null,
+            homeworkLoad: null,
             classType: null,
             testHeavy: null,
             profRating: null,
@@ -82,6 +86,12 @@ var Ratings = function (_React$Component) {
                 return response4.json();
             }).then(function (response4) {
                 return _this2.setState({ ratings4: response4.data });
+            });
+
+            fetch('http://localhost:3000/course/findratings5' + search).then(function (response5) {
+                return response5.json();
+            }).then(function (response5) {
+                return _this2.setState({ ratings5: response5.data });
             });
         }
 
@@ -150,8 +160,17 @@ var Ratings = function (_React$Component) {
                     return;
                 }
                 this.setState({ classType: true, userRating: rating });
+            } else if (type === "homeworkLoad") {
+                if (this.state.homeworkLoad) {
+                    return;
+                }
+                this.setState({ homeworkLoad: true, userRating: rating });
+            } else if (type === "profApproach") {
+                if (this.state.profApproach) {
+                    return;
+                }
+                this.setState({ profApproach: true, userRating: rating });
             }
-            // console.log(this.state.ratings[0].ClassEnjoyment)
             this.postRatings(type);
         }
     }, {
@@ -163,9 +182,11 @@ var Ratings = function (_React$Component) {
             var ratings2 = this.state.ratings2;
             var ratings3 = this.state.ratings3;
             var ratings4 = this.state.ratings4;
-            console.log(this.state.ratings4);
+            var ratings5 = this.state.ratings5;
+            console.log(ratings5);
+
             // need to add conditions for all ratings
-            if (!this.state.ratings.length || !this.state.ratings2.length || !this.state.ratings3.length || !this.state.ratings4.length) {
+            if (!this.state.ratings.length || !this.state.ratings2.length || !this.state.ratings3.length || !this.state.ratings4.length || !this.state.ratings5.length) {
                 return null;
             }
             return React.createElement(
@@ -240,6 +261,22 @@ var Ratings = function (_React$Component) {
                         Submitted: this.state.testHeavy,
                         onClick: function onClick(rating) {
                             return _this4.userRating("testHeavy", rating);
+                        }
+                    }),
+                    React.createElement(HomeworkLoad, {
+                        Light: ratings5[0].Light,
+                        Heavy: ratings5[0].Heavy,
+                        Submitted: this.state.homeworkLoad,
+                        onClick: function onClick(rating) {
+                            return _this4.userRating("homeworkLoad", rating);
+                        }
+                    }),
+                    React.createElement(ProfApproach, {
+                        Yes: ratings5[0].Yes,
+                        No: ratings5[0].No,
+                        Submitted: this.state.profApproach,
+                        onClick: function onClick(rating) {
+                            return _this4.userRating("profApproach", rating);
                         }
                     })
                 )

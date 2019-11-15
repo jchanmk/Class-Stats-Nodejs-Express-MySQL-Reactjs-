@@ -9,7 +9,7 @@ const connection = mysql.createConnection(dbconfig.connection);
 connection.query('USE ' + dbconfig.database);
 
 router.get('/', (req, res) => {
-    console.log(req.query.type);
+    // console.log(req.query.type);
     // console.log(req.query.rating);
     // console.log(req.query.courseid);
     const courseID = req.query.courseid;
@@ -31,6 +31,10 @@ router.get('/', (req, res) => {
         return res.send(addTestHeavy(courseID, rating));
     } else if (type === "classType") {
         return res.send(addClassType(courseID, rating));
+    } else if (type === "homeworkLoad") {
+        return res.send(addHomeworkLoad(courseID, rating));
+    } else if (type === "profApproach") {
+        return res.send(addProfApprach(courseID, rating));
     } 
 })
 
@@ -120,6 +124,50 @@ function addTestHeavy(courseID, rating) {
             "WHERE CourseID = ? ";
     }
     connection.query(UPDATE_TEST_HEAVY, [courseID], (err, results) => {
+        if (err) {
+            return err
+        } else {
+            return "succesfully added rating";
+        }
+    });
+}
+
+function addHomeworkLoad(courseID, rating) {
+    var UPDATE_HOMEWORK_LOAD = "";
+    if (rating == 1) {
+        UPDATE_HOMEWORK_LOAD =
+            "UPDATE Homework_Load " +
+            "SET Light = Light + 1, Count = Count + 1 " +
+            "WHERE CourseID = ? ";
+    } else {
+        UPDATE_HOMEWORK_LOAD =
+            "UPDATE Homework_Load " +
+            "SET Heavy = Heavy + 1, Count = Count + 1 " +
+            "WHERE CourseID = ? ";
+    }
+    connection.query(UPDATE_HOMEWORK_LOAD, [courseID], (err, results) => {
+        if (err) {
+            return err
+        } else {
+            return "succesfully added rating";
+        }
+    });
+}
+
+function addProfApprach(courseID, rating) {
+    var UPDATE_PROF_APPROACH = "";
+    if (rating == 1) {
+        UPDATE_PROF_APPROACH =
+            "UPDATE Prof_Approach " +
+            "SET Yes = Yes + 1, Count = Count + 1 " +
+            "WHERE CourseID = ? ";
+    } else {
+        UPDATE_PROF_APPROACH =
+            "UPDATE Prof_Approach " +
+            "SET No = No + 1, Count = Count + 1 " +
+            "WHERE CourseID = ? ";
+    }
+    connection.query(UPDATE_PROF_APPROACH, [courseID], (err, results) => {
         if (err) {
             return err
         } else {
