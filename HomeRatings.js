@@ -11,6 +11,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 import PercentageRating from "./PercentageRating.js";
 import StarList from "./StarList.js";
 import HomeClassEnjoyment from "./HomeClassEnjoyment.js";
+import HomeClassDifficulty from "./HomeClassDifficulty.js";
+import HomeClassUsefulness from "./HomeClassUsefulness.js";
 
 var Home = function (_React$Component) {
     _inherits(Home, _React$Component);
@@ -23,7 +25,9 @@ var Home = function (_React$Component) {
         _this.state = {
             courseID: null,
             ratings: [],
-            classEnjoyment: null,
+            classEnjoyment: [],
+            classDifficulty: [],
+            classUsefulness: [],
             studentID: document.getElementById('homeHeader').getAttribute('data-name').replace(/ /g, "_")
         };
         return _this;
@@ -71,16 +75,32 @@ var Home = function (_React$Component) {
     }, {
         key: "userRating",
         value: function userRating(type, courseID, rating) {
-            console.log(type);
-            console.log(courseID);
-            console.log(rating);
-            if (type === "classEnjoyment") {
-                // figure out how to only allow one submission for ratings per class
-
-                // if (this.state.classEnjoyment) {
-                //     return;
-                // }
-                // this.setState({ classEnjoyment: true, userRating: rating })
+            // console.log(type)
+            // console.log(courseID)
+            // console.log(rating)
+            if (type === "classEnjoyment" && !this.state.classEnjoyment.includes(courseID)) {
+                this.setState(function (state) {
+                    var classEnjoyment = state.classEnjoyment.concat(courseID);
+                    return {
+                        classEnjoyment: classEnjoyment
+                    };
+                });
+            } else if (type === "classDifficulty" && !this.state.classDifficulty.includes(courseID)) {
+                this.setState(function (state) {
+                    var classDifficulty = state.classDifficulty.concat(courseID);
+                    return {
+                        classDifficulty: classDifficulty
+                    };
+                });
+            } else if (type === "classUsefulness" && !this.state.classUsefulness.includes(courseID)) {
+                this.setState(function (state) {
+                    var classUsefulness = state.classUsefulness.concat(courseID);
+                    return {
+                        classUsefulness: classUsefulness
+                    };
+                });
+            } else {
+                return;
             }
             this.postRatings(type, courseID, rating);
         }
@@ -121,8 +141,13 @@ var Home = function (_React$Component) {
                         { className: "row" },
                         React.createElement(
                             "div",
-                            { className: "col-2 homeSubHeadings" },
-                            "STATS: "
+                            { className: "col-3 homeSubHeadings" },
+                            "STATS:",
+                            React.createElement(
+                                "div",
+                                { className: "callToAction" },
+                                "*hover over each stat to provide your own!"
+                            )
                         ),
                         React.createElement(
                             "div",
@@ -130,7 +155,7 @@ var Home = function (_React$Component) {
                             "Class Enjoyment",
                             React.createElement(HomeClassEnjoyment, {
                                 ClassEnjoyment: Courses.ClassEnjoyment,
-                                Submitted: _this4.state.classEnjoyment,
+                                Submitted: _this4.state.classEnjoyment.includes(Courses.CourseID) ? true : false,
                                 onClick: function onClick(rating) {
                                     return _this4.userRating("classEnjoyment", Courses.CourseID, rating);
                                 }
@@ -139,12 +164,31 @@ var Home = function (_React$Component) {
                         React.createElement(
                             "div",
                             { className: "col-3 homeSubHeadings" },
-                            "Class Difficulty "
+                            "Class Difficulty",
+                            React.createElement(HomeClassDifficulty, {
+                                Easy: Courses.Easy,
+                                Medium: Courses.Medium,
+                                Hard: Courses.Hard,
+                                Submitted: _this4.state.classDifficulty.includes(Courses.CourseID) ? true : false,
+                                onClick: function onClick(rating) {
+                                    return _this4.userRating("classDifficulty", Courses.CourseID, rating);
+                                }
+                                // onClick={rating => console.log(rating)}
+                            })
                         ),
                         React.createElement(
                             "div",
                             { className: "col-3 homeSubHeadings" },
-                            "Class Usefulness "
+                            "Class Usefulness",
+                            React.createElement(HomeClassUsefulness, {
+                                Useful: Courses.Useful,
+                                NotUseful: Courses.NotUseful,
+                                Submitted: _this4.state.classUsefulness.includes(Courses.CourseID) ? true : false,
+                                onClick: function onClick(rating) {
+                                    return _this4.userRating("classUsefulness", Courses.CourseID, rating);
+                                }
+                                //  onClick={rating => console.log(rating)}
+                            })
                         )
                     ),
                     React.createElement(
@@ -155,7 +199,9 @@ var Home = function (_React$Component) {
                             { className: "col" },
                             React.createElement(
                                 "a",
-                                { className: "float-right", href: "" },
+                                {
+                                    className: "float-right viewMore",
+                                    href: "/course?instructorid=" + Courses.InstructorID + "&courseid=" + Courses.CourseID },
                                 "VIEW MORE"
                             )
                         )

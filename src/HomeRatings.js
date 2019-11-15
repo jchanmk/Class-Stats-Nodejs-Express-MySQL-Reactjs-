@@ -2,6 +2,8 @@
 import PercentageRating from "./PercentageRating.js";
 import StarList from "./StarList.js"
 import HomeClassEnjoyment from "./HomeClassEnjoyment.js"
+import HomeClassDifficulty from "./HomeClassDifficulty.js";
+import HomeClassUsefulness from "./HomeClassUsefulness.js";
 
 
 class Home extends React.Component {
@@ -10,7 +12,9 @@ class Home extends React.Component {
         this.state = {
             courseID: null,
             ratings: [],
-            classEnjoyment: null,
+            classEnjoyment: [],
+            classDifficulty: [],
+            classUsefulness: [],
             studentID: document.getElementById('homeHeader').getAttribute('data-name').replace(/ /g, "_")
         };
     }
@@ -42,17 +46,33 @@ class Home extends React.Component {
         }, 500)
     }
     userRating(type, courseID, rating) {
-        console.log(type)
-        console.log(courseID)
-        console.log(rating)
-        if (type === "classEnjoyment") {
-            // figure out how to only allow one submission for ratings per class
-
-            // if (this.state.classEnjoyment) {
-            //     return;
-            // }
-            // this.setState({ classEnjoyment: true, userRating: rating })
-        } 
+        // console.log(type)
+        // console.log(courseID)
+        // console.log(rating)
+        if (type === "classEnjoyment" && !this.state.classEnjoyment.includes(courseID)) {            
+            this.setState( state => {
+                const classEnjoyment = state.classEnjoyment.concat(courseID);
+                return{
+                    classEnjoyment
+                };
+            })
+        } else if (type === "classDifficulty" && !this.state.classDifficulty.includes(courseID)) {            
+            this.setState( state => {
+                const classDifficulty = state.classDifficulty.concat(courseID);
+                return{
+                    classDifficulty
+                };
+            })
+        } else if (type === "classUsefulness" && !this.state.classUsefulness.includes(courseID)) {            
+            this.setState( state => {
+                const classUsefulness = state.classUsefulness.concat(courseID);
+                return{
+                    classUsefulness
+                };
+            })
+        } else {
+            return
+        }
         this.postRatings(type, courseID, rating);
     }
 
@@ -72,19 +92,45 @@ class Home extends React.Component {
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-2 homeSubHeadings">STATS: </div>
+                        <div className="col-3 homeSubHeadings">
+                            STATS: 
+                            <div className="callToAction">*hover over each stat to provide your own!</div>
+                        </div>
                         <div className="col-3 homeSubHeadings">Class Enjoyment
                             <HomeClassEnjoyment
                                 ClassEnjoyment={Courses.ClassEnjoyment}
-                                Submitted={this.state.classEnjoyment}
+                                Submitted={this.state.classEnjoyment.includes(Courses.CourseID) ? true : false}
                                 onClick={rating => this.userRating("classEnjoyment", Courses.CourseID, rating)}
                             />
                         </div>
-                        <div className="col-3 homeSubHeadings">Class Difficulty </div>
-                        <div className="col-3 homeSubHeadings">Class Usefulness </div>
+                        <div className="col-3 homeSubHeadings">Class Difficulty 
+                            <HomeClassDifficulty
+                                Easy={Courses.Easy}
+                                Medium={Courses.Medium}
+                                Hard={Courses.Hard}
+                                Submitted={this.state.classDifficulty.includes(Courses.CourseID) ? true : false}
+                                onClick={rating => this.userRating("classDifficulty", Courses.CourseID, rating)}
+                                // onClick={rating => console.log(rating)}
+                            />
+                        </div>
+                        <div className="col-3 homeSubHeadings">Class Usefulness 
+                            <HomeClassUsefulness
+                                 Useful={Courses.Useful}
+                                 NotUseful={Courses.NotUseful}
+                                 Submitted={this.state.classUsefulness.includes(Courses.CourseID) ? true : false}
+                                 onClick={rating => this.userRating("classUsefulness", Courses.CourseID, rating)}
+                                //  onClick={rating => console.log(rating)}
+                            />
+                        </div>
                     </div>
                     <div className="row">
-                        <div className="col"><a className="float-right" href="">VIEW MORE</a></div>
+                        <div className="col">
+                            <a 
+                                className="float-right viewMore" 
+                                href={`/course?instructorid=${Courses.InstructorID}&courseid=${Courses.CourseID}`}>
+                                    VIEW MORE
+                            </a>
+                        </div>
                     </div>
                 </div>
             ))

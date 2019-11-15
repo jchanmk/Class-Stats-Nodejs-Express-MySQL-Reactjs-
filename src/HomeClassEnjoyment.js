@@ -9,25 +9,25 @@ class HomeClassEnjoyment extends React.Component {
         };
     }
     componentWillReceiveProps(props) {
-        this.setState({ rating: props.ClassEnjoyment});
+        this.setState({ rating: props.ClassEnjoyment });
     }
 
     render() {
         return (
             <div className="ratings">
-                        <StarList
-                            key={this.props.ClassEnjoyment}
-                            rating={Math.round(this.props.ClassEnjoyment)}
-                            // onClick={(rating) => this.userRating("classEnjoyment", rating)}
-                            onClick={this.props.onClick}
-                        />
-                        <span
-                            class="submitted"
-                            style={this.props.Submitted ?
-                                { display: "block" } :
-                                { display: "none" }}
-                        >
-                            submitted!
+                <StarList
+                    key={this.props.ClassEnjoyment}
+                    rating={Math.round(this.props.ClassEnjoyment)}
+                    // onClick={(rating) => this.userRating("classEnjoyment", rating)}
+                    onClick={this.props.onClick}
+                />
+                <span
+                    class="submitted"
+                    style={this.props.Submitted ?
+                        { display: "block" } :
+                        { display: "none" }}
+                >
+                    submitted!
                         </span>
             </div>
         )

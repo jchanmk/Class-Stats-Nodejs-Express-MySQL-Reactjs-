@@ -63,7 +63,7 @@ router.get('/home/:studentID', function (req, res) {
         "SELECT Name, Lname, Rating/Class_Enjoyment.Count AS ClassEnjoyment, " +
         "Easy/Class_Difficulty.Count AS Easy, Medium/Class_Difficulty.Count AS Medium, " +
         "Hard/Class_Difficulty.Count AS Hard, Useful/Class_Usefulness.Count AS Useful, " +
-        "NotUseful/Class_Usefulness.Count AS NotUseful, Courses.CourseID " +  
+        "NotUseful/Class_Usefulness.Count AS NotUseful, Courses.CourseID, Courses.InstructorID " +  
         "FROM Courses, Instructors, Class_Enjoyment, Class_Difficulty, Class_Usefulness " + 
         "WHERE Instructors.InstructorID = Courses.InstructorID " +
             "AND Courses.CourseID = Class_Enjoyment.CourseID " +

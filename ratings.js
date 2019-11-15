@@ -120,56 +120,29 @@ var Ratings = function (_React$Component) {
     }, {
         key: "userRating",
         value: function userRating(type, rating) {
-            if (type === "classEnjoyment") {
-                if (this.state.classEnjoyment) {
-                    return;
-                }
+            if (type === "classEnjoyment" && !this.state.classEnjoyment) {
                 this.setState({ classEnjoyment: true, userRating: rating });
-            } else if (type === "classUsefulness") {
-                if (this.state.classUsefulness) {
-                    return;
-                }
+            } else if (type === "classUsefulness" && !this.state.classUsefulness) {
                 this.setState({ classUsefulness: true, userRating: rating });
-            } else if (type === "examDifficulty") {
-                if (this.state.examDifficulty) {
-                    return;
-                }
+            } else if (type === "examDifficulty" && !this.state.examDifficulty) {
                 this.setState({ examDifficulty: true, userRating: rating });
-            } else if (type === "attendanceAttn") {
-                if (this.state.attendanceAttn) {
-                    return;
-                }
+            } else if (type === "attendanceAttn" && !this.state.attendanceAttn) {
                 this.setState({ attendanceAttn: true, userRating: rating });
-            } else if (type === "profRating") {
-                if (this.state.profRating) {
-                    return;
-                }
+            } else if (type === "profRating" && !this.state.profRating) {
                 this.setState({ profRating: true, userRating: rating });
-            } else if (type === "classDifficulty") {
-                if (this.state.classDifficulty) {
-                    return;
-                }
+            } else if (type === "classDifficulty" && !this.state.classDifficulty) {
                 this.setState({ classDifficulty: true, userRating: rating });
-            } else if (type === "testHeavy") {
-                if (this.state.testHeavy) {
-                    return;
-                }
+            } else if (type === "testHeavy" && !this.state.testHeavy) {
                 this.setState({ testHeavy: true, userRating: rating });
-            } else if (type === "classType") {
-                if (this.state.classType) {
-                    return;
-                }
+            } else if (type === "classType" && !this.state.classType) {
                 this.setState({ classType: true, userRating: rating });
-            } else if (type === "homeworkLoad") {
-                if (this.state.homeworkLoad) {
-                    return;
-                }
+            } else if (type === "homeworkLoad" && !this.state.homeworkLoad) {
                 this.setState({ homeworkLoad: true, userRating: rating });
-            } else if (type === "profApproach") {
-                if (this.state.profApproach) {
-                    return;
-                }
+            } else if (type === "profApproach" && !this.state.profApproach) {
                 this.setState({ profApproach: true, userRating: rating });
+            } else {
+                console.log("hi");
+                return;
             }
             this.postRatings(type);
         }
