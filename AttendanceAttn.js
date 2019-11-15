@@ -6,31 +6,31 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-import StarList from "./StarList.js";
+import PercentageRating from "./PercentageRating.js";
 
-var ClassEnjoyment = function (_React$Component) {
-    _inherits(ClassEnjoyment, _React$Component);
+var AttendanceAttn = function (_React$Component) {
+    _inherits(AttendanceAttn, _React$Component);
 
-    function ClassEnjoyment(props) {
-        _classCallCheck(this, ClassEnjoyment);
+    function AttendanceAttn(props) {
+        _classCallCheck(this, AttendanceAttn);
 
-        var _this = _possibleConstructorReturn(this, (ClassEnjoyment.__proto__ || Object.getPrototypeOf(ClassEnjoyment)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (AttendanceAttn.__proto__ || Object.getPrototypeOf(AttendanceAttn)).call(this, props));
+        // console.log(props)
+
 
         _this.state = {
-            rating: props.ClassEnjoyment,
+            inattentive: props.Inattentive,
+            attentive: props.Attentive,
             submitted: false
         };
         return _this;
     }
 
-    _createClass(ClassEnjoyment, [{
-        key: "componentWillReceiveProps",
-        value: function componentWillReceiveProps(props) {
-            this.setState({ rating: props.ClassEnjoyment });
-        }
-    }, {
+    _createClass(AttendanceAttn, [{
         key: "render",
         value: function render() {
+            var _this2 = this;
+
             return React.createElement(
                 "div",
                 { className: "ratings" },
@@ -43,23 +43,35 @@ var ClassEnjoyment = function (_React$Component) {
                         React.createElement(
                             "span",
                             { className: "ratingsName" },
-                            "Class Enjoyment: "
+                            "Professors Attention to Attendance/ Tardies: "
                         )
                     ),
                     React.createElement(
                         "div",
                         { className: "col-5" },
-                        React.createElement(StarList, {
-                            key: this.props.ClassEnjoyment,
-                            rating: Math.round(this.props.ClassEnjoyment)
-                            // onClick={(rating) => this.userRating("classEnjoyment", rating)}
-                            , onClick: this.props.onClick
+                        React.createElement(PercentageRating, {
+                            type: "inattentive",
+                            color: "#27FF9B",
+                            rating: this.props.Inattentive != null ? Math.round(this.props.Inattentive * 100) : 0
+                            // onClick={() => this.userRating("attendanceAttn", 1)}
+                            , onClick: function onClick() {
+                                return _this2.props.onClick(1);
+                            }
+                        }),
+                        React.createElement(PercentageRating, {
+                            type: "attentive",
+                            color: "#DB6E6E",
+                            rating: this.props.Attentive != null ? Math.round(this.props.Attentive * 100) : 0
+                            // onClick={() => this.userRating("attendanceAttn", 0)}
+                            , onClick: function onClick() {
+                                return _this2.props.onClick(0);
+                            }
                         }),
                         React.createElement(
                             "span",
                             {
                                 "class": "submitted",
-                                style: this.props.Submitted ? { display: "block" } : { display: "none" }
+                                style: this.props.Submitted ? { display: "block", marginTop: "0" } : { display: "none" }
                             },
                             "submitted!"
                         )
@@ -69,7 +81,7 @@ var ClassEnjoyment = function (_React$Component) {
         }
     }]);
 
-    return ClassEnjoyment;
+    return AttendanceAttn;
 }(React.Component);
 
-export default ClassEnjoyment;
+export default AttendanceAttn;

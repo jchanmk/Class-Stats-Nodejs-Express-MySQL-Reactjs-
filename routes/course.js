@@ -123,7 +123,7 @@ router.get("/findratings4", (req, res) => {
         "AND Class_Type.CourseID = ? ";
 
     connection.query(SELECT_ALL_RATINGS, [courseID], (err, results) => {
-        // console.log(results)
+        console.log(results)
         if (err) {
             return res.send(err)
         } else {

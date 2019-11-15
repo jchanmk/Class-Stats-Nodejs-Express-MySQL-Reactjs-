@@ -1,13 +1,21 @@
 'use strict';
 import PercentageRating from "./PercentageRating.js";
 import StarList from "./StarList.js"
+import ClassEnjoyment from "./ClassEnjoyment.js"
+import ClassUsefulness from "./ClassUsefulness.js"
+import ExamDifficulty from "./ExamDifficulty.js"
+import AttendanceAttn from "./AttendanceAttn.js"
+import ClassType from "./ClassType.js"
+import ProfRating from "./ProfRating.js"
+import ClassDiffuculty from "./ClassDifficulty.js"
+import TestHeavy from "./TestHeavy.js"
 
 class Ratings extends React.Component {
     constructor() {
         super();
         this.state = {
             courseID: null,
-            ratings: [],
+            ratings: [{ ClassEnjoyment: 0 }],
             ratings2: [],
             ratings3: [],
             ratings4: [],
@@ -100,277 +108,74 @@ class Ratings extends React.Component {
             }
             this.setState({ classType: true, userRating: rating })
         }
+        // console.log(this.state.ratings[0].ClassEnjoyment)
         this.postRatings(type);
     }
-
-    // This renders the stars for class enjoyment, based on current state of the rating based on data from
-    // database, it renders filled stars based on the rating, eg. rating = 4, then 4 gold stars
-    renderClassEnjoyment = ({ ClassEnjoyment }) =>
-        <div className="ratings">
-            <div className="row">
-                <div className="col-4">
-                    <span className="ratingsName">Class Enjoyment: </span>
-                </div>
-                <div className="col-5">
-                    <StarList
-                        key={ClassEnjoyment}
-                        rating={Math.round(ClassEnjoyment)}
-                        onClick={(rating) => this.userRating("classEnjoyment", rating)}
-                    />
-                    {/* {(ClassEnjoyment)} */}
-                    <span
-                        class="submitted"
-                        style={this.state.classEnjoyment ?
-                            { display: "block" } :
-                            { display: "none" }}
-                    >
-                        submitted!
-                        </span>
-                </div>
-            </div>
-        </div>;
-
-    renderProfRating = ({ ProfRating }) =>
-        <div className="ratings">
-            <div className="row">
-                <div className="col-4">
-                    <span className="ratingsName">Professor Rating: </span>
-                </div>
-                <div className="col-5">
-                    <StarList
-                        key={ProfRating}
-                        rating={Math.round(ProfRating)}
-                        onClick={(rating) => this.userRating("profRating", rating)}
-                    />
-                    <span
-                        class="submitted"
-                        style={this.state.profRating ?
-                            { display: "block" } :
-                            { display: "none" }}
-                    >
-                        submitted!
-                        </span>
-                </div>
-            </div>
-        </div>;
-
-    renderClassUsefulness = ({ Useful, NotUseful }) =>
-        <div className="ratings">
-            <div className="row">
-                <div className="col-4">
-                    <span className="ratingsName">Class Usefulness: </span>
-                </div>
-                <div className="col-5">
-                    <PercentageRating
-                        type="useful"
-                        color="#27FF9B"
-                        rating={Useful != null ? Math.round(Useful * 100) : 0}
-                        onClick={() => this.userRating("classUsefulness", 1)}
-                    />
-                    <PercentageRating
-                        type="not useful"
-                        color="#DB6E6E"
-                        rating={NotUseful != null ? Math.round(NotUseful * 100) : 0}
-                        onClick={() => this.userRating("classUsefulness", 0)}
-                    />
-                    <span
-                        class="submitted"
-                        style={this.state.classUsefulness ?
-                            { display: "block", marginTop: "0" } :
-                            { display: "none" }}
-                    >
-                        submitted!
-                        </span>
-                </div>
-            </div>
-        </div>;
-
-    renderExamDifficulty = ({ Easy, Medium, Hard }) =>
-        <div className="ratings">
-            <div className="row">
-                <div className="col-4">
-                    <span className="ratingsName">Exam/Midterm Difficulty: </span>
-                </div>
-                <div className="col-5">
-                    <PercentageRating
-                        type="easy"
-                        color="#27FF9B"
-                        rating={Easy != null ? Math.round(Easy * 100) : 0}
-                        onClick={() => this.userRating("examDifficulty", 1)}
-                    />
-                    <PercentageRating
-                        type="medium"
-                        color="#27B4FF"
-                        rating={Medium != null ? Math.round(Medium * 100) : 0}
-                        onClick={() => this.userRating("examDifficulty", 0)}
-                    />
-                    <PercentageRating
-                        type="hard"
-                        color="#DB6E6E"
-                        rating={Hard != null ? Math.round(Hard * 100) : 0}
-                        onClick={() => this.userRating("examDifficulty", -1)}
-                    />
-                    <span
-                        class="submitted"
-                        style={this.state.examDifficulty ?
-                            { display: "block", marginTop: "0" } :
-                            { display: "none" }}
-                    >
-                        submitted!
-                </span>
-                </div>
-            </div>
-        </div>;
-
-    renderAttendanceAttn = ({ Inattentive, Attentive }) =>
-        <div className="ratings">
-            <div className="row">
-                <div className="col-4">
-                    <span className="ratingsName">Professors Attention to Attendance/ Tardies: </span>
-                </div>
-                <div className="col-5">
-                    <PercentageRating
-                        type="inattentive"
-                        color="#27FF9B"
-                        rating={Inattentive != null ? Math.round(Inattentive * 100) : 0}
-                        onClick={() => this.userRating("attendanceAttn", 1)}
-                    />
-                    <PercentageRating
-                        type="attentive"
-                        color="#DB6E6E"
-                        rating={Attentive != null ? Math.round(Attentive * 100) : 0}
-                        onClick={() => this.userRating("attendanceAttn", 0)}
-                    />
-                    <span
-                        class="submitted"
-                        style={this.state.attendanceAttn ?
-                            { display: "block", marginTop: "0" } :
-                            { display: "none" }}
-                    >
-                        submitted!
-                        </span>
-                </div>
-            </div>
-        </div>;
-
-    renderClassDifficulty = ({ Easy, Medium, Hard }) =>
-        <div className="ratings">
-            <div className="row">
-                <div className="col-4">
-                    <span className="ratingsName">Class Difficulty: </span>
-                </div>
-                <div className="col-5">
-                    <PercentageRating
-                        type="easy"
-                        color="#27FF9B"
-                        rating={Easy != null ? Math.round(Easy * 100) : 0}
-                        onClick={() => this.userRating("classDifficulty", 1)}
-                    />
-                    <PercentageRating
-                        type="medium"
-                        color="#27B4FF"
-                        rating={Medium != null ? Math.round(Medium * 100) : 0}
-                        onClick={() => this.userRating("classDifficulty", 0)}
-                    />
-                    <PercentageRating
-                        type="hard"
-                        color="#DB6E6E"
-                        rating={Hard != null ? Math.round(Hard * 100) : 0}
-                        onClick={() => this.userRating("classDifficulty", -1)}
-                    />
-                    <span
-                        class="submitted"
-                        style={this.state.classDifficulty ?
-                            { display: "block", marginTop: "0" } :
-                            { display: "none" }}
-                    >
-                        submitted!
-        </span>
-                </div>
-            </div>
-        </div>;
-
-    renderTestHeavy = ({ Light, Heavy }) =>
-        <div className="ratings">
-            <div className="row">
-                <div className="col-4">
-                    <span className="ratingsName">Is the class test heavy? </span>
-                </div>
-                <div className="col-5">
-                    <PercentageRating
-                        type="light"
-                        color="#27FF9B"
-                        rating={Light != null ? Math.round(Light * 100) : 0}
-                        onClick={() => this.userRating("testHeavy", 1)}
-                    />
-                    <PercentageRating
-                        type="heavy"
-                        color="#DB6E6E"
-                        rating={Heavy != null ? Math.round(Heavy * 100) : 0}
-                        onClick={() => this.userRating("testHeavy", 0)}
-                    />
-                    <span
-                        class="submitted"
-                        style={this.state.testHeavy ?
-                            { display: "block", marginTop: "0" } :
-                            { display: "none" }}
-                    >
-                        submitted!
-                </span>
-                </div>
-            </div>
-        </div>;
-
-    renderClassType = ({ Lecture, Discussion }) =>
-        <div className="ratings">
-            <div className="row">
-                <div className="col-4">
-                    <span className="ratingsName">Discussion or Lecture based curriculum? </span>
-                </div>
-                <div className="col-5">
-                    <PercentageRating
-                        type="lecture"
-                        color="#27FF9B"
-                        rating={Lecture != null ? Math.round(Lecture * 100) : 0}
-                        onClick={() => this.userRating("classType", 1)}
-                    />
-                    <PercentageRating
-                        type="discussion"
-                        color="#DB6E6E"
-                        rating={Discussion != null ? Math.round(Discussion * 100) : 0}
-                        onClick={() => this.userRating("classType", 0)}
-                    />
-                    <span
-                        class="submitted"
-                        style={this.state.classType ?
-                            { display: "block", marginTop: "0" } :
-                            { display: "none" }}
-                    >
-                        submitted!
-        </span>
-                </div>
-            </div>
-        </div>;
 
     render() {
         const ratings = this.state.ratings;
         const ratings2 = this.state.ratings2;
         const ratings3 = this.state.ratings3;
         const ratings4 = this.state.ratings4;
-
+        console.log(this.state.ratings4)
+        // need to add conditions for all ratings
+        if (!this.state.ratings.length || !this.state.ratings2.length || !this.state.ratings3.length || !this.state.ratings4.length) {
+            return null
+        }
         return (
             <div className="row">
                 <div className="col-6 pl-5">
-                    {ratings.map(this.renderClassEnjoyment)}
-                    {ratings.map(this.renderClassUsefulness)}
-                    {ratings2.map(this.renderExamDifficulty)}
-                    {ratings2.map(this.renderAttendanceAttn)}
-                    {ratings4.map(this.renderClassType)}
+                    <ClassEnjoyment
+                        ClassEnjoyment={ratings[0].ClassEnjoyment}
+                        Submitted={this.state.classEnjoyment}
+                        onClick={rating => this.userRating("classEnjoyment", rating)}
+                    />
+                    <ClassUsefulness
+                        Useful={ratings[0].Useful}
+                        NotUseful={ratings[0].NotUseful}
+                        Submitted={this.state.classUsefulness}
+                        onClick={rating => this.userRating("classUsefulness", rating)}
+                    />
+                    <ExamDifficulty
+                        Easy={ratings2[0].Easy}
+                        Medium={ratings2[0].Medium}
+                        Hard={ratings2[0].Hard}
+                        Submitted={this.state.examDifficulty}
+                        onClick={rating => this.userRating("examDifficulty", rating)}
+                    />
+                    <AttendanceAttn
+                        Inattentive={ratings2[0].Inattentive}
+                        Attentive={ratings2[0].Attentive}
+                        Submitted={this.state.attendanceAttn}
+                        onClick={rating => this.userRating("attendanceAttn", rating)}
+                    />
+
+                    <ClassType
+                        Lecture={ratings4[0].Lecture}
+                        Discussion={ratings4[0].Discussion}
+                        Submitted={this.state.classType}
+                        onClick={rating => this.userRating("classType", rating)}
+                    />
                 </div>
                 <div className="col-6">
-                    {ratings3.map(this.renderProfRating)}
-                    {ratings3.map(this.renderClassDifficulty)}
-                    {ratings4.map(this.renderTestHeavy)}
+                    <ProfRating
+                        ProfRating={ratings3[0].ProfRating}
+                        Submitted={this.state.profRating}
+                        onClick={rating => this.userRating("profRating", rating)}
+                    />
+                    <ClassDiffuculty
+                        Easy={ratings3[0].Easy}
+                        Medium={ratings3[0].Medium}
+                        Hard={ratings3[0].Hard}
+                        Submitted={this.state.classDifficulty}
+                        onClick={rating => this.userRating("classDifficulty", rating)}
+                    />
+                    <TestHeavy
+                        Light={ratings4[0].Light}
+                        Heavy={ratings4[0].Heavy}
+                        Submitted={this.state.testHeavy}
+                        onClick={rating => this.userRating("testHeavy", rating)}
+                    />
                 </div>
             </div>
         );

@@ -6,31 +6,37 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-import StarList from "./StarList.js";
+import PercentageRating from "./PercentageRating.js";
 
-var ClassEnjoyment = function (_React$Component) {
-    _inherits(ClassEnjoyment, _React$Component);
+var ExamDifficulty = function (_React$Component) {
+    _inherits(ExamDifficulty, _React$Component);
 
-    function ClassEnjoyment(props) {
-        _classCallCheck(this, ClassEnjoyment);
+    function ExamDifficulty(props) {
+        _classCallCheck(this, ExamDifficulty);
 
-        var _this = _possibleConstructorReturn(this, (ClassEnjoyment.__proto__ || Object.getPrototypeOf(ClassEnjoyment)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (ExamDifficulty.__proto__ || Object.getPrototypeOf(ExamDifficulty)).call(this, props));
+        // console.log(props)
+
 
         _this.state = {
-            rating: props.ClassEnjoyment,
+            easy: props.Easy,
+            medium: props.Medium,
+            hard: props.Hard,
             submitted: false
         };
         return _this;
     }
 
-    _createClass(ClassEnjoyment, [{
+    _createClass(ExamDifficulty, [{
         key: "componentWillReceiveProps",
         value: function componentWillReceiveProps(props) {
-            this.setState({ rating: props.ClassEnjoyment });
+            this.setState({ rating: props.ExamDifficulty });
         }
     }, {
         key: "render",
         value: function render() {
+            var _this2 = this;
+
             return React.createElement(
                 "div",
                 { className: "ratings" },
@@ -43,23 +49,45 @@ var ClassEnjoyment = function (_React$Component) {
                         React.createElement(
                             "span",
                             { className: "ratingsName" },
-                            "Class Enjoyment: "
+                            "Exam/Midterm Difficulty: "
                         )
                     ),
                     React.createElement(
                         "div",
                         { className: "col-5" },
-                        React.createElement(StarList, {
-                            key: this.props.ClassEnjoyment,
-                            rating: Math.round(this.props.ClassEnjoyment)
-                            // onClick={(rating) => this.userRating("classEnjoyment", rating)}
-                            , onClick: this.props.onClick
+                        React.createElement(PercentageRating, {
+                            type: "easy",
+                            color: "#27FF9B",
+                            rating: this.props.Easy != null ? Math.round(this.props.Easy * 100) : 0
+                            // onClick={() => this.userRating("examDifficulty", 1)}
+                            , onClick: function onClick() {
+                                return _this2.props.onClick(1);
+                            }
+                        }),
+                        React.createElement(PercentageRating, {
+                            type: "medium",
+                            color: "#27B4FF",
+                            rating: this.props.Medium != null ? Math.round(this.props.Medium * 100) : 0
+                            // onClick={() => this.userRating("examDifficulty", 0)}
+                            , onClick: function onClick() {
+                                return _this2.props.onClick(0);
+                            }
+                        }),
+                        React.createElement(PercentageRating, {
+                            type: "hard",
+                            color: "#DB6E6E",
+                            rating: this.props.Hard != null ? Math.round(this.props.Hard * 100) : 0
+                            // onClick={() => this.userRating("examDifficulty", -1)}
+                            , onClick: function onClick() {
+                                return _this2.props.onClick(-1);
+                            }
+
                         }),
                         React.createElement(
                             "span",
                             {
                                 "class": "submitted",
-                                style: this.props.Submitted ? { display: "block" } : { display: "none" }
+                                style: this.props.Submitted ? { display: "block", marginTop: "0" } : { display: "none" }
                             },
                             "submitted!"
                         )
@@ -69,7 +97,7 @@ var ClassEnjoyment = function (_React$Component) {
         }
     }]);
 
-    return ClassEnjoyment;
+    return ExamDifficulty;
 }(React.Component);
 
-export default ClassEnjoyment;
+export default ExamDifficulty;

@@ -8,29 +8,33 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 import StarList from "./StarList.js";
 
-var ClassEnjoyment = function (_React$Component) {
-    _inherits(ClassEnjoyment, _React$Component);
+var ProfRating = function (_React$Component) {
+    _inherits(ProfRating, _React$Component);
 
-    function ClassEnjoyment(props) {
-        _classCallCheck(this, ClassEnjoyment);
+    function ProfRating(props) {
+        _classCallCheck(this, ProfRating);
 
-        var _this = _possibleConstructorReturn(this, (ClassEnjoyment.__proto__ || Object.getPrototypeOf(ClassEnjoyment)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (ProfRating.__proto__ || Object.getPrototypeOf(ProfRating)).call(this, props));
+        // console.log(props)
+
 
         _this.state = {
-            rating: props.ClassEnjoyment,
+            rating: props.ProfRating,
             submitted: false
         };
         return _this;
     }
 
-    _createClass(ClassEnjoyment, [{
+    _createClass(ProfRating, [{
         key: "componentWillReceiveProps",
         value: function componentWillReceiveProps(props) {
-            this.setState({ rating: props.ClassEnjoyment });
+            this.setState({ rating: props.ProfRating });
         }
     }, {
         key: "render",
         value: function render() {
+            var _this2 = this;
+
             return React.createElement(
                 "div",
                 { className: "ratings" },
@@ -43,17 +47,19 @@ var ClassEnjoyment = function (_React$Component) {
                         React.createElement(
                             "span",
                             { className: "ratingsName" },
-                            "Class Enjoyment: "
+                            "Professor Rating: "
                         )
                     ),
                     React.createElement(
                         "div",
                         { className: "col-5" },
                         React.createElement(StarList, {
-                            key: this.props.ClassEnjoyment,
-                            rating: Math.round(this.props.ClassEnjoyment)
-                            // onClick={(rating) => this.userRating("classEnjoyment", rating)}
-                            , onClick: this.props.onClick
+                            key: this.props.ProfRating,
+                            rating: Math.round(this.props.ProfRating)
+                            // onClick={(rating) => this.userRating("profRating", rating)}
+                            , onClick: function onClick(rating) {
+                                return _this2.props.onClick(rating);
+                            }
                         }),
                         React.createElement(
                             "span",
@@ -69,7 +75,7 @@ var ClassEnjoyment = function (_React$Component) {
         }
     }]);
 
-    return ClassEnjoyment;
+    return ProfRating;
 }(React.Component);
 
-export default ClassEnjoyment;
+export default ProfRating;

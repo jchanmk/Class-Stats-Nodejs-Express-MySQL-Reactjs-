@@ -10,6 +10,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 import PercentageRating from "./PercentageRating.js";
 import StarList from "./StarList.js";
+import ClassEnjoyment from "./ClassEnjoyment.js";
+import ClassUsefulness from "./ClassUsefulness.js";
+import ExamDifficulty from "./ExamDifficulty.js";
+import AttendanceAttn from "./AttendanceAttn.js";
+import ClassType from "./ClassType.js";
+import ProfRating from "./ProfRating.js";
+import ClassDiffuculty from "./ClassDifficulty.js";
+import TestHeavy from "./TestHeavy.js";
 
 var Ratings = function (_React$Component) {
     _inherits(Ratings, _React$Component);
@@ -19,407 +27,9 @@ var Ratings = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (Ratings.__proto__ || Object.getPrototypeOf(Ratings)).call(this));
 
-        _this.renderClassEnjoyment = function (_ref) {
-            var ClassEnjoyment = _ref.ClassEnjoyment;
-            return React.createElement(
-                "div",
-                { className: "ratings" },
-                React.createElement(
-                    "div",
-                    { className: "row" },
-                    React.createElement(
-                        "div",
-                        { className: "col-4" },
-                        React.createElement(
-                            "span",
-                            { className: "ratingsName" },
-                            "Class Enjoyment: "
-                        )
-                    ),
-                    React.createElement(
-                        "div",
-                        { className: "col-5" },
-                        React.createElement(StarList, {
-                            key: ClassEnjoyment,
-                            rating: Math.round(ClassEnjoyment),
-                            onClick: function onClick(rating) {
-                                return _this.userRating("classEnjoyment", rating);
-                            }
-                        }),
-                        React.createElement(
-                            "span",
-                            {
-                                "class": "submitted",
-                                style: _this.state.classEnjoyment ? { display: "block" } : { display: "none" }
-                            },
-                            "submitted!"
-                        )
-                    )
-                )
-            );
-        };
-
-        _this.renderProfRating = function (_ref2) {
-            var ProfRating = _ref2.ProfRating;
-            return React.createElement(
-                "div",
-                { className: "ratings" },
-                React.createElement(
-                    "div",
-                    { className: "row" },
-                    React.createElement(
-                        "div",
-                        { className: "col-4" },
-                        React.createElement(
-                            "span",
-                            { className: "ratingsName" },
-                            "Professor Rating: "
-                        )
-                    ),
-                    React.createElement(
-                        "div",
-                        { className: "col-5" },
-                        React.createElement(StarList, {
-                            key: ProfRating,
-                            rating: Math.round(ProfRating),
-                            onClick: function onClick(rating) {
-                                return _this.userRating("profRating", rating);
-                            }
-                        }),
-                        React.createElement(
-                            "span",
-                            {
-                                "class": "submitted",
-                                style: _this.state.profRating ? { display: "block" } : { display: "none" }
-                            },
-                            "submitted!"
-                        )
-                    )
-                )
-            );
-        };
-
-        _this.renderClassUsefulness = function (_ref3) {
-            var Useful = _ref3.Useful,
-                NotUseful = _ref3.NotUseful;
-            return React.createElement(
-                "div",
-                { className: "ratings" },
-                React.createElement(
-                    "div",
-                    { className: "row" },
-                    React.createElement(
-                        "div",
-                        { className: "col-4" },
-                        React.createElement(
-                            "span",
-                            { className: "ratingsName" },
-                            "Class Usefulness: "
-                        )
-                    ),
-                    React.createElement(
-                        "div",
-                        { className: "col-5" },
-                        React.createElement(PercentageRating, {
-                            type: "useful",
-                            color: "#27FF9B",
-                            rating: Useful != null ? Math.round(Useful * 100) : 0,
-                            onClick: function onClick() {
-                                return _this.userRating("classUsefulness", 1);
-                            }
-                        }),
-                        React.createElement(PercentageRating, {
-                            type: "not useful",
-                            color: "#DB6E6E",
-                            rating: NotUseful != null ? Math.round(NotUseful * 100) : 0,
-                            onClick: function onClick() {
-                                return _this.userRating("classUsefulness", 0);
-                            }
-                        }),
-                        React.createElement(
-                            "span",
-                            {
-                                "class": "submitted",
-                                style: _this.state.classUsefulness ? { display: "block", marginTop: "0" } : { display: "none" }
-                            },
-                            "submitted!"
-                        )
-                    )
-                )
-            );
-        };
-
-        _this.renderExamDifficulty = function (_ref4) {
-            var Easy = _ref4.Easy,
-                Medium = _ref4.Medium,
-                Hard = _ref4.Hard;
-            return React.createElement(
-                "div",
-                { className: "ratings" },
-                React.createElement(
-                    "div",
-                    { className: "row" },
-                    React.createElement(
-                        "div",
-                        { className: "col-4" },
-                        React.createElement(
-                            "span",
-                            { className: "ratingsName" },
-                            "Exam/Midterm Difficulty: "
-                        )
-                    ),
-                    React.createElement(
-                        "div",
-                        { className: "col-5" },
-                        React.createElement(PercentageRating, {
-                            type: "easy",
-                            color: "#27FF9B",
-                            rating: Easy != null ? Math.round(Easy * 100) : 0,
-                            onClick: function onClick() {
-                                return _this.userRating("examDifficulty", 1);
-                            }
-                        }),
-                        React.createElement(PercentageRating, {
-                            type: "medium",
-                            color: "#27B4FF",
-                            rating: Medium != null ? Math.round(Medium * 100) : 0,
-                            onClick: function onClick() {
-                                return _this.userRating("examDifficulty", 0);
-                            }
-                        }),
-                        React.createElement(PercentageRating, {
-                            type: "hard",
-                            color: "#DB6E6E",
-                            rating: Hard != null ? Math.round(Hard * 100) : 0,
-                            onClick: function onClick() {
-                                return _this.userRating("examDifficulty", -1);
-                            }
-                        }),
-                        React.createElement(
-                            "span",
-                            {
-                                "class": "submitted",
-                                style: _this.state.examDifficulty ? { display: "block", marginTop: "0" } : { display: "none" }
-                            },
-                            "submitted!"
-                        )
-                    )
-                )
-            );
-        };
-
-        _this.renderAttendanceAttn = function (_ref5) {
-            var Inattentive = _ref5.Inattentive,
-                Attentive = _ref5.Attentive;
-            return React.createElement(
-                "div",
-                { className: "ratings" },
-                React.createElement(
-                    "div",
-                    { className: "row" },
-                    React.createElement(
-                        "div",
-                        { className: "col-4" },
-                        React.createElement(
-                            "span",
-                            { className: "ratingsName" },
-                            "Professors Attention to Attendance/ Tardies: "
-                        )
-                    ),
-                    React.createElement(
-                        "div",
-                        { className: "col-5" },
-                        React.createElement(PercentageRating, {
-                            type: "inattentive",
-                            color: "#27FF9B",
-                            rating: Inattentive != null ? Math.round(Inattentive * 100) : 0,
-                            onClick: function onClick() {
-                                return _this.userRating("attendanceAttn", 1);
-                            }
-                        }),
-                        React.createElement(PercentageRating, {
-                            type: "attentive",
-                            color: "#DB6E6E",
-                            rating: Attentive != null ? Math.round(Attentive * 100) : 0,
-                            onClick: function onClick() {
-                                return _this.userRating("attendanceAttn", 0);
-                            }
-                        }),
-                        React.createElement(
-                            "span",
-                            {
-                                "class": "submitted",
-                                style: _this.state.attendanceAttn ? { display: "block", marginTop: "0" } : { display: "none" }
-                            },
-                            "submitted!"
-                        )
-                    )
-                )
-            );
-        };
-
-        _this.renderClassDifficulty = function (_ref6) {
-            var Easy = _ref6.Easy,
-                Medium = _ref6.Medium,
-                Hard = _ref6.Hard;
-            return React.createElement(
-                "div",
-                { className: "ratings" },
-                React.createElement(
-                    "div",
-                    { className: "row" },
-                    React.createElement(
-                        "div",
-                        { className: "col-4" },
-                        React.createElement(
-                            "span",
-                            { className: "ratingsName" },
-                            "Class Difficulty: "
-                        )
-                    ),
-                    React.createElement(
-                        "div",
-                        { className: "col-5" },
-                        React.createElement(PercentageRating, {
-                            type: "easy",
-                            color: "#27FF9B",
-                            rating: Easy != null ? Math.round(Easy * 100) : 0,
-                            onClick: function onClick() {
-                                return _this.userRating("classDifficulty", 1);
-                            }
-                        }),
-                        React.createElement(PercentageRating, {
-                            type: "medium",
-                            color: "#27B4FF",
-                            rating: Medium != null ? Math.round(Medium * 100) : 0,
-                            onClick: function onClick() {
-                                return _this.userRating("classDifficulty", 0);
-                            }
-                        }),
-                        React.createElement(PercentageRating, {
-                            type: "hard",
-                            color: "#DB6E6E",
-                            rating: Hard != null ? Math.round(Hard * 100) : 0,
-                            onClick: function onClick() {
-                                return _this.userRating("classDifficulty", -1);
-                            }
-                        }),
-                        React.createElement(
-                            "span",
-                            {
-                                "class": "submitted",
-                                style: _this.state.classDifficulty ? { display: "block", marginTop: "0" } : { display: "none" }
-                            },
-                            "submitted!"
-                        )
-                    )
-                )
-            );
-        };
-
-        _this.renderTestHeavy = function (_ref7) {
-            var Light = _ref7.Light,
-                Heavy = _ref7.Heavy;
-            return React.createElement(
-                "div",
-                { className: "ratings" },
-                React.createElement(
-                    "div",
-                    { className: "row" },
-                    React.createElement(
-                        "div",
-                        { className: "col-4" },
-                        React.createElement(
-                            "span",
-                            { className: "ratingsName" },
-                            "Is the class test heavy? "
-                        )
-                    ),
-                    React.createElement(
-                        "div",
-                        { className: "col-5" },
-                        React.createElement(PercentageRating, {
-                            type: "light",
-                            color: "#27FF9B",
-                            rating: Light != null ? Math.round(Light * 100) : 0,
-                            onClick: function onClick() {
-                                return _this.userRating("testHeavy", 1);
-                            }
-                        }),
-                        React.createElement(PercentageRating, {
-                            type: "heavy",
-                            color: "#DB6E6E",
-                            rating: Heavy != null ? Math.round(Heavy * 100) : 0,
-                            onClick: function onClick() {
-                                return _this.userRating("testHeavy", 0);
-                            }
-                        }),
-                        React.createElement(
-                            "span",
-                            {
-                                "class": "submitted",
-                                style: _this.state.testHeavy ? { display: "block", marginTop: "0" } : { display: "none" }
-                            },
-                            "submitted!"
-                        )
-                    )
-                )
-            );
-        };
-
-        _this.renderClassType = function (_ref8) {
-            var Lecture = _ref8.Lecture,
-                Discussion = _ref8.Discussion;
-            return React.createElement(
-                "div",
-                { className: "ratings" },
-                React.createElement(
-                    "div",
-                    { className: "row" },
-                    React.createElement(
-                        "div",
-                        { className: "col-4" },
-                        React.createElement(
-                            "span",
-                            { className: "ratingsName" },
-                            "Discussion or Lecture based curriculum? "
-                        )
-                    ),
-                    React.createElement(
-                        "div",
-                        { className: "col-5" },
-                        React.createElement(PercentageRating, {
-                            type: "lecture",
-                            color: "#27FF9B",
-                            rating: Lecture != null ? Math.round(Lecture * 100) : 0,
-                            onClick: function onClick() {
-                                return _this.userRating("classType", 1);
-                            }
-                        }),
-                        React.createElement(PercentageRating, {
-                            type: "discussion",
-                            color: "#DB6E6E",
-                            rating: Discussion != null ? Math.round(Discussion * 100) : 0,
-                            onClick: function onClick() {
-                                return _this.userRating("classType", 0);
-                            }
-                        }),
-                        React.createElement(
-                            "span",
-                            {
-                                "class": "submitted",
-                                style: _this.state.classType ? { display: "block", marginTop: "0" } : { display: "none" }
-                            },
-                            "submitted!"
-                        )
-                    )
-                )
-            );
-        };
-
         _this.state = {
             courseID: null,
-            ratings: [],
+            ratings: [{ ClassEnjoyment: 0 }],
             ratings2: [],
             ratings3: [],
             ratings4: [],
@@ -541,38 +151,97 @@ var Ratings = function (_React$Component) {
                 }
                 this.setState({ classType: true, userRating: rating });
             }
+            // console.log(this.state.ratings[0].ClassEnjoyment)
             this.postRatings(type);
         }
-
-        // This renders the stars for class enjoyment, based on current state of the rating based on data from
-        // database, it renders filled stars based on the rating, eg. rating = 4, then 4 gold stars
-
     }, {
         key: "render",
         value: function render() {
+            var _this4 = this;
+
             var ratings = this.state.ratings;
             var ratings2 = this.state.ratings2;
             var ratings3 = this.state.ratings3;
             var ratings4 = this.state.ratings4;
-
+            console.log(this.state.ratings4);
+            // need to add conditions for all ratings
+            if (!this.state.ratings.length || !this.state.ratings2.length || !this.state.ratings3.length || !this.state.ratings4.length) {
+                return null;
+            }
             return React.createElement(
                 "div",
                 { className: "row" },
                 React.createElement(
                     "div",
                     { className: "col-6 pl-5" },
-                    ratings.map(this.renderClassEnjoyment),
-                    ratings.map(this.renderClassUsefulness),
-                    ratings2.map(this.renderExamDifficulty),
-                    ratings2.map(this.renderAttendanceAttn),
-                    ratings4.map(this.renderClassType)
+                    React.createElement(ClassEnjoyment, {
+                        ClassEnjoyment: ratings[0].ClassEnjoyment,
+                        Submitted: this.state.classEnjoyment,
+                        onClick: function onClick(rating) {
+                            return _this4.userRating("classEnjoyment", rating);
+                        }
+                    }),
+                    React.createElement(ClassUsefulness, {
+                        Useful: ratings[0].Useful,
+                        NotUseful: ratings[0].NotUseful,
+                        Submitted: this.state.classUsefulness,
+                        onClick: function onClick(rating) {
+                            return _this4.userRating("classUsefulness", rating);
+                        }
+                    }),
+                    React.createElement(ExamDifficulty, {
+                        Easy: ratings2[0].Easy,
+                        Medium: ratings2[0].Medium,
+                        Hard: ratings2[0].Hard,
+                        Submitted: this.state.examDifficulty,
+                        onClick: function onClick(rating) {
+                            return _this4.userRating("examDifficulty", rating);
+                        }
+                    }),
+                    React.createElement(AttendanceAttn, {
+                        Inattentive: ratings2[0].Inattentive,
+                        Attentive: ratings2[0].Attentive,
+                        Submitted: this.state.attendanceAttn,
+                        onClick: function onClick(rating) {
+                            return _this4.userRating("attendanceAttn", rating);
+                        }
+                    }),
+                    React.createElement(ClassType, {
+                        Lecture: ratings4[0].Lecture,
+                        Discussion: ratings4[0].Discussion,
+                        Submitted: this.state.classType,
+                        onClick: function onClick(rating) {
+                            return _this4.userRating("classType", rating);
+                        }
+                    })
                 ),
                 React.createElement(
                     "div",
                     { className: "col-6" },
-                    ratings3.map(this.renderProfRating),
-                    ratings3.map(this.renderClassDifficulty),
-                    ratings4.map(this.renderTestHeavy)
+                    React.createElement(ProfRating, {
+                        ProfRating: ratings3[0].ProfRating,
+                        Submitted: this.state.profRating,
+                        onClick: function onClick(rating) {
+                            return _this4.userRating("profRating", rating);
+                        }
+                    }),
+                    React.createElement(ClassDiffuculty, {
+                        Easy: ratings3[0].Easy,
+                        Medium: ratings3[0].Medium,
+                        Hard: ratings3[0].Hard,
+                        Submitted: this.state.classDifficulty,
+                        onClick: function onClick(rating) {
+                            return _this4.userRating("classDifficulty", rating);
+                        }
+                    }),
+                    React.createElement(TestHeavy, {
+                        Light: ratings4[0].Light,
+                        Heavy: ratings4[0].Heavy,
+                        Submitted: this.state.testHeavy,
+                        onClick: function onClick(rating) {
+                            return _this4.userRating("testHeavy", rating);
+                        }
+                    })
                 )
             );
         }
