@@ -1,3 +1,14 @@
+@media only screen and (max-width: 900px) {
+    .star{
+        width: 22px;
+    }
+}
+@media only screen and (max-width: 1200px) {
+    .star{
+        width: 24px;
+    }
+}
+
 .courseHeaders {
     font-weight: 800;
     /* margin-left: 15%; */
@@ -8,10 +19,6 @@
 .ratingsName {
     margin-right: 10px;
     font-size: 16px;
-}
-
-.star {
-    /* padding: px; */
 }
 
 .starHover:active {

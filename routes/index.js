@@ -72,7 +72,7 @@ router.get('/home/:studentID', function (req, res) {
             "AND Courses.CourseID IN( " +
                 "SELECT CourseID " +
                 "FROM Takes " +
-                "WHERE StudentID = ? )";
+                "WHERE Semester = 'Fall 2019' AND StudentID = ? )";
 
     connection.query(SELECT_HOME_INFO, [studentID], (err, results) => {
         if (err) {

@@ -141,7 +141,7 @@ var Home = function (_React$Component) {
                         { className: "row" },
                         React.createElement(
                             "div",
-                            { className: "col-3 homeSubHeadings" },
+                            { className: "col-lg-3 homeSubHeadings" },
                             "STATS:",
                             React.createElement(
                                 "div",
@@ -151,7 +151,7 @@ var Home = function (_React$Component) {
                         ),
                         React.createElement(
                             "div",
-                            { className: "col-3 homeSubHeadings" },
+                            { className: "col-lg-3 homeSubHeadings" },
                             "Class Enjoyment",
                             React.createElement(HomeClassEnjoyment, {
                                 ClassEnjoyment: Courses.ClassEnjoyment,
@@ -163,7 +163,7 @@ var Home = function (_React$Component) {
                         ),
                         React.createElement(
                             "div",
-                            { className: "col-3 homeSubHeadings" },
+                            { className: "col-lg-3 homeSubHeadings" },
                             "Class Difficulty",
                             React.createElement(HomeClassDifficulty, {
                                 Easy: Courses.Easy,
@@ -178,7 +178,7 @@ var Home = function (_React$Component) {
                         ),
                         React.createElement(
                             "div",
-                            { className: "col-3 homeSubHeadings" },
+                            { className: "col-lg-3 homeSubHeadings" },
                             "Class Usefulness",
                             React.createElement(HomeClassUsefulness, {
                                 Useful: Courses.Useful,

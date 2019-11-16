@@ -5,13 +5,29 @@
 <body>
     <% include ./partials/navbar %>
     <% include ./partials/announcement %>
-    <h1 class="pageHeaders">Professors</h1>
+    <!-- <h1 class="pageHeaders">Professors</h1> -->
 
-    <% print.forEach(function(professors) { %>
-        <div class="pageLinks">
-            <a class="" href="/course?instructorid=<%= professors.InstructorID %>&courseid=<%= professors.CourseID %>"><%= professors.Lname %></a>
+    <!-- <% print.forEach(function(professors) { %>
+    <div class="pageLinks">
+        <a class=""
+            href="/course?instructorid=<%= professors.InstructorID %>&courseid=<%= professors.CourseID %>"><%= professors.Lname %></a>
+    </div>
+    <% }) %> -->
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col ml-sm-5 ml-0">
+                <h1 class="pageHeaders">Professors</h1>
+            </div>
         </div>
-    <% }) %>
+        <% print.forEach(function(professors) { %>
+        <div class="row pageLinks ml-sm-5 ml-0">
+            <a class=""
+                href="/course?instructorid=<%= professors.InstructorID %>&courseid=<%= professors.CourseID %>"><%= professors.Lname %></a>
+        </div>
+        <% }) %>
+    </div>
 </body>
 
 </html>

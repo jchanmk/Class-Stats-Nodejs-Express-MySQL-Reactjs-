@@ -92,18 +92,18 @@ class Home extends React.Component {
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-3 homeSubHeadings">
+                        <div className="col-lg-3 homeSubHeadings">
                             STATS: 
                             <div className="callToAction">*hover over each stat to provide your own!</div>
                         </div>
-                        <div className="col-3 homeSubHeadings">Class Enjoyment
+                        <div className="col-lg-3 homeSubHeadings">Class Enjoyment
                             <HomeClassEnjoyment
                                 ClassEnjoyment={Courses.ClassEnjoyment}
                                 Submitted={this.state.classEnjoyment.includes(Courses.CourseID) ? true : false}
                                 onClick={rating => this.userRating("classEnjoyment", Courses.CourseID, rating)}
                             />
                         </div>
-                        <div className="col-3 homeSubHeadings">Class Difficulty 
+                        <div className="col-lg-3 homeSubHeadings">Class Difficulty 
                             <HomeClassDifficulty
                                 Easy={Courses.Easy}
                                 Medium={Courses.Medium}
@@ -113,7 +113,7 @@ class Home extends React.Component {
                                 // onClick={rating => console.log(rating)}
                             />
                         </div>
-                        <div className="col-3 homeSubHeadings">Class Usefulness 
+                        <div className="col-lg-3 homeSubHeadings">Class Usefulness 
                             <HomeClassUsefulness
                                  Useful={Courses.Useful}
                                  NotUseful={Courses.NotUseful}

@@ -5,13 +5,24 @@
 <body>
     <% include ./partials/navbar %>
     <% include ./partials/announcement %>
-    <h1 class="pageHeaders">DEPARTMENTS</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col ml-sm-5 ml-0">
+                <h1 class="pageHeaders">DEPARTMENTS</h1>
+            </div>
+        </div>
+        <% print.forEach(function(departments) { %>
+        <div class="row pageLinks ml-sm-5 ml-0">
+            <a class="" href="/findcourse/<%= departments.Name %>"><%= departments.Name %></a>
+        </div>
+        <% }) %>
+    </div>
 
-    <% print.forEach(function(departments) { %>
+    <!-- <% print.forEach(function(departments) { %>
     <div class="pageLinks">
         <a class="" href="/findcourse/<%= departments.Name %>"><%= departments.Name %></a>
     </div>
-    <% }) %>
+    <% }) %> -->
 </body>
 
 </html>
