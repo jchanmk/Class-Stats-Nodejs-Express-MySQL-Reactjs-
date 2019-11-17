@@ -2,6 +2,7 @@ import StarList from "./StarList.js"
 
 class ClassEnjoyment extends React.Component {
     constructor(props) {
+        // console.log(props);
         super(props);
         this.state = {
             rating: props.ClassEnjoyment,

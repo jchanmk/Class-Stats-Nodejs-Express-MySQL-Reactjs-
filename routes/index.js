@@ -34,7 +34,7 @@ router.post('/signup', passport.authenticate('local-signup', {
 // commented this out for editing purposes
 // router.get('/home', middleware.isLoggedIn, function (req, res) {
 router.get('/home', function (req, res) {
-    console.log(req.user)
+    // console.log(req.user)
     const SELECT_ALL_COURSES =
         "SELECT CourseID " +
         "FROM Takes, Students " +
@@ -58,7 +58,7 @@ router.get('/home', function (req, res) {
 
 router.get('/home/:studentID', function (req, res) {
     var studentID = req.params.studentID;
-    console.log("made contact with react api " + studentID)
+    // console.log("made contact with react api " + studentID)
     const SELECT_HOME_INFO =
         "SELECT Name, Lname, Rating/Class_Enjoyment.Count AS ClassEnjoyment, " +
         "Easy/Class_Difficulty.Count AS Easy, Medium/Class_Difficulty.Count AS Medium, " +
@@ -83,6 +83,32 @@ router.get('/home/:studentID', function (req, res) {
             // console.log(obj)
             // res.render('home', obj);
             // console.log(results)
+            return res.json({
+                data: results
+            })
+        }
+    });
+});
+
+router.get('/popup/:studentID', function (req, res) {
+    var studentID = req.params.studentID;
+    console.log("made contact with react api " + studentID)
+    const SELECT_POPUP_INFO = 
+    "SELECT CourseID, Name, Lname " +
+    "FROM Courses, Instructors " +
+    "WHERE Courses.InstructorID = Instructors.InstructorID " +
+    "AND Courses.CourseID = (" +
+    "SELECT CourseID " +
+    "FROM Takes " +
+    "WHERE StudentID = ? " +
+    "LIMIT 1)";
+
+    connection.query(SELECT_POPUP_INFO, [studentID], (err, results) => {
+        if (err) {
+            console.log(err)
+            return res.send(err)
+        } else {
+            console.log(results);
             return res.json({
                 data: results
             })

@@ -65,14 +65,14 @@ class Ratings extends React.Component {
 
     // This sends ratings to the server
     // figure out a way to do without setTimeout, maybe do a promise 
-    postRatings(type) {
-        setTimeout(() => {
-            const { courseID, userRating } = this.state;
-            fetch(`http://localhost:3000/course/addrating?courseid=${courseID}&type=${type}&rating=${userRating}`)
+    postRatings(type, rating) {
+        // setTimeout(() => {
+            const { courseID } = this.state;
+            fetch(`http://localhost:3000/course/addrating?courseid=${courseID}&type=${type}&rating=${rating}`)
                 .then(response => response)
                 .then(response => this.getRatings())
                 .catch(err => console.log(err))
-        }, 500)
+        // }, 500)
     }
     userRating(type, rating) {
         if (type === "classEnjoyment" && !this.state.classEnjoyment) {
@@ -96,10 +96,10 @@ class Ratings extends React.Component {
         } else if (type === "profApproach" && !this.state.profApproach) {
             this.setState({ profApproach: true, userRating: rating })
         } else {
-            console.log("hi")
+            // console.log("hi")
             return
         }
-        this.postRatings(type);
+        this.postRatings(type, rating);
     }
 
     render() {

@@ -32,8 +32,8 @@ class Home extends React.Component {
         // then add ratings to state
         // render ratings
         fetch('http://localhost:3000/home/' + this.state.studentID)
-        .then(response => response.json())
-        .then(response => this.setState({ ratings: response.data }));
+            .then(response => response.json())
+            .then(response => this.setState({ ratings: response.data }));
     }
 
     postRatings(type, courseID, rating) {

@@ -100,22 +100,20 @@ var Ratings = function (_React$Component) {
 
     }, {
         key: "postRatings",
-        value: function postRatings(type) {
+        value: function postRatings(type, rating) {
             var _this3 = this;
 
-            setTimeout(function () {
-                var _state = _this3.state,
-                    courseID = _state.courseID,
-                    userRating = _state.userRating;
+            // setTimeout(() => {
+            var courseID = this.state.courseID;
 
-                fetch("http://localhost:3000/course/addrating?courseid=" + courseID + "&type=" + type + "&rating=" + userRating).then(function (response) {
-                    return response;
-                }).then(function (response) {
-                    return _this3.getRatings();
-                }).catch(function (err) {
-                    return console.log(err);
-                });
-            }, 500);
+            fetch("http://localhost:3000/course/addrating?courseid=" + courseID + "&type=" + type + "&rating=" + rating).then(function (response) {
+                return response;
+            }).then(function (response) {
+                return _this3.getRatings();
+            }).catch(function (err) {
+                return console.log(err);
+            });
+            // }, 500)
         }
     }, {
         key: "userRating",
@@ -141,10 +139,10 @@ var Ratings = function (_React$Component) {
             } else if (type === "profApproach" && !this.state.profApproach) {
                 this.setState({ profApproach: true, userRating: rating });
             } else {
-                console.log("hi");
+                // console.log("hi")
                 return;
             }
-            this.postRatings(type);
+            this.postRatings(type, rating);
         }
     }, {
         key: "render",

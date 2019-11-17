@@ -15,6 +15,8 @@ var ClassEnjoyment = function (_React$Component) {
         _classCallCheck(this, ClassEnjoyment);
 
         var _this = _possibleConstructorReturn(this, (ClassEnjoyment.__proto__ || Object.getPrototypeOf(ClassEnjoyment)).call(this, props));
+        // console.log(props);
+
 
         _this.state = {
             rating: props.ClassEnjoyment,
