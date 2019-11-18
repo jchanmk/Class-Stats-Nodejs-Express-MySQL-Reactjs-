@@ -2,8 +2,6 @@
 // and then have it pop up on the page
 // store in a cookie if the user has received a popup before so they only get one 
 'use strict';
-import PercentageRating from "./PercentageRating.js";
-import StarList from "./StarList.js"
 import ClassEnjoyment from "./ClassEnjoyment.js"
 import ClassUsefulness from "./ClassUsefulness.js"
 import ExamDifficulty from "./ExamDifficulty.js"
