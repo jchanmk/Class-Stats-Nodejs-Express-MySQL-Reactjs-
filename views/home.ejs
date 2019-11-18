@@ -5,6 +5,7 @@
 <body>
     <% include ./partials/navbar %>
     <% include ./partials/announcement %>
+    <span id="userInfo" data-name="<%= user.StudentID %>"></span>
 
     <div class="container">
         <div class="row mt-4">
@@ -23,6 +24,6 @@
 
     <!-- Load our React component. -->
     <script type="module" src="/HomeRatings.js"></script>
-    <!-- <script type="module" src="/PopupRatings.js"></script> -->
+    <script type="module" src="/PopupRatings.js"></script>
 
     </html>

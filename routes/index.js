@@ -92,6 +92,7 @@ router.get('/home/:studentID', function (req, res) {
 
 router.get('/popup/:studentID', function (req, res) {
     var studentID = req.params.studentID;
+    var semester = "Fall 2019"
     console.log("made contact with react api " + studentID)
     const SELECT_POPUP_INFO = 
     "SELECT CourseID, Name, Lname " +
@@ -100,10 +101,10 @@ router.get('/popup/:studentID', function (req, res) {
     "AND Courses.CourseID = (" +
     "SELECT CourseID " +
     "FROM Takes " +
-    "WHERE StudentID = ? " +
+    "WHERE Semester != ? AND StudentID = ? " +
     "LIMIT 1)";
 
-    connection.query(SELECT_POPUP_INFO, [studentID], (err, results) => {
+    connection.query(SELECT_POPUP_INFO, [semester, studentID], (err, results) => {
         if (err) {
             console.log(err)
             return res.send(err)
@@ -123,7 +124,10 @@ router.get("/departments", middleware.isLoggedIn, function (req, res) {
         if (err) {
             return res.send(err)
         } else {
-            obj = { print: results };
+            obj = { 
+                print: results,
+                user: req.user
+            };
             res.render('departments', obj)
         }
     });

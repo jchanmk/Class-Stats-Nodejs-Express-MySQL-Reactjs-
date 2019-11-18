@@ -26,7 +26,10 @@ router.get("/:department", middleware.isLoggedIn, function (req, res) {
         if (err) {
             return res.send(err)
         } else {
-            obj = { print: results };
+            obj = { 
+                print: results,
+                user: req.user
+            };
             // console.log(results);
       
             res.render('courses', obj)
@@ -56,7 +59,10 @@ router.get("/:department/:course", middleware.isLoggedIn, function (req, res) {
         if (err) {
             return res.send(err)
         } else {
-            obj = { print: results };
+            obj = { 
+                print: results,
+                user: req.user
+            };
             res.render('instructors', obj)
         }
     });

@@ -5,6 +5,9 @@
 <body>
     <% include ./partials/navbar %>
     <% include ./partials/announcement %>
+
+    <span id="userInfo" data-name="<%= user.StudentID %>"></span>
+
     <div class="container">
         <div class="row">
             <div class="col ml-sm-5 ml-0">
@@ -18,11 +21,14 @@
         <% }) %>
     </div>
 
-    <!-- <% print.forEach(function(departments) { %>
-    <div class="pageLinks">
-        <a class="" href="/findcourse/<%= departments.Name %>"><%= departments.Name %></a>
-    </div>
-    <% }) %> -->
+    <div id="popup"></div>
+
+    <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+    <script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script>
+
+    <!-- Load our React component. -->
+    <script type="module" src="/PopupRatings.js"></script>
 </body>
 
 </html>

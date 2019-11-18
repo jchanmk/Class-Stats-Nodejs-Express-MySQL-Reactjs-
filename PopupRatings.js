@@ -37,7 +37,7 @@ var PopupRatings = function (_React$Component) {
             courseID: null,
             courseName: null,
             profName: null,
-            studentID: document.getElementById('courseTitle').getAttribute('data-name').replace(/ /g, "_"),
+            studentID: document.getElementById('userInfo').getAttribute('data-name').replace(/ /g, "_"),
             ratings: [{ ClassEnjoyment: null }],
             ratings2: [],
             ratings3: [],
@@ -52,8 +52,9 @@ var PopupRatings = function (_React$Component) {
             classType: null,
             testHeavy: null,
             profRating: null,
-            userRating: null,
-            popup: true
+            userRating: 0,
+            popupExit: false,
+            popup: false
         };
         return _this;
     }
@@ -61,15 +62,17 @@ var PopupRatings = function (_React$Component) {
     _createClass(PopupRatings, [{
         key: "componentDidMount",
         value: function componentDidMount() {
+            var _this2 = this;
+
             this.getClassInfo();
-            // this.getRatings();
-            // this.getRatings();
-            // setTimeout(() => this.setState({popup: true}), 4000);
+            setTimeout(function () {
+                return _this2.setState({ popup: true });
+            }, 30000);
         }
     }, {
         key: "getClassInfo",
         value: function getClassInfo() {
-            var _this2 = this;
+            var _this3 = this;
 
             // Write a function that calls to the server, picks the class info for one of the courses
             // that the user has taken in the past 
@@ -78,7 +81,7 @@ var PopupRatings = function (_React$Component) {
             })
             // .then(response => console.log(response))
             .then(function (response) {
-                return _this2.setState({
+                return _this3.setState({
                     courseID: response.data[0].CourseID,
                     courseName: response.data[0].Name,
                     profName: response.data[0].Lname
@@ -91,37 +94,37 @@ var PopupRatings = function (_React$Component) {
     }, {
         key: "getRatings",
         value: function getRatings() {
-            var _this3 = this;
+            var _this4 = this;
 
             // console.log(this.state.courseID)
             fetch('http://localhost:3000/course/findratings1?courseid=' + this.state.courseID).then(function (response) {
                 return response.json();
             }).then(function (response) {
-                return _this3.setState({ ratings: response.data });
+                return _this4.setState({ ratings: response.data });
             });
 
             fetch('http://localhost:3000/course/findratings2?courseid=' + this.state.courseID).then(function (response2) {
                 return response2.json();
             }).then(function (response2) {
-                return _this3.setState({ ratings2: response2.data });
+                return _this4.setState({ ratings2: response2.data });
             });
 
             fetch('http://localhost:3000/course/findratings3?courseid=' + this.state.courseID).then(function (response3) {
                 return response3.json();
             }).then(function (response3) {
-                return _this3.setState({ ratings3: response3.data });
+                return _this4.setState({ ratings3: response3.data });
             });
 
             fetch('http://localhost:3000/course/findratings4?courseid=' + this.state.courseID).then(function (response4) {
                 return response4.json();
             }).then(function (response4) {
-                return _this3.setState({ ratings4: response4.data });
+                return _this4.setState({ ratings4: response4.data });
             });
 
             fetch('http://localhost:3000/course/findratings5?courseid=' + this.state.courseID).then(function (response5) {
                 return response5.json();
             }).then(function (response5) {
-                return _this3.setState({ ratings5: response5.data });
+                return _this4.setState({ ratings5: response5.data });
             });
         }
 
@@ -131,14 +134,14 @@ var PopupRatings = function (_React$Component) {
     }, {
         key: "postRatings",
         value: function postRatings(type, rating) {
-            var _this4 = this;
+            var _this5 = this;
 
             var courseID = this.state.courseID;
 
             fetch("http://localhost:3000/course/addrating?courseid=" + courseID + "&type=" + type + "&rating=" + rating).then(function (response) {
                 return response;
             }).then(function (response) {
-                return _this4.getRatings();
+                return _this5.getRatings();
             }).catch(function (err) {
                 return console.log(err);
             });
@@ -147,168 +150,195 @@ var PopupRatings = function (_React$Component) {
         key: "userRating",
         value: function userRating(type, rating) {
             if (type === "classEnjoyment" && !this.state.classEnjoyment) {
-                this.setState({ classEnjoyment: true, userRating: rating });
+                this.setState({ classEnjoyment: true });
             } else if (type === "classUsefulness" && !this.state.classUsefulness) {
-                this.setState({ classUsefulness: true, userRating: rating });
+                this.setState({ classUsefulness: true });
             } else if (type === "examDifficulty" && !this.state.examDifficulty) {
-                this.setState({ examDifficulty: true, userRating: rating });
+                this.setState({ examDifficulty: true });
             } else if (type === "attendanceAttn" && !this.state.attendanceAttn) {
-                this.setState({ attendanceAttn: true, userRating: rating });
+                this.setState({ attendanceAttn: true });
             } else if (type === "profRating" && !this.state.profRating) {
-                this.setState({ profRating: true, userRating: rating });
+                this.setState({ profRating: true });
             } else if (type === "classDifficulty" && !this.state.classDifficulty) {
-                this.setState({ classDifficulty: true, userRating: rating });
+                this.setState({ classDifficulty: true });
             } else if (type === "testHeavy" && !this.state.testHeavy) {
-                this.setState({ testHeavy: true, userRating: rating });
+                this.setState({ testHeavy: true });
             } else if (type === "classType" && !this.state.classType) {
-                this.setState({ classType: true, userRating: rating });
+                this.setState({ classType: true });
             } else if (type === "homeworkLoad" && !this.state.homeworkLoad) {
-                this.setState({ homeworkLoad: true, userRating: rating });
+                this.setState({ homeworkLoad: true });
             } else if (type === "profApproach" && !this.state.profApproach) {
-                this.setState({ profApproach: true, userRating: rating });
+                this.setState({ profApproach: true });
             } else {
                 return;
             }
-            // console.log(this.state.courseID);
-            // console.log(this.state.courseName);
-            // console.log(this.state.profName);
-            // console.log(rating)
-            // console.log(this.state.ratings)
+            this.setState({ userRating: this.state.userRating + 1 });
             this.postRatings(type, rating);
+        }
+    }, {
+        key: "closePopup",
+        value: function closePopup() {
+            console.log(this.state.userRating);
+            this.setState({ popupExit: true });
+            if (this.state.userRating < 3) {
+                return;
+            }
+            this.setState({ popup: false });
         }
     }, {
         key: "render",
         value: function render() {
-            var _this5 = this;
+            var _this6 = this;
 
             var ratings = this.state.ratings;
             var ratings2 = this.state.ratings2;
             var ratings3 = this.state.ratings3;
             var ratings4 = this.state.ratings4;
             var ratings5 = this.state.ratings5;
+            var popup = React.createElement(
+                "div",
+                { id: "myModal", className: "popup", style: { display: 'block' } },
+                React.createElement(
+                    "div",
+                    { className: "container modal-content" },
+                    React.createElement(
+                        "div",
+                        null,
+                        React.createElement("i", {
+                            className: "fas fa-times float-right popupExit",
+                            onClick: function onClick() {
+                                return _this6.closePopup();
+                            }
+                        }),
+                        React.createElement(
+                            "div",
+                            { className: "float-right popupExitText", style: this.state.popupExit ? { display: 'block' } : { display: 'none' } },
+                            "You must submit at ",
+                            React.createElement("br", null),
+                            "least 3 ratings to exit!"
+                        ),
+                        React.createElement(PopupHeaders, {
+                            ClassName: this.state.courseName,
+                            Professor: this.state.profName
+                        })
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "row" },
+                        React.createElement(
+                            "div",
+                            { className: "col-md-6 pl-lg-5" },
+                            React.createElement(ClassEnjoyment, {
+                                ClassEnjoyment: this.state.classEnjoyment && ratings.length ? ratings[0].ClassEnjoyment : null,
+                                Submitted: this.state.classEnjoyment,
+                                onClick: function onClick(rating) {
+                                    return _this6.userRating("classEnjoyment", rating);
+                                }
+                            })
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "col-md-6" },
+                            React.createElement(ProfRating
+                            // ProfRating={ratings3[0].ProfRating}
+                            , { ProfRating: this.state.profRating && ratings3.length ? ratings3[0].ProfRating : null,
+                                Submitted: this.state.profRating,
+                                onClick: function onClick(rating) {
+                                    return _this6.userRating("profRating", rating);
+                                }
+                            })
+                        )
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "row" },
+                        React.createElement(
+                            "div",
+                            { className: "col-md-6 pl-lg-5" },
+                            React.createElement(ClassUsefulness
+                            // Useful={ratings[0].Useful}
+                            , { Useful: this.state.classUsefulness && ratings.length ? ratings[0].Useful : null,
+                                NotUseful: this.state.classUsefulness && ratings.length ? ratings[0].NotUseful : null,
+                                Submitted: this.state.classUsefulness,
+                                onClick: function onClick(rating) {
+                                    return _this6.userRating("classUsefulness", rating);
+                                }
+                            }),
+                            React.createElement(ExamDifficulty, {
+                                Easy: this.state.examDifficulty && ratings2.length ? ratings2[0].Easy : null,
+                                Medium: this.state.examDifficulty && ratings2.length ? ratings2[0].Medium : null,
+                                Hard: this.state.examDifficulty && ratings2.length ? ratings2[0].Hard : null,
+                                Submitted: this.state.examDifficulty,
+                                onClick: function onClick(rating) {
+                                    return _this6.userRating("examDifficulty", rating);
+                                }
+                            }),
+                            React.createElement(AttendanceAttn, {
+                                Inattentive: this.state.attendanceAttn && ratings2.length ? ratings2[0].Inattentive : null,
+                                Attentive: this.state.attendanceAttn && ratings2.length ? ratings2[0].Attentive : null,
+                                Submitted: this.state.attendanceAttn,
+                                onClick: function onClick(rating) {
+                                    return _this6.userRating("attendanceAttn", rating);
+                                }
+                            }),
+                            React.createElement(ClassType, {
+                                Lecture: this.state.classType && ratings4.length ? ratings4[0].Lecture : null,
+                                Discussion: this.state.classType && ratings4.length ? ratings4[0].Discussion : null,
+                                Submitted: this.state.classType,
+                                onClick: function onClick(rating) {
+                                    return _this6.userRating("classType", rating);
+                                }
+                            })
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "col-md-6" },
+                            React.createElement(ClassDiffuculty, {
+                                Easy: this.state.classDifficulty && ratings3.length ? ratings3[0].Easy : null,
+                                Medium: this.state.classDifficulty && ratings3.length ? ratings3[0].Medium : null,
+                                Hard: this.state.classDifficulty && ratings3.length ? ratings3[0].Hard : null,
+                                Submitted: this.state.classDifficulty,
+                                onClick: function onClick(rating) {
+                                    return _this6.userRating("classDifficulty", rating);
+                                }
+                            }),
+                            React.createElement(TestHeavy, {
+                                Light: this.state.testHeavy && ratings4.length ? ratings4[0].Light : null,
+                                Heavy: this.state.testHeavy && ratings4.length ? ratings4[0].Heavy : null
+                                // Heavy={ratings4[0].Heavy}
+                                , Submitted: this.state.testHeavy,
+                                onClick: function onClick(rating) {
+                                    return _this6.userRating("testHeavy", rating);
+                                }
+                            }),
+                            React.createElement(HomeworkLoad, {
+                                Light: this.state.homeworkLoad && ratings5.length ? ratings5[0].Light : null,
+                                Heavy: this.state.homeworkLoad && ratings5.length ? ratings5[0].Heavy : null,
+                                Submitted: this.state.homeworkLoad,
+                                onClick: function onClick(rating) {
+                                    return _this6.userRating("homeworkLoad", rating);
+                                }
+                            }),
+                            React.createElement(ProfApproach, {
+                                Yes: this.state.profApproach && ratings5.length ? ratings5[0].Yes : null,
+                                No: this.state.profApproach && ratings5.length ? ratings5[0].No : null,
+                                Submitted: this.state.profApproach,
+                                onClick: function onClick(rating) {
+                                    return _this6.userRating("profApproach", rating);
+                                }
+                            })
+                        )
+                    )
+                )
+            );
+            if (!this.state.popup) {
+                popup = null;
+            }
 
             return React.createElement(
                 "div",
                 { className: "container" },
-                React.createElement(
-                    "div",
-                    { id: "myModal", className: "popup", style: this.state.popup ? { display: 'block' } : { display: 'false' } },
-                    React.createElement(
-                        "div",
-                        { className: "container modal-content" },
-                        React.createElement(PopupHeaders, {
-                            ClassName: this.state.courseName,
-                            Professor: this.state.profName
-                        }),
-                        React.createElement(
-                            "div",
-                            { className: "row" },
-                            React.createElement(
-                                "div",
-                                { className: "col-md-6 pl-lg-5" },
-                                React.createElement(ClassEnjoyment, {
-                                    ClassEnjoyment: this.state.classEnjoyment && ratings.length ? ratings[0].ClassEnjoyment : null,
-                                    Submitted: this.state.classEnjoyment,
-                                    onClick: function onClick(rating) {
-                                        return _this5.userRating("classEnjoyment", rating);
-                                    }
-                                })
-                            ),
-                            React.createElement(
-                                "div",
-                                { className: "col-md-6" },
-                                React.createElement(ProfRating
-                                // ProfRating={ratings3[0].ProfRating}
-                                , { ProfRating: this.state.profRating && ratings3.length ? ratings3[0].ProfRating : null,
-                                    Submitted: this.state.profRating,
-                                    onClick: function onClick(rating) {
-                                        return _this5.userRating("profRating", rating);
-                                    }
-                                })
-                            )
-                        ),
-                        React.createElement(
-                            "div",
-                            { className: "row" },
-                            React.createElement(
-                                "div",
-                                { className: "col-md-6 pl-lg-5" },
-                                React.createElement(ClassUsefulness
-                                // Useful={ratings[0].Useful}
-                                , { Useful: this.state.classUsefulness && ratings.length ? ratings[0].Useful : null,
-                                    NotUseful: this.state.classUsefulness && ratings.length ? ratings[0].NotUseful : null,
-                                    Submitted: this.state.classUsefulness,
-                                    onClick: function onClick(rating) {
-                                        return _this5.userRating("classUsefulness", rating);
-                                    }
-                                }),
-                                React.createElement(ExamDifficulty, {
-                                    Easy: this.state.examDifficulty && ratings2.length ? ratings2[0].Easy : null,
-                                    Medium: this.state.examDifficulty && ratings2.length ? ratings2[0].Medium : null,
-                                    Hard: this.state.examDifficulty && ratings2.length ? ratings2[0].Hard : null,
-                                    Submitted: this.state.examDifficulty,
-                                    onClick: function onClick(rating) {
-                                        return _this5.userRating("examDifficulty", rating);
-                                    }
-                                }),
-                                React.createElement(AttendanceAttn, {
-                                    Inattentive: this.state.attendanceAttn && ratings2.length ? ratings2[0].Inattentive : null,
-                                    Attentive: this.state.attendanceAttn && ratings2.length ? ratings2[0].Attentive : null,
-                                    Submitted: this.state.attendanceAttn,
-                                    onClick: function onClick(rating) {
-                                        return _this5.userRating("attendanceAttn", rating);
-                                    }
-                                }),
-                                React.createElement(ClassType, {
-                                    Lecture: this.state.classType && ratings4.length ? ratings4[0].Lecture : null,
-                                    Discussion: this.state.classType && ratings4.length ? ratings4[0].Discussion : null,
-                                    Submitted: this.state.classType,
-                                    onClick: function onClick(rating) {
-                                        return _this5.userRating("classType", rating);
-                                    }
-                                })
-                            ),
-                            React.createElement(
-                                "div",
-                                { className: "col-md-6" },
-                                React.createElement(ClassDiffuculty, {
-                                    Easy: this.state.classDifficulty && ratings3.length ? ratings3[0].Easy : null,
-                                    Medium: this.state.classDifficulty && ratings3.length ? ratings3[0].Medium : null,
-                                    Hard: this.state.classDifficulty && ratings3.length ? ratings3[0].Hard : null,
-                                    Submitted: this.state.classDifficulty,
-                                    onClick: function onClick(rating) {
-                                        return _this5.userRating("classDifficulty", rating);
-                                    }
-                                }),
-                                React.createElement(TestHeavy, {
-                                    Light: this.state.testHeavy && ratings4.length ? ratings4[0].Light : null,
-                                    Heavy: this.state.testHeavy && ratings4.length ? ratings4[0].Heavy : null
-                                    // Heavy={ratings4[0].Heavy}
-                                    , Submitted: this.state.testHeavy,
-                                    onClick: function onClick(rating) {
-                                        return _this5.userRating("testHeavy", rating);
-                                    }
-                                }),
-                                React.createElement(HomeworkLoad, {
-                                    Light: this.state.homeworkLoad && ratings5.length ? ratings5[0].Light : null,
-                                    Heavy: this.state.homeworkLoad && ratings5.length ? ratings5[0].Heavy : null,
-                                    Submitted: this.state.homeworkLoad,
-                                    onClick: function onClick(rating) {
-                                        return _this5.userRating("homeworkLoad", rating);
-                                    }
-                                }),
-                                React.createElement(ProfApproach, {
-                                    Yes: this.state.profApproach && ratings5.length ? ratings5[0].Yes : null,
-                                    No: this.state.profApproach && ratings5.length ? ratings5[0].No : null,
-                                    Submitted: this.state.profApproach,
-                                    onClick: function onClick(rating) {
-                                        return _this5.userRating("profApproach", rating);
-                                    }
-                                })
-                            )
-                        )
-                    )
-                )
+                popup
             );
         }
     }]);

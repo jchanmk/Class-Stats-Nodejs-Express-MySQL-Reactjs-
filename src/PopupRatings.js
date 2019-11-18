@@ -23,7 +23,7 @@ class PopupRatings extends React.Component {
             courseID: null,
             courseName: null,
             profName: null,
-            studentID: document.getElementById('courseTitle').getAttribute('data-name').replace(/ /g, "_"),
+            studentID: document.getElementById('userInfo').getAttribute('data-name').replace(/ /g, "_"),
             ratings: [{ ClassEnjoyment: null }],
             ratings2: [],
             ratings3: [],
@@ -38,16 +38,15 @@ class PopupRatings extends React.Component {
             classType: null,
             testHeavy: null,
             profRating: null,
-            userRating: null,
-            popup: true
+            userRating: 0,
+            popupExit: false,
+            popup: false
         };
     }
 
     componentDidMount() {
         this.getClassInfo();
-        // this.getRatings();
-        // this.getRatings();
-        // setTimeout(() => this.setState({popup: true}), 4000);
+        setTimeout(() => this.setState({popup: true}), 30000);
     }
 
     getClassInfo() {
@@ -98,34 +97,39 @@ class PopupRatings extends React.Component {
     }
     userRating(type, rating) {
         if (type === "classEnjoyment" && !this.state.classEnjoyment) {
-            this.setState({ classEnjoyment: true, userRating: rating })
+            this.setState({ classEnjoyment: true})
         } else if (type === "classUsefulness" && !this.state.classUsefulness) {
-            this.setState({ classUsefulness: true, userRating: rating })
+            this.setState({ classUsefulness: true})
         } else if (type === "examDifficulty" && !this.state.examDifficulty) {
-            this.setState({ examDifficulty: true, userRating: rating })
+            this.setState({ examDifficulty: true})
         } else if (type === "attendanceAttn" && !this.state.attendanceAttn) {
-            this.setState({ attendanceAttn: true, userRating: rating })
+            this.setState({ attendanceAttn: true})
         } else if (type === "profRating" && !this.state.profRating) {
-            this.setState({ profRating: true, userRating: rating })
+            this.setState({ profRating: true})
         } else if (type === "classDifficulty" && !this.state.classDifficulty) {
-            this.setState({ classDifficulty: true, userRating: rating })
+            this.setState({ classDifficulty: true})
         } else if (type === "testHeavy" && !this.state.testHeavy) {
-            this.setState({ testHeavy: true, userRating: rating })
+            this.setState({ testHeavy: true})
         } else if (type === "classType" && !this.state.classType) {
-            this.setState({ classType: true, userRating: rating })
+            this.setState({ classType: true})
         } else if (type === "homeworkLoad" && !this.state.homeworkLoad) {
-            this.setState({ homeworkLoad: true, userRating: rating })
+            this.setState({ homeworkLoad: true})
         } else if (type === "profApproach" && !this.state.profApproach) {
-            this.setState({ profApproach: true, userRating: rating })
+            this.setState({ profApproach: true})
         } else {
             return
         }
-        // console.log(this.state.courseID);
-        // console.log(this.state.courseName);
-        // console.log(this.state.profName);
-        // console.log(rating)
-        // console.log(this.state.ratings)
+        this.setState({userRating: this.state.userRating+1});
         this.postRatings(type, rating);
+    }
+
+    closePopup() {
+        console.log(this.state.userRating);
+        this.setState({popupExit: true})
+        if(this.state.userRating < 3){
+            return
+        }
+        this.setState({ popup: false })
     }
 
     render() {
@@ -134,93 +138,109 @@ class PopupRatings extends React.Component {
         const ratings3 = this.state.ratings3;
         const ratings4 = this.state.ratings4;
         const ratings5 = this.state.ratings5;
-
-        return (
-            <div className="container">
-                <div id="myModal" className="popup" style={this.state.popup ? { display: 'block' } : { display: 'false' }}>
-                    <div className="container modal-content">
+        let popup = (
+            <div id="myModal" className="popup" style={{ display: 'block' }}>
+                <div className="container modal-content">
+                    <div>
+                        <i
+                            className="fas fa-times float-right popupExit"
+                            onClick={() => this.closePopup()}
+                        ></i> 
+                        <div className="float-right popupExitText" style={this.state.popupExit ? {display: 'block'} : {display: 'none'}}>
+                            You must submit at <br/>least 3 ratings to exit!
+                        </div>
                         <PopupHeaders
                             ClassName={this.state.courseName}
                             Professor={this.state.profName}
                         />
-                        <div className="row">
-                            <div className="col-md-6 pl-lg-5">
-                                <ClassEnjoyment
-                                    ClassEnjoyment={this.state.classEnjoyment && ratings.length ? ratings[0].ClassEnjoyment : null}
-                                    Submitted={this.state.classEnjoyment}
-                                    onClick={rating => this.userRating("classEnjoyment", rating)}
-                                />
-                            </div>
-                            <div className="col-md-6">
-                                <ProfRating
-                                    // ProfRating={ratings3[0].ProfRating}
-                                    ProfRating={this.state.profRating && ratings3.length ? ratings3[0].ProfRating : null}
-                                    Submitted={this.state.profRating}
-                                    onClick={rating => this.userRating("profRating", rating)}
-                                />
-                            </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-md-6 pl-lg-5">
+                            <ClassEnjoyment
+                                ClassEnjoyment={this.state.classEnjoyment && ratings.length ? ratings[0].ClassEnjoyment : null}
+                                Submitted={this.state.classEnjoyment}
+                                onClick={rating => this.userRating("classEnjoyment", rating)}
+                            />
                         </div>
-                        <div className="row">
-                            <div className="col-md-6 pl-lg-5">
-                                <ClassUsefulness
-                                    // Useful={ratings[0].Useful}
-                                    Useful={this.state.classUsefulness && ratings.length ? ratings[0].Useful : null}
-                                    NotUseful={this.state.classUsefulness && ratings.length ? ratings[0].NotUseful : null}
-                                    Submitted={this.state.classUsefulness}
-                                    onClick={rating => this.userRating("classUsefulness", rating)}
-                                />
-                                <ExamDifficulty
-                                    Easy={this.state.examDifficulty && ratings2.length ? ratings2[0].Easy : null}
-                                    Medium={this.state.examDifficulty && ratings2.length ? ratings2[0].Medium : null}
-                                    Hard={this.state.examDifficulty && ratings2.length ? ratings2[0].Hard : null}
-                                    Submitted={this.state.examDifficulty}
-                                    onClick={rating => this.userRating("examDifficulty", rating)}
-                                />
-                                <AttendanceAttn
-                                    Inattentive={this.state.attendanceAttn && ratings2.length ? ratings2[0].Inattentive : null}
-                                    Attentive={this.state.attendanceAttn && ratings2.length ? ratings2[0].Attentive : null}
-                                    Submitted={this.state.attendanceAttn}
-                                    onClick={rating => this.userRating("attendanceAttn", rating)}
-                                />
+                        <div className="col-md-6">
+                            <ProfRating
+                                // ProfRating={ratings3[0].ProfRating}
+                                ProfRating={this.state.profRating && ratings3.length ? ratings3[0].ProfRating : null}
+                                Submitted={this.state.profRating}
+                                onClick={rating => this.userRating("profRating", rating)}
+                            />
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-md-6 pl-lg-5">
+                            <ClassUsefulness
+                                // Useful={ratings[0].Useful}
+                                Useful={this.state.classUsefulness && ratings.length ? ratings[0].Useful : null}
+                                NotUseful={this.state.classUsefulness && ratings.length ? ratings[0].NotUseful : null}
+                                Submitted={this.state.classUsefulness}
+                                onClick={rating => this.userRating("classUsefulness", rating)}
+                            />
+                            <ExamDifficulty
+                                Easy={this.state.examDifficulty && ratings2.length ? ratings2[0].Easy : null}
+                                Medium={this.state.examDifficulty && ratings2.length ? ratings2[0].Medium : null}
+                                Hard={this.state.examDifficulty && ratings2.length ? ratings2[0].Hard : null}
+                                Submitted={this.state.examDifficulty}
+                                onClick={rating => this.userRating("examDifficulty", rating)}
+                            />
+                            <AttendanceAttn
+                                Inattentive={this.state.attendanceAttn && ratings2.length ? ratings2[0].Inattentive : null}
+                                Attentive={this.state.attendanceAttn && ratings2.length ? ratings2[0].Attentive : null}
+                                Submitted={this.state.attendanceAttn}
+                                onClick={rating => this.userRating("attendanceAttn", rating)}
+                            />
 
-                                <ClassType
-                                    Lecture={this.state.classType && ratings4.length ? ratings4[0].Lecture : null}
-                                    Discussion={this.state.classType && ratings4.length ? ratings4[0].Discussion : null}
-                                    Submitted={this.state.classType}
-                                    onClick={rating => this.userRating("classType", rating)}
-                                />
-                            </div>
-                            <div className="col-md-6">
-                                <ClassDiffuculty
-                                    Easy={this.state.classDifficulty && ratings3.length ? ratings3[0].Easy : null}
-                                    Medium={this.state.classDifficulty && ratings3.length ? ratings3[0].Medium : null}
-                                    Hard={this.state.classDifficulty && ratings3.length ? ratings3[0].Hard : null}
-                                    Submitted={this.state.classDifficulty}
-                                    onClick={rating => this.userRating("classDifficulty", rating)}
-                                />
-                                <TestHeavy
-                                    Light={this.state.testHeavy && ratings4.length ? ratings4[0].Light : null}
-                                    Heavy={this.state.testHeavy && ratings4.length ? ratings4[0].Heavy : null}
-                                    // Heavy={ratings4[0].Heavy}
-                                    Submitted={this.state.testHeavy}
-                                    onClick={rating => this.userRating("testHeavy", rating)}
-                                />
-                                <HomeworkLoad
-                                    Light={this.state.homeworkLoad && ratings5.length ? ratings5[0].Light : null}
-                                    Heavy={this.state.homeworkLoad && ratings5.length ? ratings5[0].Heavy : null}
-                                    Submitted={this.state.homeworkLoad}
-                                    onClick={rating => this.userRating("homeworkLoad", rating)}
-                                />
-                                <ProfApproach
-                                    Yes={this.state.profApproach && ratings5.length ? ratings5[0].Yes : null}
-                                    No={this.state.profApproach && ratings5.length ? ratings5[0].No : null}
-                                    Submitted={this.state.profApproach}
-                                    onClick={rating => this.userRating("profApproach", rating)}
-                                />
-                            </div>
+                            <ClassType
+                                Lecture={this.state.classType && ratings4.length ? ratings4[0].Lecture : null}
+                                Discussion={this.state.classType && ratings4.length ? ratings4[0].Discussion : null}
+                                Submitted={this.state.classType}
+                                onClick={rating => this.userRating("classType", rating)}
+                            />
+                        </div>
+                        <div className="col-md-6">
+                            <ClassDiffuculty
+                                Easy={this.state.classDifficulty && ratings3.length ? ratings3[0].Easy : null}
+                                Medium={this.state.classDifficulty && ratings3.length ? ratings3[0].Medium : null}
+                                Hard={this.state.classDifficulty && ratings3.length ? ratings3[0].Hard : null}
+                                Submitted={this.state.classDifficulty}
+                                onClick={rating => this.userRating("classDifficulty", rating)}
+                            />
+                            <TestHeavy
+                                Light={this.state.testHeavy && ratings4.length ? ratings4[0].Light : null}
+                                Heavy={this.state.testHeavy && ratings4.length ? ratings4[0].Heavy : null}
+                                // Heavy={ratings4[0].Heavy}
+                                Submitted={this.state.testHeavy}
+                                onClick={rating => this.userRating("testHeavy", rating)}
+                            />
+                            <HomeworkLoad
+                                Light={this.state.homeworkLoad && ratings5.length ? ratings5[0].Light : null}
+                                Heavy={this.state.homeworkLoad && ratings5.length ? ratings5[0].Heavy : null}
+                                Submitted={this.state.homeworkLoad}
+                                onClick={rating => this.userRating("homeworkLoad", rating)}
+                            />
+                            <ProfApproach
+                                Yes={this.state.profApproach && ratings5.length ? ratings5[0].Yes : null}
+                                No={this.state.profApproach && ratings5.length ? ratings5[0].No : null}
+                                Submitted={this.state.profApproach}
+                                onClick={rating => this.userRating("profApproach", rating)}
+                            />
                         </div>
                     </div>
                 </div>
+            </div>
+        )
+        if(!this.state.popup){
+            popup = null;
+        }
+        
+
+        return (
+            <div className="container">
+                {popup}
             </div>
         );
     }

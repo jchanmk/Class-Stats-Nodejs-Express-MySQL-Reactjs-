@@ -8,7 +8,8 @@
     <div class="container">
         <div class="row mb-4">
             <div class="col-12">
-                <h1 id="courseTitle" class="courseHeaders mb-3" data-name="<%= user.StudentID %>"><%= classInfo[0].Name %></h1>
+                <span id="userInfo" data-name="<%= user.StudentID %>"></span>
+                <h1 class="courseHeaders mb-3"><%= classInfo[0].Name %></h1>
                 <h4>Professer <%= classInfo[0].Lname %></h4>
                 <!-- <h4><%= user.StudentID %></h4> -->
             </div>
@@ -22,12 +23,7 @@
 
     <div id="ratings_container"></div>
 
-    <!-- <div id="myModal" class="popup">
-        <div class="modal-content">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam, numquam?</p>
-        </div>
-    </div> -->
-    <div id="popup"></div>
+    <div id="popup"></div> 
 
 <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
 <script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
