@@ -65,9 +65,15 @@ var PopupRatings = function (_React$Component) {
             var _this2 = this;
 
             this.getClassInfo();
-            setTimeout(function () {
-                return _this2.setState({ popup: true });
-            }, 30000);
+            if (sessionStorage.getItem('popup') !== 'shown') {
+                setTimeout(function () {
+                    return _this2.setState({ popup: true });
+                }, 20000);
+                // localStorage.setItem('popup', 'shown');
+                sessionStorage.setItem('popup', 'shown');
+            } else {
+                console.log("popup isnt coming");
+            }
         }
     }, {
         key: "getClassInfo",

@@ -9,6 +9,12 @@ const connection = mysql.createConnection(dbconfig.connection);
 connection.query('USE ' + dbconfig.database);
 
 router.get("/", function (req, res) {
+    if(req.user != null){
+        // console.log("you logged in arleady")
+        // console.log(req.user)
+        res.redirect("/home");
+        return;
+    }
     res.render("login", { message: req.flash('loginMessage') });
 })
 
@@ -32,8 +38,8 @@ router.post('/signup', passport.authenticate('local-signup', {
 }));
 
 // commented this out for editing purposes
-// router.get('/home', middleware.isLoggedIn, function (req, res) {
-router.get('/home', function (req, res) {
+router.get('/home', middleware.isLoggedIn, function (req, res) {
+// router.get('/home', function (req, res) {
     // console.log(req.user)
     const SELECT_ALL_COURSES =
         "SELECT CourseID " +

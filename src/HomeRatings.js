@@ -37,13 +37,13 @@ class Home extends React.Component {
     }
 
     postRatings(type, courseID, rating) {
-        setTimeout(() => {
+        // setTimeout(() => {
             // const { courseID, userRating } = this.state;
             fetch(`http://localhost:3000/course/addrating?courseid=${courseID}&type=${type}&rating=${rating}`)
                 .then(response => response)
                 .then(response => this.getRatings())
                 .catch(err => console.log(err))
-        }, 500)
+        // }, 500)
     }
     userRating(type, courseID, rating) {
         // console.log(type)

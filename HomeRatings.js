@@ -61,16 +61,16 @@ var Home = function (_React$Component) {
         value: function postRatings(type, courseID, rating) {
             var _this3 = this;
 
-            setTimeout(function () {
-                // const { courseID, userRating } = this.state;
-                fetch("http://localhost:3000/course/addrating?courseid=" + courseID + "&type=" + type + "&rating=" + rating).then(function (response) {
-                    return response;
-                }).then(function (response) {
-                    return _this3.getRatings();
-                }).catch(function (err) {
-                    return console.log(err);
-                });
-            }, 500);
+            // setTimeout(() => {
+            // const { courseID, userRating } = this.state;
+            fetch("http://localhost:3000/course/addrating?courseid=" + courseID + "&type=" + type + "&rating=" + rating).then(function (response) {
+                return response;
+            }).then(function (response) {
+                return _this3.getRatings();
+            }).catch(function (err) {
+                return console.log(err);
+            });
+            // }, 500)
         }
     }, {
         key: "userRating",

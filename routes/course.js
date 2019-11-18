@@ -10,13 +10,13 @@ connection.query('USE ' + dbconfig.database);
 
 const addRatingRoute = require("./addRatings");
 
-router.get("/", function (req, res) {
+router.get("/", middleware.isLoggedIn, function (req, res) {
     var instructorID = req.query.instructorid;
     var courseID = req.query.courseid;
     // console.log(instructorID);
     // console.log(courseID);
-    console.log("hi");
-    console.log(req.user);
+    // console.log("hi");
+    // console.log(req.user);
     const SELECT_COURSENAME_QUERY =
         "SELECT Name, Lname " +
         "FROM Instructors, Courses " +

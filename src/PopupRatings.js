@@ -46,7 +46,13 @@ class PopupRatings extends React.Component {
 
     componentDidMount() {
         this.getClassInfo();
-        setTimeout(() => this.setState({popup: true}), 30000);
+        if (sessionStorage.getItem('popup') !== 'shown') {
+            setTimeout(() => this.setState({ popup: true }), 20000);
+            // localStorage.setItem('popup', 'shown');
+            sessionStorage.setItem('popup', 'shown');
+        } else {
+            console.log("popup isnt coming");
+        }
     }
 
     getClassInfo() {
@@ -97,36 +103,36 @@ class PopupRatings extends React.Component {
     }
     userRating(type, rating) {
         if (type === "classEnjoyment" && !this.state.classEnjoyment) {
-            this.setState({ classEnjoyment: true})
+            this.setState({ classEnjoyment: true })
         } else if (type === "classUsefulness" && !this.state.classUsefulness) {
-            this.setState({ classUsefulness: true})
+            this.setState({ classUsefulness: true })
         } else if (type === "examDifficulty" && !this.state.examDifficulty) {
-            this.setState({ examDifficulty: true})
+            this.setState({ examDifficulty: true })
         } else if (type === "attendanceAttn" && !this.state.attendanceAttn) {
-            this.setState({ attendanceAttn: true})
+            this.setState({ attendanceAttn: true })
         } else if (type === "profRating" && !this.state.profRating) {
-            this.setState({ profRating: true})
+            this.setState({ profRating: true })
         } else if (type === "classDifficulty" && !this.state.classDifficulty) {
-            this.setState({ classDifficulty: true})
+            this.setState({ classDifficulty: true })
         } else if (type === "testHeavy" && !this.state.testHeavy) {
-            this.setState({ testHeavy: true})
+            this.setState({ testHeavy: true })
         } else if (type === "classType" && !this.state.classType) {
-            this.setState({ classType: true})
+            this.setState({ classType: true })
         } else if (type === "homeworkLoad" && !this.state.homeworkLoad) {
-            this.setState({ homeworkLoad: true})
+            this.setState({ homeworkLoad: true })
         } else if (type === "profApproach" && !this.state.profApproach) {
-            this.setState({ profApproach: true})
+            this.setState({ profApproach: true })
         } else {
             return
         }
-        this.setState({userRating: this.state.userRating+1});
+        this.setState({ userRating: this.state.userRating + 1 });
         this.postRatings(type, rating);
     }
 
     closePopup() {
         console.log(this.state.userRating);
-        this.setState({popupExit: true})
-        if(this.state.userRating < 3){
+        this.setState({ popupExit: true })
+        if (this.state.userRating < 3) {
             return
         }
         this.setState({ popup: false })
@@ -145,9 +151,9 @@ class PopupRatings extends React.Component {
                         <i
                             className="fas fa-times float-right popupExit"
                             onClick={() => this.closePopup()}
-                        ></i> 
-                        <div className="float-right popupExitText" style={this.state.popupExit ? {display: 'block'} : {display: 'none'}}>
-                            You must submit at <br/>least 3 ratings to exit!
+                        ></i>
+                        <div className="float-right popupExitText" style={this.state.popupExit ? { display: 'block' } : { display: 'none' }}>
+                            You must submit at <br />least 3 ratings to exit!
                         </div>
                         <PopupHeaders
                             ClassName={this.state.courseName}
@@ -233,10 +239,10 @@ class PopupRatings extends React.Component {
                 </div>
             </div>
         )
-        if(!this.state.popup){
+        if (!this.state.popup) {
             popup = null;
         }
-        
+
 
         return (
             <div className="container">
