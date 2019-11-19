@@ -40,14 +40,12 @@ router.get("/:department", middleware.isLoggedIn, function (req, res) {
 
 // Show Professors for a specific course
 router.get("/:department/:course", middleware.isLoggedIn, function (req, res) {
-    // console.log(req.params);
+    console.log(req.params);
 
     var courseName = req.params.course.toString();
 
     // Similar to SQL Prepared Statement
 
-    // Note: may need to manipulate this query to make sure the previous pathways are recorded
-    // Ask celia about how to record previous pathway/url
     const SELECT_ALL_PROFESSORS_QUERY =
         "SELECT Instructors.InstructorID, Lname, Courses.CourseID " +
         "FROM Instructors, Courses, Teaches " +

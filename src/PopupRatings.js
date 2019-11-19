@@ -54,7 +54,6 @@ class PopupRatings extends React.Component {
     popup(){
         this.setState({ popup: true })
         sessionStorage.setItem('popup', 'shown');
-
     }
 
     getClassInfo() {

@@ -1,8 +1,8 @@
-body{
+body {
     font-family: Helvetica;
 }
 
-#navLogo{
+#navLogo {
     width: 141px;
 }
 
@@ -10,39 +10,47 @@ body{
     color: black !important;
     font-weight: 600;
 }
+
 .navLinks:hover {
     color: #707070 !important;
 }
 
-.navSearch{
+.navSearch {
     border-radius: 20px;
     padding-left: 30px;
 }
 
-.searchIcon{
+.searchIcon {
     position: absolute;
     margin-left: 10px;
 }
 
-.loginLogo{
+@media only screen and (max-width: 1000px) {
+    .loginLogo img {
+        width: 400px;
+    }
+}
+@media only screen and (min-width: 1001px) {
+    .loginLogo img {
+        width: 500px;
+    }
+}
+
+.loginLogo {
     text-align: center;
 }
 
-.loginLogo img{
-    width: 500px;
-}
 
-.loginLogoMobile img{
+.loginLogoMobile img {
     width: 400px;
 }
 
-
-.loginBlurb{
+.loginBlurb {
     text-align: center;
     font-size: 18px;
 }
 
-.formInputs{
+.formInputs {
     border: none;
     border-radius: 0;
     border-bottom: 1px solid black;
@@ -52,16 +60,16 @@ body{
     padding-bottom: 10px;
 }
 
-.fname{
+.fname {
     margin-right: 5%;
     width: 55%;
 }
 
-.lname{
+.lname {
     width: 38%;
 }
 
-.formInputName{
+.formInputName {
     border: none;
     border-radius: 0;
     border-bottom: 1px solid black;
@@ -70,19 +78,18 @@ body{
     padding-bottom: 10px;
 }
 
-.loginTitles{
+.loginTitles {
     font-weight: 600;
-    color:#06497B;
+    color: #06497B;
 }
 
-.formSubmit{
+.formSubmit {
     font-weight: 600;
     padding: 5px;
     color: white;
     padding-left: 25px;
     padding-right: 25px;
-    background:#0093FF;
+    background: #0093FF;
     float: right;
     border-radius: 0;
 }
-
