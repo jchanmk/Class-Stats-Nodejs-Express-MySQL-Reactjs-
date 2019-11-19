@@ -42,10 +42,10 @@ router.get('/home', middleware.isLoggedIn, function (req, res) {
 // router.get('/home', function (req, res) {
     // console.log(req.user)
     const SELECT_ALL_COURSES =
-        "SELECT CourseID " +
+        "SELECT CourseNum " +
         "FROM Takes, Students " +
-        "WHERE Takes.StudentID = Students.StudentID AND " +
-        "Takes.StudentID = ? ";
+        "WHERE Takes.StudentNum = Students.StudentID AND " +
+        "Takes.StudentNum = ? ";
 
     connection.query(SELECT_ALL_COURSES, [req.user.StudentID], (err, results) => {
         if (err) {
@@ -76,9 +76,9 @@ router.get('/home/:studentID', function (req, res) {
             "AND Courses.CourseID = Class_Difficulty.CourseID " +
             "AND Courses.CourseID = Class_Usefulness.CourseID " +
             "AND Courses.CourseID IN( " +
-                "SELECT CourseID " +
+                "SELECT CourseNum " +
                 "FROM Takes " +
-                "WHERE Semester = 'Fall 2019' AND StudentID = ? )";
+                "WHERE Semester = 'Fall 2019' AND StudentNum = ? )";
 
     connection.query(SELECT_HOME_INFO, [studentID], (err, results) => {
         if (err) {
@@ -105,9 +105,9 @@ router.get('/popup/:studentID', function (req, res) {
     "FROM Courses, Instructors " +
     "WHERE Courses.InstructorID = Instructors.InstructorID " +
     "AND Courses.CourseID = (" +
-    "SELECT CourseID " +
+    "SELECT CourseNum " +
     "FROM Takes " +
-    "WHERE Semester != ? AND StudentID = ? " +
+    "WHERE Semester != ? AND StudentNum = ? " +
     "LIMIT 1)";
 
     connection.query(SELECT_POPUP_INFO, [semester, studentID], (err, results) => {

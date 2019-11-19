@@ -45,12 +45,16 @@ class PopupRatings extends React.Component {
     componentDidMount() {
         this.getClassInfo();
         if (sessionStorage.getItem('popup') !== 'shown') {
-            setTimeout(() => this.setState({ popup: true }), 20000);
-            // localStorage.setItem('popup', 'shown');
-            sessionStorage.setItem('popup', 'shown');
+            setTimeout(() => this.popup(), 20000);
         } else {
             console.log("popup isnt coming");
         }
+    }
+
+    popup(){
+        this.setState({ popup: true })
+        sessionStorage.setItem('popup', 'shown');
+
     }
 
     getClassInfo() {
