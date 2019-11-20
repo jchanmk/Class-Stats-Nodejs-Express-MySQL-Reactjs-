@@ -20,6 +20,9 @@ import ClassDiffuculty from "./ClassDifficulty.js";
 import TestHeavy from "./TestHeavy.js";
 import HomeworkLoad from "./HomeworkLoad.js";
 import ProfApproach from "./ProfApproach.js";
+// import "../node_modules/babel-polyfill";
+
+// var polyfill = require('babel-polyfill');
 
 var Ratings = function (_React$Component) {
     _inherits(Ratings, _React$Component);
@@ -106,6 +109,7 @@ var Ratings = function (_React$Component) {
             // setTimeout(() => {
             var courseID = this.state.courseID;
 
+            console.log(courseID + " " + type + " " + rating);
             fetch("http://localhost:3000/course/addrating?courseid=" + courseID + "&type=" + type + "&rating=" + rating).then(function (response) {
                 return response;
             }).then(function (response) {

@@ -1,3 +1,8 @@
+// Questions:
+// - Do I need to change links in react files from localhost:3000 to something else?
+// - How to launch on MySql
+// - React not showing up on mobile
+
 const express = require("express"),
     app = express(),
     bodyParser = require("body-parser"),
@@ -16,7 +21,7 @@ const findCourseRoutes = require("./routes/findCourses");
 const indexRoutes = require("./routes/index");
 const courseRoutes = require("./routes/course");
 
-// app.use(cors());
+app.use(cors());
 app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -42,6 +47,3 @@ app.listen(process.env.PORT || 3000, function () {
     console.log("ClassStats Server has started...")
 })
 
-    // Ask celiia about hwo to record previous pathway/url
-    // Ask celiea about how to create react app with only one server, because react is only for a
-    // specific part of the website, not the page

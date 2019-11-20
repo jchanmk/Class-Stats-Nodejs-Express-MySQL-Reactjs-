@@ -11,6 +11,9 @@ import ClassDiffuculty from "./ClassDifficulty.js"
 import TestHeavy from "./TestHeavy.js"
 import HomeworkLoad from "./HomeworkLoad.js"
 import ProfApproach from "./ProfApproach.js"
+// import "../node_modules/babel-polyfill";
+
+// var polyfill = require('babel-polyfill');
 
 class Ratings extends React.Component {
     constructor() {
@@ -68,6 +71,7 @@ class Ratings extends React.Component {
     postRatings(type, rating) {
         // setTimeout(() => {
             const { courseID } = this.state;
+            console.log(courseID + " " + type + " " + rating)
             fetch(`http://localhost:3000/course/addrating?courseid=${courseID}&type=${type}&rating=${rating}`)
                 .then(response => response)
                 .then(response => this.getRatings())

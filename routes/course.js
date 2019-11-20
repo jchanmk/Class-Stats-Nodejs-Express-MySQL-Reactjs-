@@ -39,10 +39,10 @@ router.get("/", middleware.isLoggedIn, function (req, res) {
 })
 
 router.get("/findratings1", (req, res) => {
-    console.log("in this API, find ratings 1");
+    // console.log("in this API, find ratings 1");
     // const instructorID = req.query.instructorid;
     const courseID = req.query.courseid;
-    console.log(courseID)
+    // console.log(courseID)
     const SELECT_ALL_RATINGS =
         "SELECT Rating/Class_Enjoyment.Count AS ClassEnjoyment, " +
         "Useful/Class_Usefulness.Count AS Useful, " +
@@ -51,7 +51,7 @@ router.get("/findratings1", (req, res) => {
         "WHERE Class_Enjoyment.CourseID = Class_Usefulness.CourseID AND Class_Usefulness.CourseID = ? ";
 
     connection.query(SELECT_ALL_RATINGS, [courseID], (err, results) => {
-        console.log(results)
+        // console.log(results)
         if (err) {
             return res.send(err)
         } else {

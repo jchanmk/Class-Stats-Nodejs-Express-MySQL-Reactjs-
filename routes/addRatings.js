@@ -9,9 +9,9 @@ const connection = mysql.createConnection(dbconfig.connection);
 connection.query('USE ' + dbconfig.database);
 
 router.get('/', middleware.isLoggedIn, (req, res) => {
-    // console.log(req.query.type);
-    // console.log(req.query.rating);
-    // console.log(req.query.courseid);
+    console.log(req.query.type);
+    console.log(req.query.rating);
+    console.log(req.query.courseid);
     const courseID = req.query.courseid;
     const type = req.query.type;
     const rating = req.query.rating;
