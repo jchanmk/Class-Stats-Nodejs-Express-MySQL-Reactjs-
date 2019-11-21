@@ -1,8 +1,3 @@
-// Questions:
-// - Do I need to change links in react files from localhost:3000 to something else?
-// - How to launch on MySql
-// - React not showing up on mobile
-
 const express = require("express"),
     app = express(),
     bodyParser = require("body-parser"),
@@ -21,7 +16,7 @@ const findCourseRoutes = require("./routes/findCourses");
 const indexRoutes = require("./routes/index");
 const courseRoutes = require("./routes/course");
 
-app.use(cors());
+// app.use(cors());
 app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));

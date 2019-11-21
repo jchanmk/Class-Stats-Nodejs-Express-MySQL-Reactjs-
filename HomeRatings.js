@@ -50,6 +50,7 @@ var Home = function (_React$Component) {
             // their first 3 ratings, name, instructor
             // then add ratings to state
             // render ratings
+            console.log("hi");
             fetch('http://localhost:3000/home/' + this.state.studentID).then(function (response) {
                 return response.json();
             }).then(function (response) {

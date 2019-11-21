@@ -37,10 +37,7 @@ router.post('/signup', passport.authenticate('local-signup', {
     failureFlash: true
 }));
 
-// commented this out for editing purposes
 router.get('/home', middleware.isLoggedIn, function (req, res) {
-// router.get('/home', function (req, res) {
-    // console.log(req.user)
     const SELECT_ALL_COURSES =
         "SELECT CourseNum " +
         "FROM Takes, Students " +
@@ -56,7 +53,6 @@ router.get('/home', middleware.isLoggedIn, function (req, res) {
                 print: results
             };
             // res.render('departments', obj)
-            console.log(obj)
             res.render('home', obj);
         }
     });
@@ -64,7 +60,6 @@ router.get('/home', middleware.isLoggedIn, function (req, res) {
 
 router.get('/home/:studentID', function (req, res) {
     var studentID = req.params.studentID;
-    // console.log("made contact with react api " + studentID)
     const SELECT_HOME_INFO =
         "SELECT Name, Lname, Rating/Class_Enjoyment.Count AS ClassEnjoyment, " +
         "Easy/Class_Difficulty.Count AS Easy, Medium/Class_Difficulty.Count AS Medium, " +
@@ -81,14 +76,11 @@ router.get('/home/:studentID', function (req, res) {
                 "WHERE Semester = 'Fall 2019' AND StudentNum = ? )";
 
     connection.query(SELECT_HOME_INFO, [studentID], (err, results) => {
+        console.log(results + " hi ");
         if (err) {
             console.log(err)
             return res.send(err)
         } else {
-            // res.render('departments', obj)
-            // console.log(obj)
-            // res.render('home', obj);
-            // console.log(results)
             return res.json({
                 data: results
             })
@@ -99,23 +91,21 @@ router.get('/home/:studentID', function (req, res) {
 router.get('/popup/:studentID', function (req, res) {
     var studentID = req.params.studentID;
     var semester = "Fall 2019"
-    console.log("made contact with react api " + studentID)
     const SELECT_POPUP_INFO = 
-    "SELECT CourseID, Name, Lname " +
-    "FROM Courses, Instructors " +
-    "WHERE Courses.InstructorID = Instructors.InstructorID " +
-    "AND Courses.CourseID = (" +
-    "SELECT CourseNum " +
-    "FROM Takes " +
-    "WHERE Semester != ? AND StudentNum = ? " +
-    "LIMIT 1)";
+        "SELECT CourseID, Name, Lname " +
+        "FROM Courses, Instructors " +
+        "WHERE Courses.InstructorID = Instructors.InstructorID " +
+        "AND Courses.CourseID = (" +
+        "SELECT CourseNum " +
+        "FROM Takes " +
+        "WHERE Semester != ? AND StudentNum = ? " +
+        "LIMIT 1)";
 
     connection.query(SELECT_POPUP_INFO, [semester, studentID], (err, results) => {
         if (err) {
             console.log(err)
             return res.send(err)
         } else {
-            console.log(results);
             return res.json({
                 data: results
             })
@@ -143,13 +133,5 @@ router.get('/logout', function (req, res) {
     req.logout();
     res.redirect('/');
 })
-
-
-// function isLoggedIn(req, res, next) {
-//     if (req.isAuthenticated()) {
-//         return next();
-//     }
-//     res.redirect('/');
-// }
 
 module.exports = router;

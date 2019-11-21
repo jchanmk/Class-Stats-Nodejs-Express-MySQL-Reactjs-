@@ -10,8 +10,8 @@ connection.query('USE ' + dbconfig.database);
 
 // Show courses by that department
 router.get("/:department", middleware.isLoggedIn, function (req, res) {
-    // console.log(req.params);
     var departmentName = req.params.department.toString();
+
     // Similar to SQL Prepared Statement 
     const SELECT_ALL_COURSES_QUERY =
     "SELECT DISTINCT Courses.Name, Departments.Name AS Department " +
@@ -29,17 +29,15 @@ router.get("/:department", middleware.isLoggedIn, function (req, res) {
             obj = { 
                 print: results,
                 user: req.user
-            };
-            // console.log(results);
-      
+            };      
             res.render('courses', obj)
-            // console.log(results);
         }
     });
 });
 
 // Show Professors for a specific course
 router.get("/:department/:course", middleware.isLoggedIn, function (req, res) {
+    console.log("in show professors")
     console.log(req.params);
 
     var courseName = req.params.course.toString();
@@ -55,8 +53,10 @@ router.get("/:department/:course", middleware.isLoggedIn, function (req, res) {
 
     connection.query(SELECT_ALL_PROFESSORS_QUERY, [courseName], (err, results) => {
         if (err) {
+            console.log(err);
             return res.send(err)
         } else {
+            console.log(results);
             obj = { 
                 print: results,
                 user: req.user

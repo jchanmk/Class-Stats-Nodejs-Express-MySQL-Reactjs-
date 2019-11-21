@@ -13,10 +13,6 @@ const addRatingRoute = require("./addRatings");
 router.get("/", middleware.isLoggedIn, function (req, res) {
     var instructorID = req.query.instructorid;
     var courseID = req.query.courseid;
-    // console.log(instructorID);
-    // console.log(courseID);
-    // console.log("hi");
-    // console.log(req.user);
     const SELECT_COURSENAME_QUERY =
         "SELECT Name, Lname " +
         "FROM Instructors, Courses " +
@@ -31,7 +27,6 @@ router.get("/", middleware.isLoggedIn, function (req, res) {
                 user: req.user,
                 classInfo: results 
             };
-            // console.log(obj);
             req.next;
             res.render('courseRatings', obj)
         }
@@ -39,10 +34,8 @@ router.get("/", middleware.isLoggedIn, function (req, res) {
 })
 
 router.get("/findratings1", (req, res) => {
-    // console.log("in this API, find ratings 1");
-    // const instructorID = req.query.instructorid;
+
     const courseID = req.query.courseid;
-    // console.log(courseID)
     const SELECT_ALL_RATINGS =
         "SELECT Rating/Class_Enjoyment.Count AS ClassEnjoyment, " +
         "Useful/Class_Usefulness.Count AS Useful, " +
@@ -64,7 +57,6 @@ router.get("/findratings1", (req, res) => {
 });
 
 router.get("/findratings2", (req, res) => {
-    // console.log("in this API, react has made contact");
     const instructorID = req.query.instructorid;
     const courseID = req.query.courseid;
     const SELECT_ALL_RATINGS =
@@ -78,7 +70,6 @@ router.get("/findratings2", (req, res) => {
         "AND Attendance_Attn.CourseID = ?";
 
     connection.query(SELECT_ALL_RATINGS, [courseID], (err, results) => {
-        // console.log(results)
         if (err) {
             return res.send(err)
         } else {
@@ -91,7 +82,6 @@ router.get("/findratings2", (req, res) => {
 });
 
 router.get("/findratings3", (req, res) => {
-    // console.log("in this API, react has made contact");
     const instructorID = req.query.instructorid;
     const courseID = req.query.courseid;
     const SELECT_ALL_RATINGS =
@@ -104,7 +94,6 @@ router.get("/findratings3", (req, res) => {
         "AND Prof_Rating.CourseID = ?";
 
     connection.query(SELECT_ALL_RATINGS, [courseID], (err, results) => {
-        // console.log(results)
         if (err) {
             return res.send(err)
         } else {
@@ -117,7 +106,6 @@ router.get("/findratings3", (req, res) => {
 });
 
 router.get("/findratings4", (req, res) => {
-    // console.log("in this API, react has made contact");
     const instructorID = req.query.instructorid;
     const courseID = req.query.courseid;
     const SELECT_ALL_RATINGS =
@@ -141,7 +129,6 @@ router.get("/findratings4", (req, res) => {
 });
 
 router.get("/findratings5", (req, res) => {
-    // console.log("in this API, react has made contact");
     const instructorID = req.query.instructorid;
     const courseID = req.query.courseid;
     const SELECT_ALL_RATINGS =
@@ -152,7 +139,6 @@ router.get("/findratings5", (req, res) => {
     "AND Prof_Approach.CourseID = ? ";
 
     connection.query(SELECT_ALL_RATINGS, [courseID], (err, results) => {
-        // console.log(results)
         if (err) {
             return res.send(err)
         } else {

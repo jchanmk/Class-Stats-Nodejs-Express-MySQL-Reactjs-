@@ -57,6 +57,7 @@ var Ratings = function (_React$Component) {
         key: "componentDidMount",
         value: function componentDidMount() {
             this.getRatings();
+            console.log("in ratings");
         }
 
         // Retrieves data from database, upon loading the webpage 
