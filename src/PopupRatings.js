@@ -13,6 +13,7 @@ import TestHeavy from "./TestHeavy.js"
 import HomeworkLoad from "./HomeworkLoad.js"
 import ProfApproach from "./ProfApproach.js"
 import PopupHeaders from "./PopupHeaders.js"
+import ServerURL from "/config/serverUrl.js"
 
 class PopupRatings extends React.Component {
     constructor() {
@@ -59,7 +60,7 @@ class PopupRatings extends React.Component {
     getClassInfo() {
         // Write a function that calls to the server, picks the class info for one of the courses
         // that the user has taken in the past 
-        fetch('http://localhost:3000/popup/' + this.state.studentID)
+        fetch(ServerURL + '/popup/' + this.state.studentID)
             .then(response => response.json())
             // .then(response => console.log(response))
             .then(response => this.setState({
@@ -72,23 +73,23 @@ class PopupRatings extends React.Component {
     // Retrieves data from database, upon loading the webpage 
     getRatings() {
         // console.log(this.state.courseID)
-        fetch('http://localhost:3000/course/findratings1?courseid=' + this.state.courseID)
+        fetch(ServerURL + '/course/findratings1?courseid=' + this.state.courseID)
             .then(response => response.json())
             .then(response => this.setState({ ratings: response.data }));
 
-        fetch('http://localhost:3000/course/findratings2?courseid=' + this.state.courseID)
+        fetch(ServerURL + '/course/findratings2?courseid=' + this.state.courseID)
             .then(response2 => response2.json())
             .then(response2 => this.setState({ ratings2: response2.data }));
 
-        fetch('http://localhost:3000/course/findratings3?courseid=' + this.state.courseID)
+        fetch(ServerURL + '/course/findratings3?courseid=' + this.state.courseID)
             .then(response3 => response3.json())
             .then(response3 => this.setState({ ratings3: response3.data }));
 
-        fetch('http://localhost:3000/course/findratings4?courseid=' + this.state.courseID)
+        fetch(ServerURL + '/course/findratings4?courseid=' + this.state.courseID)
             .then(response4 => response4.json())
             .then(response4 => this.setState({ ratings4: response4.data }));
 
-        fetch('http://localhost:3000/course/findratings5?courseid=' + this.state.courseID)
+        fetch(ServerURL + '/course/findratings5?courseid=' + this.state.courseID)
             .then(response5 => response5.json())
             .then(response5 => this.setState({ ratings5: response5.data }));
     }
@@ -97,7 +98,7 @@ class PopupRatings extends React.Component {
     // figure out a way to do without setTimeout, maybe do a promise 
     postRatings(type, rating) {
         const { courseID } = this.state;
-        fetch(`http://localhost:3000/course/addrating?courseid=${courseID}&type=${type}&rating=${rating}`)
+        fetch(ServerURL + `/course/addrating?courseid=${courseID}&type=${type}&rating=${rating}`)
             .then(response => response)
             .then(response => this.getRatings())
             .catch(err => console.log(err))

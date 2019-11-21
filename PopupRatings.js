@@ -22,6 +22,7 @@ import TestHeavy from "./TestHeavy.js";
 import HomeworkLoad from "./HomeworkLoad.js";
 import ProfApproach from "./ProfApproach.js";
 import PopupHeaders from "./PopupHeaders.js";
+import ServerURL from "/config/serverUrl.js";
 
 var PopupRatings = function (_React$Component) {
     _inherits(PopupRatings, _React$Component);
@@ -84,7 +85,7 @@ var PopupRatings = function (_React$Component) {
 
             // Write a function that calls to the server, picks the class info for one of the courses
             // that the user has taken in the past 
-            fetch('http://localhost:3000/popup/' + this.state.studentID).then(function (response) {
+            fetch(ServerURL + '/popup/' + this.state.studentID).then(function (response) {
                 return response.json();
             })
             // .then(response => console.log(response))
@@ -105,31 +106,31 @@ var PopupRatings = function (_React$Component) {
             var _this4 = this;
 
             // console.log(this.state.courseID)
-            fetch('http://localhost:3000/course/findratings1?courseid=' + this.state.courseID).then(function (response) {
+            fetch(ServerURL + '/course/findratings1?courseid=' + this.state.courseID).then(function (response) {
                 return response.json();
             }).then(function (response) {
                 return _this4.setState({ ratings: response.data });
             });
 
-            fetch('http://localhost:3000/course/findratings2?courseid=' + this.state.courseID).then(function (response2) {
+            fetch(ServerURL + '/course/findratings2?courseid=' + this.state.courseID).then(function (response2) {
                 return response2.json();
             }).then(function (response2) {
                 return _this4.setState({ ratings2: response2.data });
             });
 
-            fetch('http://localhost:3000/course/findratings3?courseid=' + this.state.courseID).then(function (response3) {
+            fetch(ServerURL + '/course/findratings3?courseid=' + this.state.courseID).then(function (response3) {
                 return response3.json();
             }).then(function (response3) {
                 return _this4.setState({ ratings3: response3.data });
             });
 
-            fetch('http://localhost:3000/course/findratings4?courseid=' + this.state.courseID).then(function (response4) {
+            fetch(ServerURL + '/course/findratings4?courseid=' + this.state.courseID).then(function (response4) {
                 return response4.json();
             }).then(function (response4) {
                 return _this4.setState({ ratings4: response4.data });
             });
 
-            fetch('http://localhost:3000/course/findratings5?courseid=' + this.state.courseID).then(function (response5) {
+            fetch(ServerURL + '/course/findratings5?courseid=' + this.state.courseID).then(function (response5) {
                 return response5.json();
             }).then(function (response5) {
                 return _this4.setState({ ratings5: response5.data });
@@ -146,7 +147,7 @@ var PopupRatings = function (_React$Component) {
 
             var courseID = this.state.courseID;
 
-            fetch("http://localhost:3000/course/addrating?courseid=" + courseID + "&type=" + type + "&rating=" + rating).then(function (response) {
+            fetch(ServerURL + ("/course/addrating?courseid=" + courseID + "&type=" + type + "&rating=" + rating)).then(function (response) {
                 return response;
             }).then(function (response) {
                 return _this5.getRatings();

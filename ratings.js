@@ -20,9 +20,7 @@ import ClassDiffuculty from "./ClassDifficulty.js";
 import TestHeavy from "./TestHeavy.js";
 import HomeworkLoad from "./HomeworkLoad.js";
 import ProfApproach from "./ProfApproach.js";
-// import "../node_modules/babel-polyfill";
-
-// var polyfill = require('babel-polyfill');
+import ServerURL from "/config/serverUrl.js";
 
 var Ratings = function (_React$Component) {
     _inherits(Ratings, _React$Component);
@@ -57,7 +55,7 @@ var Ratings = function (_React$Component) {
         key: "componentDidMount",
         value: function componentDidMount() {
             this.getRatings();
-            // console.log("in ratings")
+            console.log("hi " + ServerURL);
         }
 
         // Retrieves data from database, upon loading the webpage 
@@ -68,31 +66,31 @@ var Ratings = function (_React$Component) {
             var _this2 = this;
 
             var search = window.location.search;
-            fetch('http://localhost:3000/course/findratings1' + search).then(function (response) {
+            fetch(ServerURL + '/course/findratings1' + search).then(function (response) {
                 return response.json();
             }).then(function (response) {
                 return _this2.setState({ courseID: response.courseID, ratings: response.data });
             });
 
-            fetch('http://localhost:3000/course/findratings2' + search).then(function (response2) {
+            fetch(ServerURL + '/course/findratings2' + search).then(function (response2) {
                 return response2.json();
             }).then(function (response2) {
                 return _this2.setState({ ratings2: response2.data });
             });
 
-            fetch('http://localhost:3000/course/findratings3' + search).then(function (response3) {
+            fetch(ServerURL + '/course/findratings3' + search).then(function (response3) {
                 return response3.json();
             }).then(function (response3) {
                 return _this2.setState({ ratings3: response3.data });
             });
 
-            fetch('http://localhost:3000/course/findratings4' + search).then(function (response4) {
+            fetch(ServerURL + '/course/findratings4' + search).then(function (response4) {
                 return response4.json();
             }).then(function (response4) {
                 return _this2.setState({ ratings4: response4.data });
             });
 
-            fetch('http://localhost:3000/course/findratings5' + search).then(function (response5) {
+            fetch(ServerURL + '/course/findratings5' + search).then(function (response5) {
                 return response5.json();
             }).then(function (response5) {
                 return _this2.setState({ ratings5: response5.data });
@@ -111,7 +109,7 @@ var Ratings = function (_React$Component) {
             var courseID = this.state.courseID;
 
             console.log(courseID + " " + type + " " + rating);
-            fetch("http://localhost:3000/course/addrating?courseid=" + courseID + "&type=" + type + "&rating=" + rating).then(function (response) {
+            fetch(ServerURL + ("/course/addrating?courseid=" + courseID + "&type=" + type + "&rating=" + rating)).then(function (response) {
                 return response;
             }).then(function (response) {
                 return _this3.getRatings();

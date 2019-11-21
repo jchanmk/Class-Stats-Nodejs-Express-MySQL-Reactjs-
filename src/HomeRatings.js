@@ -4,6 +4,7 @@ import StarList from "./StarList.js"
 import HomeClassEnjoyment from "./HomeClassEnjoyment.js"
 import HomeClassDifficulty from "./HomeClassDifficulty.js";
 import HomeClassUsefulness from "./HomeClassUsefulness.js";
+import ServerURL from "/config/serverUrl.js"
 
 
 class Home extends React.Component {
@@ -32,7 +33,7 @@ class Home extends React.Component {
         // then add ratings to state
         // render ratings
         // console.log("hi")
-        fetch('http://localhost:3000/home/' + this.state.studentID)
+        fetch(ServerURL + '/home/' + this.state.studentID)
             .then(response => response.json())
             .then(response => this.setState({ ratings: response.data }));
     }
@@ -40,7 +41,7 @@ class Home extends React.Component {
     postRatings(type, courseID, rating) {
         // setTimeout(() => {
             // const { courseID, userRating } = this.state;
-            fetch(`http://localhost:3000/course/addrating?courseid=${courseID}&type=${type}&rating=${rating}`)
+            fetch(ServerURL + `/course/addrating?courseid=${courseID}&type=${type}&rating=${rating}`)
                 .then(response => response)
                 .then(response => this.getRatings())
                 .catch(err => console.log(err))

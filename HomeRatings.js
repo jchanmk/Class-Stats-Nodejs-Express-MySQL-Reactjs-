@@ -13,6 +13,7 @@ import StarList from "./StarList.js";
 import HomeClassEnjoyment from "./HomeClassEnjoyment.js";
 import HomeClassDifficulty from "./HomeClassDifficulty.js";
 import HomeClassUsefulness from "./HomeClassUsefulness.js";
+import ServerURL from "/config/serverUrl.js";
 
 var Home = function (_React$Component) {
     _inherits(Home, _React$Component);
@@ -51,7 +52,7 @@ var Home = function (_React$Component) {
             // then add ratings to state
             // render ratings
             // console.log("hi")
-            fetch('http://localhost:3000/home/' + this.state.studentID).then(function (response) {
+            fetch(ServerURL + '/home/' + this.state.studentID).then(function (response) {
                 return response.json();
             }).then(function (response) {
                 return _this2.setState({ ratings: response.data });
@@ -64,7 +65,7 @@ var Home = function (_React$Component) {
 
             // setTimeout(() => {
             // const { courseID, userRating } = this.state;
-            fetch("http://localhost:3000/course/addrating?courseid=" + courseID + "&type=" + type + "&rating=" + rating).then(function (response) {
+            fetch(ServerURL + ("/course/addrating?courseid=" + courseID + "&type=" + type + "&rating=" + rating)).then(function (response) {
                 return response;
             }).then(function (response) {
                 return _this3.getRatings();

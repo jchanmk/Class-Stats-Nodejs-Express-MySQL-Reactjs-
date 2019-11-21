@@ -11,9 +11,7 @@ import ClassDiffuculty from "./ClassDifficulty.js"
 import TestHeavy from "./TestHeavy.js"
 import HomeworkLoad from "./HomeworkLoad.js"
 import ProfApproach from "./ProfApproach.js"
-// import "../node_modules/babel-polyfill";
-
-// var polyfill = require('babel-polyfill');
+import ServerURL from "/config/serverUrl.js"
 
 class Ratings extends React.Component {
     constructor() {
@@ -40,29 +38,29 @@ class Ratings extends React.Component {
 
     componentDidMount() {
         this.getRatings();
-        // console.log("in ratings")
+        console.log("hi " + ServerURL)
     }
 
     // Retrieves data from database, upon loading the webpage 
     getRatings() {
         let search = window.location.search;
-        fetch('http://localhost:3000/course/findratings1' + search)
+        fetch(ServerURL + '/course/findratings1' + search)
             .then(response => response.json())
             .then(response => this.setState({ courseID: response.courseID, ratings: response.data }));
 
-        fetch('http://localhost:3000/course/findratings2' + search)
+        fetch(ServerURL + '/course/findratings2' + search)
             .then(response2 => response2.json())
             .then(response2 => this.setState({ ratings2: response2.data }));
 
-        fetch('http://localhost:3000/course/findratings3' + search)
+        fetch(ServerURL + '/course/findratings3' + search)
             .then(response3 => response3.json())
             .then(response3 => this.setState({ ratings3: response3.data }));
 
-        fetch('http://localhost:3000/course/findratings4' + search)
+        fetch(ServerURL + '/course/findratings4' + search)
             .then(response4 => response4.json())
             .then(response4 => this.setState({ ratings4: response4.data }));
 
-        fetch('http://localhost:3000/course/findratings5' + search)
+        fetch(ServerURL + '/course/findratings5' + search)
             .then(response5 => response5.json())
             .then(response5 => this.setState({ ratings5: response5.data }));
     }
@@ -73,7 +71,7 @@ class Ratings extends React.Component {
         // setTimeout(() => {
             const { courseID } = this.state;
             console.log(courseID + " " + type + " " + rating)
-            fetch(`http://localhost:3000/course/addrating?courseid=${courseID}&type=${type}&rating=${rating}`)
+            fetch(ServerURL + `/course/addrating?courseid=${courseID}&type=${type}&rating=${rating}`)
                 .then(response => response)
                 .then(response => this.getRatings())
                 .catch(err => console.log(err))
