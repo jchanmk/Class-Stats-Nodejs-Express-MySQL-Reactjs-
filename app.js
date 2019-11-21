@@ -25,7 +25,7 @@ app.use(express.static(__dirname));
 
 app.use(session({
     secret: 'justasecret',
-    resave: false,
+    resave: true,
     saveUninitialized: true
 }));
 
