@@ -22,7 +22,6 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname));
-console.log(__dirname);
 
 app.use(session({
     secret: 'justasecret',
