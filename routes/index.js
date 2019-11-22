@@ -5,7 +5,8 @@ const express = require("express"),
     mysql = require('mysql'),
     dbconfig = require('../config/database');
 
-const connection = mysql.createConnection(dbconfig.connection);
+// const connection = mysql.createConnection(dbconfig.connection);
+const connection = mysql.createPool(dbconfig.connection);
 connection.query('USE ' + dbconfig.database);
 
 router.get("/", function (req, res) {

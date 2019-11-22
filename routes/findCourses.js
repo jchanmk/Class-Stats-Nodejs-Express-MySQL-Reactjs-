@@ -4,7 +4,8 @@ const dbconfig = require("../config/database")
 const mysql = require('mysql');
 const middleware = require("../middleware");
 
-const connection = mysql.createConnection(dbconfig.connection);
+// const connection = mysql.createConnection(dbconfig.connection);
+const connection = mysql.createPool(dbconfig.connection);
 connection.query('USE ' + dbconfig.database);
 
 
