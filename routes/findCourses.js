@@ -18,24 +18,28 @@ router.get("/:department", middleware.isLoggedIn, function (req, res) {
 
     // Similar to SQL Prepared Statement 
     const SELECT_ALL_COURSES_QUERY =
-    "SELECT DISTINCT Courses.Name, Departments.Name AS Department " +
+        "SELECT DISTINCT Courses.Name, Departments.Name AS Department " +
         "FROM Courses, Departments " +
         "WHERE Courses.DeptID = (" +
-            "SELECT DepartmentID " +
-            "FROM Departments " +
-            "WHERE Departments.name = ?" +
-        ") AND Departments.Name = ?";    
+        "SELECT DepartmentID " +
+        "FROM Departments " +
+        "WHERE Departments.name = ?" +
+        ") AND Departments.Name = ?";
 
-    connection.query(SELECT_ALL_COURSES_QUERY, [departmentName, departmentName], (err, results) => {
-        if (err) {
-            return res.send(err)
-        } else {
-            obj = { 
-                print: results,
-                user: req.user
-            };      
-            res.render('courses', obj)
-        }
+    pool.getConnection(function (err, connection) {
+        if (err) throw err;
+        connection.query(SELECT_ALL_COURSES_QUERY, [departmentName, departmentName], (err, results) => {
+            connection.release();
+            if (err) {
+                return res.send(err)
+            } else {
+                obj = {
+                    print: results,
+                    user: req.user
+                };
+                res.render('courses', obj)
+            }
+        });
     });
 });
 
@@ -53,20 +57,24 @@ router.get("/:department/:course", middleware.isLoggedIn, function (req, res) {
         "FROM Instructors, Courses, Teaches " +
         "WHERE Instructors.InstructorID = Teaches.InstructorID AND " +
         "Teaches.CourseID = Courses.CourseID AND " +
-            "Courses.Name = ? ";
+        "Courses.Name = ? ";
 
-    connection.query(SELECT_ALL_PROFESSORS_QUERY, [courseName], (err, results) => {
-        if (err) {
-            console.log(err);
-            return res.send(err)
-        } else {
-            console.log(results);
-            obj = { 
-                print: results,
-                user: req.user
-            };
-            res.render('instructors', obj)
-        }
+    pool.getConnection(function (err, connection) {
+        if (err) throw err;
+        connection.query(SELECT_ALL_PROFESSORS_QUERY, [courseName], (err, results) => {
+            connection.release();
+            if (err) {
+                console.log(err);
+                return res.send(err)
+            } else {
+                console.log(results);
+                obj = {
+                    print: results,
+                    user: req.user
+                };
+                res.render('instructors', obj)
+            }
+        });
     });
 });
 

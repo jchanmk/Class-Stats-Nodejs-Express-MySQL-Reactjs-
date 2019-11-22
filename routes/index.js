@@ -7,13 +7,12 @@ const express = require("express"),
 
 // const connection = mysql.createConnection(dbconfig.connection);
 // connection.query('USE ' + dbconfig.database);
-const connection = mysql.createPool(dbconfig.connection);
-
+const pool = mysql.createPool(dbconfig.connection);
 
 
 
 router.get("/", function (req, res) {
-    if(req.user != null){
+    if (req.user != null) {
         // console.log("you logged in arleady")
         // console.log(req.user)
         res.redirect("/home");
@@ -48,18 +47,23 @@ router.get('/home', middleware.isLoggedIn, function (req, res) {
         "WHERE Takes.StudentNum = Students.StudentID AND " +
         "Takes.StudentNum = ? ";
 
-    connection.query(SELECT_ALL_COURSES, [req.user.StudentID], (err, results) => {
-        if (err) {
-            return res.send(err)
-        } else {
-            obj = {
-                user: req.user,
-                print: results
-            };
-            // res.render('departments', obj)
-            res.render('home', obj);
-        }
-    });
+    pool.getConnection(function (err, connection) {
+        if (err) throw err;
+
+        connection.query(SELECT_ALL_COURSES, [req.user.StudentID], (err, results) => {
+            connection.release();
+            if (err) {
+                return res.send(err)
+            } else {
+                obj = {
+                    user: req.user,
+                    print: results
+                };
+                // res.render('departments', obj)
+                res.render('home', obj);
+            }
+        });
+    })
 });
 
 router.get('/home/:studentID', function (req, res) {
@@ -68,34 +72,38 @@ router.get('/home/:studentID', function (req, res) {
         "SELECT Name, Lname, Rating/Class_Enjoyment.Count AS ClassEnjoyment, " +
         "Easy/Class_Difficulty.Count AS Easy, Medium/Class_Difficulty.Count AS Medium, " +
         "Hard/Class_Difficulty.Count AS Hard, Useful/Class_Usefulness.Count AS Useful, " +
-        "NotUseful/Class_Usefulness.Count AS NotUseful, Courses.CourseID, Courses.InstructorID " +  
-        "FROM Courses, Instructors, Class_Enjoyment, Class_Difficulty, Class_Usefulness " + 
+        "NotUseful/Class_Usefulness.Count AS NotUseful, Courses.CourseID, Courses.InstructorID " +
+        "FROM Courses, Instructors, Class_Enjoyment, Class_Difficulty, Class_Usefulness " +
         "WHERE Instructors.InstructorID = Courses.InstructorID " +
-            "AND Courses.CourseID = Class_Enjoyment.CourseID " +
-            "AND Courses.CourseID = Class_Difficulty.CourseID " +
-            "AND Courses.CourseID = Class_Usefulness.CourseID " +
-            "AND Courses.CourseID IN( " +
-                "SELECT CourseNum " +
-                "FROM Takes " +
-                "WHERE Semester = 'Fall 2019' AND StudentNum = ? )";
+        "AND Courses.CourseID = Class_Enjoyment.CourseID " +
+        "AND Courses.CourseID = Class_Difficulty.CourseID " +
+        "AND Courses.CourseID = Class_Usefulness.CourseID " +
+        "AND Courses.CourseID IN( " +
+        "SELECT CourseNum " +
+        "FROM Takes " +
+        "WHERE Semester = 'Fall 2019' AND StudentNum = ? )";
 
-    connection.query(SELECT_HOME_INFO, [studentID], (err, results) => {
-        console.log(results + " hi ");
-        if (err) {
-            console.log(err)
-            return res.send(err)
-        } else {
-            return res.json({
-                data: results
-            })
-        }
-    });
+    pool.getConnection(function (err, connection) {
+        if (err) throw err;
+        connection.query(SELECT_HOME_INFO, [studentID], (err, results) => {
+            connection.release();
+            console.log(results + " hi ");
+            if (err) {
+                console.log(err)
+                return res.send(err)
+            } else {
+                return res.json({
+                    data: results
+                })
+            }
+        });
+    })
 });
 
 router.get('/popup/:studentID', function (req, res) {
     var studentID = req.params.studentID;
     var semester = "Fall 2019"
-    const SELECT_POPUP_INFO = 
+    const SELECT_POPUP_INFO =
         "SELECT CourseID, Name, Lname " +
         "FROM Courses, Instructors " +
         "WHERE Courses.InstructorID = Instructors.InstructorID " +
@@ -105,31 +113,40 @@ router.get('/popup/:studentID', function (req, res) {
         "WHERE Semester != ? AND StudentNum = ? " +
         "LIMIT 1)";
 
-    connection.query(SELECT_POPUP_INFO, [semester, studentID], (err, results) => {
-        if (err) {
-            console.log(err)
-            return res.send(err)
-        } else {
-            return res.json({
-                data: results
-            })
-        }
-    });
+    pool.getConnection(function (err, connection) {
+        if (err) throw err;
+        connection.query(SELECT_POPUP_INFO, [semester, studentID], (err, results) => {
+            connection.release();
+            if (err) {
+                console.log(err)
+                return res.send(err)
+            } else {
+                return res.json({
+                    data: results
+                })
+            }
+        });
+    })
 });
 
 var obj = {};
 router.get("/departments", middleware.isLoggedIn, function (req, res) {
     const SELECT_ALL_DEPARTMENTS_QUERY = "SELECT * FROM Departments;";
-    connection.query(SELECT_ALL_DEPARTMENTS_QUERY, (err, results) => {
-        if (err) {
-            return res.send(err)
-        } else {
-            obj = { 
-                print: results,
-                user: req.user
-            };
-            res.render('departments', obj)
-        }
+
+    pool.getConnection(function (err, connection) {
+        if (err) throw err;
+        connection.query(SELECT_ALL_DEPARTMENTS_QUERY, (err, results) => {
+            connection.release();
+            if (err) {
+                return res.send(err)
+            } else {
+                obj = {
+                    print: results,
+                    user: req.user
+                };
+                res.render('departments', obj)
+            }
+        });
     });
 });
 
