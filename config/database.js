@@ -13,8 +13,8 @@ module.exports = {
         user:'b430d34a9292e2',
         password:'a3eaa021',
         database:'heroku_ee6e96f9f6250a3'
-    },
-    'database':'heroku_ee6e96f9f6250a3'
+    }
+    // 'database':'heroku_ee6e96f9f6250a3'
 }
 
 // module.exports = {
