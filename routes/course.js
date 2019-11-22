@@ -20,18 +20,21 @@ router.get("/", middleware.isLoggedIn, function (req, res) {
         "FROM Instructors, Courses " +
         "WHERE Instructors.InstructorID = ? AND " +
         "Courses.CourseID = ? ";
-
-    connection.query(SELECT_COURSENAME_QUERY, [instructorID, courseID], (err, results) => {
-        if (err) {
-            return res.send(err)
-        } else {
-            obj = {
-                user: req.user,
-                classInfo: results
-            };
-            req.next;
-            res.render('courseRatings', obj)
-        }
+    pool.getConnection(function (err, connection) {
+        if (err) throw err;
+        connection.query(SELECT_COURSENAME_QUERY, [instructorID, courseID], (err, results) => {
+            connection.release();
+            if (err) {
+                return res.send(err)
+            } else {
+                obj = {
+                    user: req.user,
+                    classInfo: results
+                };
+                req.next;
+                res.render('courseRatings', obj)
+            }
+        });
     });
 })
 
