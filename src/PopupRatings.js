@@ -44,8 +44,8 @@ class PopupRatings extends React.Component {
     }
 
     componentDidMount() {
-        this.getClassInfo();
         if (sessionStorage.getItem('popup') !== 'shown') {
+            this.getClassInfo();
             setTimeout(() => this.popup(), 20000);
         } else {
             console.log("popup isnt coming");

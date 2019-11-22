@@ -63,8 +63,8 @@ var PopupRatings = function (_React$Component) {
         value: function componentDidMount() {
             var _this2 = this;
 
-            this.getClassInfo();
             if (sessionStorage.getItem('popup') !== 'shown') {
+                this.getClassInfo();
                 setTimeout(function () {
                     return _this2.popup();
                 }, 20000);
