@@ -38,7 +38,7 @@ class Ratings extends React.Component {
 
     componentDidMount() {
         this.getRatings();
-        // console.log("hi " + ServerURL)
+        console.log("hi " + ServerURL)
     }
 
     // Retrieves data from database, upon loading the webpage 
