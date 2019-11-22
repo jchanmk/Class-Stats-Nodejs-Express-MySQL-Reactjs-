@@ -25,6 +25,7 @@ class Home extends React.Component {
         // their first 3 ratings, name, instructor
         // console.log(this.state.studentID)
        this.getRatings();
+       console.log("in home ratings js file")
     }
 
     getRatings() {

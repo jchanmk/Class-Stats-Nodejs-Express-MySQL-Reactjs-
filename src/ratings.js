@@ -1,6 +1,4 @@
 'use strict';
-import PercentageRating from "./PercentageRating.js";
-import StarList from "./StarList.js"
 import ClassEnjoyment from "./ClassEnjoyment.js"
 import ClassUsefulness from "./ClassUsefulness.js"
 import ExamDifficulty from "./ExamDifficulty.js"
@@ -38,7 +36,7 @@ class Ratings extends React.Component {
 
     componentDidMount() {
         this.getRatings();
-        console.log("hi " + ServerURL)
+        console.log("hi, ratings js file " + ServerURL)
     }
 
     // Retrieves data from database, upon loading the webpage 
