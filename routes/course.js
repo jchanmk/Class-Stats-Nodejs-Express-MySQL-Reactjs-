@@ -51,7 +51,10 @@ router.get("/findratings1", (req, res) => {
     pool.getConnection(function (err, connection) {
         if (err) throw err;
         connection.query(SELECT_ALL_RATINGS, [courseID], (err, results) => {
+            console.log(pool._freeConnections.indexOf(connection)); // -1
             connection.release();
+            console.log(pool._freeConnections.indexOf(connection)); // -1
+
             // console.log(results)
             if (err) {
                 console.log("ERROR IN SQL: " + err)
@@ -84,7 +87,10 @@ router.get("/findratings2", (req, res) => {
     pool.getConnection(function (err, connection) {
         if (err) throw err;
         connection.query(SELECT_ALL_RATINGS, [courseID], (err, results) => {
+            console.log(pool._freeConnections.indexOf(connection)); // -1
             connection.release();
+            console.log(pool._freeConnections.indexOf(connection)); // -1
+
             if (err) {
                 console.log("ERROR IN SQL: " + err)
 
@@ -116,7 +122,10 @@ router.get("/findratings3", (req, res) => {
     pool.getConnection(function (err, connection) {
         if (err) throw err;
         connection.query(SELECT_ALL_RATINGS, [courseID], (err, results) => {
+            console.log(pool._freeConnections.indexOf(connection)); // -1
             connection.release();
+            console.log(pool._freeConnections.indexOf(connection)); // -1
+
             if (err) {
                 console.log("ERROR IN SQL: " + err)
 
@@ -146,7 +155,11 @@ router.get("/findratings4", (req, res) => {
     pool.getConnection(function (err, connection) {
         if (err) throw err;
         connection.query(SELECT_ALL_RATINGS, [courseID], (err, results) => {
+            console.log(pool._freeConnections.indexOf(connection)); // -1
+
             connection.release();
+            console.log(pool._freeConnections.indexOf(connection)); // -1
+
             // console.log(results)
             if (err) {
                 console.log("ERROR IN SQL: " + err)
@@ -177,7 +190,11 @@ router.get("/findratings5", (req, res) => {
     pool.getConnection(function (err, connection) {
         if (err) throw err;
         connection.query(SELECT_ALL_RATINGS, [courseID], (err, results) => {
+            console.log(pool._freeConnections.indexOf(connection)); // -1
+
             connection.release();
+            console.log(pool._freeConnections.indexOf(connection)); // -1
+
             if (err) {
                 console.log("ERROR IN SQL: " + err)
 
