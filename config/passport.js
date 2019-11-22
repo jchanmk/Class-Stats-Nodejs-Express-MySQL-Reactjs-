@@ -7,6 +7,7 @@ const dbconfig = require("./database");
 // const connection = mysql.createConnection(dbconfig.connection);
 // connection.query('USE ' + dbconfig.database);
 
+// const connection = mysql.createPool(dbconfig.connection);
 const connection = mysql.createPool(dbconfig.connection);
 
 module.exports = function (passport) {

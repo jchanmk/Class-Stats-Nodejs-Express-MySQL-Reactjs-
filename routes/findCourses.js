@@ -29,7 +29,10 @@ router.get("/:department", middleware.isLoggedIn, function (req, res) {
     pool.getConnection(function (err, connection) {
         if (err) throw err;
         connection.query(SELECT_ALL_COURSES_QUERY, [departmentName, departmentName], (err, results) => {
+            console.log(pool._freeConnections.indexOf(connection)); // -1
             connection.release();
+            console.log(pool._freeConnections.indexOf(connection)); // 0
+            
             if (err) {
                 return res.send(err)
             } else {
