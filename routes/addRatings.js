@@ -34,35 +34,45 @@ router.get('/', middleware.isLoggedIn, (req, res) => {
         return res.send(addHomeworkLoad(courseID, rating));
     } else if (type === "profApproach") {
         return res.send(addProfApprach(courseID, rating));
-    } 
+    }
 })
 
 function addClassEnjoyment(courseID, rating) {
     const INSERT_INTO_ClASS_ENJOYMENT =
-        "UPDATE Class_Enjoyment " + 
+        "UPDATE Class_Enjoyment " +
         "SET Rating = Rating + ?, Count = Count + 1 " +
         "WHERE CourseID = ? "
-    connection.query(INSERT_INTO_ClASS_ENJOYMENT, [rating, courseID], (err, results) => {
-        if (err) {
-            return err
-        } else {
-            return results;
-        }
-    });
+
+    pool.getConnection(function (err, connection) {
+        if (err) throw err;
+        connection.query(INSERT_INTO_ClASS_ENJOYMENT, [rating, courseID], (err, results) => {
+            connection.release();
+            if (err) {
+                return err
+            } else {
+                return results;
+            }
+        });
+    })
 }
 
 function addProfRating(courseID, rating) {
     const INSERT_INTO_ClASS_ENJOYMENT =
-        "UPDATE Prof_Rating " + 
+        "UPDATE Prof_Rating " +
         "SET Rating = Rating + ?, Count = Count + 1 " +
         "WHERE CourseID = ? "
-    connection.query(INSERT_INTO_ClASS_ENJOYMENT, [rating, courseID], (err, results) => {
-        if (err) {
-            return err
-        } else {
-            return "succesfully added rating";
-        }
-    });
+
+    pool.getConnection(function (err, connection) {
+        if (err) throw err;
+        connection.query(INSERT_INTO_ClASS_ENJOYMENT, [rating, courseID], (err, results) => {
+            connection.release()
+            if (err) {
+                return err
+            } else {
+                return "succesfully added rating";
+            }
+        });
+    })
 }
 
 function addClassUsefulness(courseID, rating) {
@@ -78,13 +88,18 @@ function addClassUsefulness(courseID, rating) {
             "SET NotUseful = NotUseful + 1, Count = Count + 1 " +
             "WHERE CourseID = ? ";
     }
-    connection.query(UPDATE_CLASS_USEFULNESS, [courseID], (err, results) => {
-        if (err) {
-            return err
-        } else {
-            return "succesfully added rating";
-        }
-    });
+
+    pool.getConnection(function (err, connection) {
+        if (err) throw err;
+        connection.query(UPDATE_CLASS_USEFULNESS, [courseID], (err, results) => {
+            connection.release()
+            if (err) {
+                return err
+            } else {
+                return "succesfully added rating";
+            }
+        });
+    })
 }
 
 function addClassType(courseID, rating) {
@@ -100,13 +115,18 @@ function addClassType(courseID, rating) {
             "SET Discussion = Discussion + 1, Count = Count + 1 " +
             "WHERE CourseID = ? ";
     }
-    connection.query(UPDATE_CLASS_TYPE, [courseID], (err, results) => {
-        if (err) {
-            return err
-        } else {
-            return "succesfully added rating";
-        }
-    });
+
+    pool.getConnection(function (err, connection) {
+        if (err) throw err;
+        connection.query(UPDATE_CLASS_TYPE, [courseID], (err, results) => {
+            connection.release()
+            if (err) {
+                return err
+            } else {
+                return "succesfully added rating";
+            }
+        });
+    })
 }
 
 function addTestHeavy(courseID, rating) {
@@ -122,13 +142,18 @@ function addTestHeavy(courseID, rating) {
             "SET Heavy = Heavy + 1, Count = Count + 1 " +
             "WHERE CourseID = ? ";
     }
-    connection.query(UPDATE_TEST_HEAVY, [courseID], (err, results) => {
-        if (err) {
-            return err
-        } else {
-            return "succesfully added rating";
-        }
-    });
+
+    pool.getConnection(function (err, connection) {
+        if (err) throw err;
+        connection.query(UPDATE_TEST_HEAVY, [courseID], (err, results) => {
+            connection.release()
+            if (err) {
+                return err
+            } else {
+                return "succesfully added rating";
+            }
+        });
+    })
 }
 
 function addHomeworkLoad(courseID, rating) {
@@ -144,13 +169,18 @@ function addHomeworkLoad(courseID, rating) {
             "SET Heavy = Heavy + 1, Count = Count + 1 " +
             "WHERE CourseID = ? ";
     }
-    connection.query(UPDATE_HOMEWORK_LOAD, [courseID], (err, results) => {
-        if (err) {
-            return err
-        } else {
-            return "succesfully added rating";
-        }
-    });
+
+    pool.getConnection(function (err, connection) {
+        if (err) throw err;
+        connection.query(UPDATE_HOMEWORK_LOAD, [courseID], (err, results) => {
+            connection.release()
+            if (err) {
+                return err
+            } else {
+                return "succesfully added rating";
+            }
+        });
+    })
 }
 
 function addProfApprach(courseID, rating) {
@@ -166,13 +196,18 @@ function addProfApprach(courseID, rating) {
             "SET No = No + 1, Count = Count + 1 " +
             "WHERE CourseID = ? ";
     }
-    connection.query(UPDATE_PROF_APPROACH, [courseID], (err, results) => {
-        if (err) {
-            return err
-        } else {
-            return "succesfully added rating";
-        }
-    });
+
+    pool.getConnection(function (err, connection) {
+        if (err) throw err;
+        connection.query(UPDATE_PROF_APPROACH, [courseID], (err, results) => {
+            connection.release()
+            if (err) {
+                return err
+            } else {
+                return "succesfully added rating";
+            }
+        });
+    })
 }
 
 function addExamDifficulty(courseID, rating) {
@@ -193,13 +228,18 @@ function addExamDifficulty(courseID, rating) {
             "SET Hard = Hard + 1, Count = Count + 1 " +
             "WHERE CourseID = ? ";
     }
-    connection.query(UPDATE_EXAM_DIFFICULTY, [courseID], (err, results) => {
-        if (err) {
-            return err
-        } else {
-            return "succesfully added rating";
-        }
-    });
+
+    pool.getConnection(function (err, connection) {
+        if (err) throw err;
+        connection.query(UPDATE_EXAM_DIFFICULTY, [courseID], (err, results) => {
+            connection.release()
+            if (err) {
+                return err
+            } else {
+                return "succesfully added rating";
+            }
+        });
+    })
 }
 
 function addClassDifficulty(courseID, rating) {
@@ -220,12 +260,17 @@ function addClassDifficulty(courseID, rating) {
             "SET Hard = Hard + 1, Count = Count + 1 " +
             "WHERE CourseID = ? ";
     }
-    connection.query(UPDATE_CLASS_DIFFICULTY, [courseID], (err, results) => {
-        if (err) {
-            return err
-        } else {
-            return "succesfully added rating";
-        }
+
+    pool.getConnection(function (err, connection) {
+        if (err) throw err;
+        connection.query(UPDATE_CLASS_DIFFICULTY, [courseID], (err, results) => {
+            connection.release()
+            if (err) {
+                return err
+            } else {
+                return "succesfully added rating";
+            }
+        });
     });
 }
 
@@ -242,13 +287,18 @@ function addAttendanceAttn(courseID, rating) {
             "SET Attentive = Attentive + 1, Count = Count + 1 " +
             "WHERE CourseID = ? ";
     }
-    connection.query(UPDATE_ATTENDANCE_ATTN, [courseID], (err, results) => {
-        if (err) {
-            return err
-        } else {
-            return "succesfully added rating";
-        }
-    });
+
+    pool.getConnection(function (err, connection) {
+        if (err) throw err;
+        connection.query(UPDATE_ATTENDANCE_ATTN, [courseID], (err, results) => {
+            connection.release()
+            if (err) {
+                return err
+            } else {
+                return "succesfully added rating";
+            }
+        });
+    })
 }
 
 module.exports = router;
