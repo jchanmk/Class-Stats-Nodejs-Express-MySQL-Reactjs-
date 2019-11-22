@@ -9,6 +9,7 @@
 
 module.exports = {
     'connection':{
+        connectionLimit: 30,
         host:'us-cdbr-iron-east-05.cleardb.net',
         user:'b430d34a9292e2',
         password:'a3eaa021',
