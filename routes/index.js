@@ -6,8 +6,15 @@ const express = require("express"),
     dbconfig = require('../config/database');
 
 // const connection = mysql.createConnection(dbconfig.connection);
-const connection = mysql.createPool(dbconfig.connection);
-connection.query('USE ' + dbconfig.database);
+var connection = mysql.createPool(dbconfig.connection);
+// connection.query('USE ' + dbconfig.database);
+connection.getConnection(function(err, connection){
+    if(err){
+        console.log(err);
+    } else {
+        // console.log(connection);
+    }
+});
 
 router.get("/", function (req, res) {
     if(req.user != null){

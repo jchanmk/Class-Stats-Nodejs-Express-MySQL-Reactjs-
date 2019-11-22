@@ -5,8 +5,17 @@ const mysql = require('mysql');
 const middleware = require("../middleware");
 
 // const connection = mysql.createConnection(dbconfig.connection);
-const connection = mysql.createPool(dbconfig.connection);
-connection.query('USE ' + dbconfig.database);
+var connection = mysql.createPool(dbconfig.connection);
+// connection.query('USE ' + dbconfig.database);
+
+connection.getConnection(function(err, connection){
+    if(err){
+        console.log("something wrong happened")
+        console.log(err);
+    } else {
+        console.log("connected to DB");
+    }
+});
 
 
 // Show courses by that department
