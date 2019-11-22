@@ -48,6 +48,7 @@ router.get("/findratings1", (req, res) => {
     connection.query(SELECT_ALL_RATINGS, [courseID], (err, results) => {
         // console.log(results)
         if (err) {
+            console.log("ERROR IN SQL: " + err)
             return res.send(err)
         } else {
             return res.json({
@@ -73,6 +74,8 @@ router.get("/findratings2", (req, res) => {
 
     connection.query(SELECT_ALL_RATINGS, [courseID], (err, results) => {
         if (err) {
+            console.log("ERROR IN SQL: " + err)
+
             return res.send(err)
         } else {
             return res.json({
@@ -97,6 +100,8 @@ router.get("/findratings3", (req, res) => {
 
     connection.query(SELECT_ALL_RATINGS, [courseID], (err, results) => {
         if (err) {
+            console.log("ERROR IN SQL: " + err)
+
             return res.send(err)
         } else {
             return res.json({
@@ -120,6 +125,8 @@ router.get("/findratings4", (req, res) => {
     connection.query(SELECT_ALL_RATINGS, [courseID], (err, results) => {
         // console.log(results)
         if (err) {
+            console.log("ERROR IN SQL: " + err)
+
             return res.send(err)
         } else {
             return res.json({
@@ -142,6 +149,8 @@ router.get("/findratings5", (req, res) => {
 
     connection.query(SELECT_ALL_RATINGS, [courseID], (err, results) => {
         if (err) {
+            console.log("ERROR IN SQL: " + err)
+
             return res.send(err)
         } else {
             return res.json({
