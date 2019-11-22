@@ -36,7 +36,7 @@ router.get("/", middleware.isLoggedIn, function (req, res) {
 })
 
 router.get("/findratings1", (req, res) => {
-
+    console.log("1. in here")
     const courseID = req.query.courseid;
     const SELECT_ALL_RATINGS =
         "SELECT Rating/Class_Enjoyment.Count AS ClassEnjoyment, " +
@@ -60,6 +60,8 @@ router.get("/findratings1", (req, res) => {
 });
 
 router.get("/findratings2", (req, res) => {
+    console.log("2. in here")
+
     const instructorID = req.query.instructorid;
     const courseID = req.query.courseid;
     const SELECT_ALL_RATINGS =
@@ -87,6 +89,8 @@ router.get("/findratings2", (req, res) => {
 });
 
 router.get("/findratings3", (req, res) => {
+    console.log("3. in here")
+
     const instructorID = req.query.instructorid;
     const courseID = req.query.courseid;
     const SELECT_ALL_RATINGS =
@@ -113,6 +117,8 @@ router.get("/findratings3", (req, res) => {
 });
 
 router.get("/findratings4", (req, res) => {
+    console.log("4. in here")
+
     const instructorID = req.query.instructorid;
     const courseID = req.query.courseid;
     const SELECT_ALL_RATINGS =
@@ -138,6 +144,8 @@ router.get("/findratings4", (req, res) => {
 });
 
 router.get("/findratings5", (req, res) => {
+    console.log("5. in here")
+
     const instructorID = req.query.instructorid;
     const courseID = req.query.courseid;
     const SELECT_ALL_RATINGS =
