@@ -5,22 +5,10 @@ const express = require("express"),
     mysql = require('mysql'),
     dbconfig = require('../config/database');
 
-// const connection = mysql.createConnection(dbconfig.connection);
-// var connection = mysql.createPool(dbconfig.connection);
-var connection = mysql.createPool({
-    host:'us-cdbr-iron-east-05.cleardb.net',
-    user:'b430d34a9292e2',
-    password:'a3eaa021',
-    database:'heroku_ee6e96f9f6250a3'
-});
-// connection.query('USE ' + dbconfig.database);
-connection.getConnection(function(err, connection){
-    if(err){
-        console.log(err);
-    } else {
-        // console.log(connection);
-    }
-});
+const connection = mysql.createConnection(dbconfig.connection);
+connection.query('USE ' + dbconfig.database);
+
+
 router.get('/', middleware.isLoggedIn, (req, res) => {
     const courseID = req.query.courseid;
     const type = req.query.type;

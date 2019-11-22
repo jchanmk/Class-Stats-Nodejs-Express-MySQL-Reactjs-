@@ -4,26 +4,11 @@ const dbconfig = require("../config/database")
 const mysql = require('mysql');
 const middleware = require("../middleware");
 
-// const connection = mysql.createConnection(dbconfig.connection);
-// var connection = mysql.createPool(dbconfig.connection);
-// connection.query('USE ' + dbconfig.database);
-
-var connection = mysql.createPool({
-    host:'us-cdbr-iron-east-05.cleardb.net',
-    user:'b430d34a9292e2',
-    password:'a3eaa021',
-    database:'heroku_ee6e96f9f6250a3'
-});
+const connection = mysql.createConnection(dbconfig.connection);
+connection.query('USE ' + dbconfig.database);
 
 
-connection.getConnection(function(err, connection){
-    if(err){
-        console.log("something wrong happened")
-        console.log(err);
-    } else {
-        console.log("connected to DB");
-    }
-});
+
 
 
 // Show courses by that department
