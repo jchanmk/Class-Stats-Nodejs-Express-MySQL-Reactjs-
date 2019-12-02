@@ -45,7 +45,7 @@ router.get('/home', middleware.isLoggedIn, function (req, res) {
         "SELECT CourseNum " +
         "FROM Takes, Students " +
         "WHERE Takes.StudentNum = Students.StudentID AND " +
-        "Takes.StudentNum = ? ";
+        "Takes.StudentNum = ? ;";
 
     pool.getConnection(function (err, connection) {
         if (err) throw err;
@@ -81,7 +81,7 @@ router.get('/home/:studentID', function (req, res) {
         "AND Courses.CourseID IN( " +
         "SELECT CourseNum " +
         "FROM Takes " +
-        "WHERE Semester = 'Fall 2019' AND StudentNum = ? )";
+        "WHERE Semester = 'Fall 2019' AND StudentNum = ? ) ;";
 
     pool.getConnection(function (err, connection) {
         if (err) throw err;
@@ -111,7 +111,7 @@ router.get('/popup/:studentID', function (req, res) {
         "SELECT CourseNum " +
         "FROM Takes " +
         "WHERE Semester != ? AND StudentNum = ? " +
-        "LIMIT 1)";
+        "LIMIT 1);";
 
     pool.getConnection(function (err, connection) {
         if (err) throw err;

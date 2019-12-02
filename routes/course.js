@@ -19,7 +19,7 @@ router.get("/", middleware.isLoggedIn, function (req, res) {
         "SELECT Name, Lname " +
         "FROM Instructors, Courses " +
         "WHERE Instructors.InstructorID = ? AND " +
-        "Courses.CourseID = ? ";
+        "Courses.CourseID = ? ;";
     pool.getConnection(function (err, connection) {
         if (err) throw err;
         connection.query(SELECT_COURSENAME_QUERY, [instructorID, courseID], (err, results) => {
@@ -46,7 +46,7 @@ router.get("/findratings1", (req, res) => {
         "Useful/Class_Usefulness.Count AS Useful, " +
         "NotUseful/Class_Usefulness.Count AS NotUseful " +
         "FROM Class_Enjoyment, Class_Usefulness " +
-        "WHERE Class_Enjoyment.CourseID = Class_Usefulness.CourseID AND Class_Usefulness.CourseID = ? ";
+        "WHERE Class_Enjoyment.CourseID = Class_Usefulness.CourseID AND Class_Usefulness.CourseID = ? ;";
 
     pool.getConnection(function (err, connection) {
         if (err) throw err;
@@ -82,7 +82,7 @@ router.get("/findratings2", (req, res) => {
         "Attentive/Attendance_Attn.Count AS Attentive " +
         "FROM Exam_Difficulty, Attendance_Attn " +
         "WHERE Exam_Difficulty.CourseID = Attendance_Attn.CourseID " +
-        "AND Attendance_Attn.CourseID = ?";
+        "AND Attendance_Attn.CourseID = ? ;";
 
     pool.getConnection(function (err, connection) {
         if (err) throw err;
@@ -117,7 +117,7 @@ router.get("/findratings3", (req, res) => {
         "Hard/Class_Difficulty.Count AS Hard " +
         "FROM Prof_Rating, Class_Difficulty " +
         "WHERE Prof_Rating.CourseID = Class_Difficulty.CourseID " +
-        "AND Prof_Rating.CourseID = ?";
+        "AND Prof_Rating.CourseID = ? ;";
 
     pool.getConnection(function (err, connection) {
         if (err) throw err;
@@ -150,7 +150,7 @@ router.get("/findratings4", (req, res) => {
         "Lecture/Class_Type.Count AS Lecture, Discussion/Class_Type.Count AS Discussion " +
         "FROM Test_Heavy, Class_Type " +
         "WHERE Test_Heavy.CourseID = Class_Type.CourseID " +
-        "AND Class_Type.CourseID = ? ";
+        "AND Class_Type.CourseID = ? ;";
 
     pool.getConnection(function (err, connection) {
         if (err) throw err;
@@ -185,7 +185,7 @@ router.get("/findratings5", (req, res) => {
         "Yes/Prof_Approach.Count AS Yes, No/Prof_Approach.Count AS No " +
         "FROM Homework_Load, Prof_Approach " +
         "WHERE Homework_Load.CourseID = Prof_Approach.CourseID " +
-        "AND Prof_Approach.CourseID = ? ";
+        "AND Prof_Approach.CourseID = ? ;";
 
     pool.getConnection(function (err, connection) {
         if (err) throw err;

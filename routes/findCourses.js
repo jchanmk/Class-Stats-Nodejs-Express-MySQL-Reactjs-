@@ -24,7 +24,7 @@ router.get("/:department", middleware.isLoggedIn, function (req, res) {
         "SELECT DepartmentID " +
         "FROM Departments " +
         "WHERE Departments.name = ?" +
-        ") AND Departments.Name = ?";
+        ") AND Departments.Name = ? ;";
 
     pool.getConnection(function (err, connection) {
         if (err) throw err;
@@ -32,7 +32,7 @@ router.get("/:department", middleware.isLoggedIn, function (req, res) {
             console.log(pool._freeConnections.indexOf(connection)); // -1
             connection.release();
             console.log(pool._freeConnections.indexOf(connection)); // 0
-            
+
             if (err) {
                 return res.send(err)
             } else {
@@ -60,7 +60,7 @@ router.get("/:department/:course", middleware.isLoggedIn, function (req, res) {
         "FROM Instructors, Courses, Teaches " +
         "WHERE Instructors.InstructorID = Teaches.InstructorID AND " +
         "Teaches.CourseID = Courses.CourseID AND " +
-        "Courses.Name = ? ";
+        "Courses.Name = ? ;";
 
     pool.getConnection(function (err, connection) {
         if (err) throw err;

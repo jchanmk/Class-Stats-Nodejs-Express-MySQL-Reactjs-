@@ -42,7 +42,7 @@ function addClassEnjoyment(courseID, rating) {
     const INSERT_INTO_ClASS_ENJOYMENT =
         "UPDATE Class_Enjoyment " +
         "SET Rating = Rating + ?, Count = Count + 1 " +
-        "WHERE CourseID = ? "
+        "WHERE CourseID = ? ;"
 
     pool.getConnection(function (err, connection) {
         if (err) throw err;
@@ -61,7 +61,7 @@ function addProfRating(courseID, rating) {
     const INSERT_INTO_ClASS_ENJOYMENT =
         "UPDATE Prof_Rating " +
         "SET Rating = Rating + ?, Count = Count + 1 " +
-        "WHERE CourseID = ? "
+        "WHERE CourseID = ? ;"
 
     pool.getConnection(function (err, connection) {
         if (err) throw err;
@@ -82,7 +82,7 @@ function addClassUsefulness(courseID, rating) {
         UPDATE_CLASS_USEFULNESS =
             "UPDATE Class_Usefulness " +
             "SET Useful = Useful + 1, Count = Count + 1 " +
-            "WHERE CourseID = ? ";
+            "WHERE CourseID = ? ;";
     } else {
         UPDATE_CLASS_USEFULNESS =
             "UPDATE Class_Usefulness " +
@@ -109,12 +109,12 @@ function addClassType(courseID, rating) {
         UPDATE_CLASS_TYPE =
             "UPDATE Class_Type " +
             "SET Lecture = Lecture + 1, Count = Count + 1 " +
-            "WHERE CourseID = ? ";
+            "WHERE CourseID = ? ;";
     } else {
         UPDATE_CLASS_TYPE =
             "UPDATE Class_Type " +
             "SET Discussion = Discussion + 1, Count = Count + 1 " +
-            "WHERE CourseID = ? ";
+            "WHERE CourseID = ? ;";
     }
 
     pool.getConnection(function (err, connection) {
@@ -136,12 +136,12 @@ function addTestHeavy(courseID, rating) {
         UPDATE_TEST_HEAVY =
             "UPDATE Test_Heavy " +
             "SET Light = Light + 1, Count = Count + 1 " +
-            "WHERE CourseID = ? ";
+            "WHERE CourseID = ? ;";
     } else {
         UPDATE_TEST_HEAVY =
             "UPDATE Test_Heavy " +
             "SET Heavy = Heavy + 1, Count = Count + 1 " +
-            "WHERE CourseID = ? ";
+            "WHERE CourseID = ? ;";
     }
 
     pool.getConnection(function (err, connection) {
@@ -163,12 +163,12 @@ function addHomeworkLoad(courseID, rating) {
         UPDATE_HOMEWORK_LOAD =
             "UPDATE Homework_Load " +
             "SET Light = Light + 1, Count = Count + 1 " +
-            "WHERE CourseID = ? ";
+            "WHERE CourseID = ? ;";
     } else {
         UPDATE_HOMEWORK_LOAD =
             "UPDATE Homework_Load " +
             "SET Heavy = Heavy + 1, Count = Count + 1 " +
-            "WHERE CourseID = ? ";
+            "WHERE CourseID = ? ;";
     }
 
     pool.getConnection(function (err, connection) {
@@ -190,12 +190,12 @@ function addProfApprach(courseID, rating) {
         UPDATE_PROF_APPROACH =
             "UPDATE Prof_Approach " +
             "SET Yes = Yes + 1, Count = Count + 1 " +
-            "WHERE CourseID = ? ";
+            "WHERE CourseID = ? ;";
     } else {
         UPDATE_PROF_APPROACH =
             "UPDATE Prof_Approach " +
             "SET No = No + 1, Count = Count + 1 " +
-            "WHERE CourseID = ? ";
+            "WHERE CourseID = ? ;";
     }
 
     pool.getConnection(function (err, connection) {
@@ -217,17 +217,17 @@ function addExamDifficulty(courseID, rating) {
         UPDATE_EXAM_DIFFICULTY =
             "UPDATE Exam_Difficulty " +
             "SET Easy = Easy + 1, Count = Count + 1 " +
-            "WHERE CourseID = ? ";
+            "WHERE CourseID = ? ;";
     } else if (rating == 0) {
         UPDATE_EXAM_DIFFICULTY =
             "UPDATE Exam_Difficulty " +
             "SET Medium = Medium + 1, Count = Count + 1 " +
-            "WHERE CourseID = ? ";
+            "WHERE CourseID = ? ;";
     } else if (rating == -1) {
         UPDATE_EXAM_DIFFICULTY =
             "UPDATE Exam_Difficulty " +
             "SET Hard = Hard + 1, Count = Count + 1 " +
-            "WHERE CourseID = ? ";
+            "WHERE CourseID = ? ;";
     }
 
     pool.getConnection(function (err, connection) {
@@ -249,17 +249,17 @@ function addClassDifficulty(courseID, rating) {
         UPDATE_CLASS_DIFFICULTY =
             "UPDATE Class_Difficulty " +
             "SET Easy = Easy + 1, Count = Count + 1 " +
-            "WHERE CourseID = ? ";
+            "WHERE CourseID = ? ;";
     } else if (rating == 0) {
         UPDATE_CLASS_DIFFICULTY =
             "UPDATE Class_Difficulty " +
             "SET Medium = Medium + 1, Count = Count + 1 " +
-            "WHERE CourseID = ? ";
+            "WHERE CourseID = ? ;";
     } else if (rating == -1) {
         UPDATE_CLASS_DIFFICULTY =
             "UPDATE Class_Difficulty " +
             "SET Hard = Hard + 1, Count = Count + 1 " +
-            "WHERE CourseID = ? ";
+            "WHERE CourseID = ? ;";
     }
 
     pool.getConnection(function (err, connection) {
@@ -281,12 +281,12 @@ function addAttendanceAttn(courseID, rating) {
         UPDATE_ATTENDANCE_ATTN =
             "UPDATE Attendance_Attn " +
             "SET Inattentive = Inattentive + 1, Count = Count + 1 " +
-            "WHERE CourseID = ? ";
+            "WHERE CourseID = ? ;";
     } else {
         UPDATE_ATTENDANCE_ATTN =
             "UPDATE Attendance_Attn " +
             "SET Attentive = Attentive + 1, Count = Count + 1 " +
-            "WHERE CourseID = ? ";
+            "WHERE CourseID = ? ;";
     }
 
     pool.getConnection(function (err, connection) {
