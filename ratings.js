@@ -57,6 +57,28 @@ var Ratings = function (_React$Component) {
         }
 
         // Retrieves data from database, upon loading the webpage 
+        // getRatings() {
+        //     let search = window.location.search;
+        //     fetch(ServerURL + '/course/findratings1' + search)
+        //         .then(response => response.json())
+        //         .then(response => this.setState({ courseID: response.courseID, ratings: response.data }));
+
+        //     fetch(ServerURL + '/course/findratings2' + search)
+        //         .then(response2 => response2.json())
+        //         .then(response2 => this.setState({ ratings2: response2.data }));
+
+        //     fetch(ServerURL + '/course/findratings3' + search)
+        //         .then(response3 => response3.json())
+        //         .then(response3 => this.setState({ ratings3: response3.data }));
+
+        //     fetch(ServerURL + '/course/findratings4' + search)
+        //         .then(response4 => response4.json())
+        //         .then(response4 => this.setState({ ratings4: response4.data }));
+
+        //     fetch(ServerURL + '/course/findratings5' + search)
+        //         .then(response5 => response5.json())
+        //         .then(response5 => this.setState({ ratings5: response5.data }));
+        // }
 
     }, {
         key: "getRatings",
@@ -68,31 +90,23 @@ var Ratings = function (_React$Component) {
                 return response.json();
             }).then(function (response) {
                 return _this2.setState({ courseID: response.courseID, ratings: response.data });
-            });
-
-            fetch(ServerURL + '/course/findratings2' + search).then(function (response2) {
+            }, fetch(ServerURL + '/course/findratings2' + search).then(function (response2) {
                 return response2.json();
             }).then(function (response2) {
                 return _this2.setState({ ratings2: response2.data });
-            });
-
-            fetch(ServerURL + '/course/findratings3' + search).then(function (response3) {
+            }, fetch(ServerURL + '/course/findratings3' + search).then(function (response3) {
                 return response3.json();
             }).then(function (response3) {
                 return _this2.setState({ ratings3: response3.data });
-            });
-
-            fetch(ServerURL + '/course/findratings4' + search).then(function (response4) {
+            }, fetch(ServerURL + '/course/findratings4' + search).then(function (response4) {
                 return response4.json();
             }).then(function (response4) {
                 return _this2.setState({ ratings4: response4.data });
-            });
-
-            fetch(ServerURL + '/course/findratings5' + search).then(function (response5) {
+            }, fetch(ServerURL + '/course/findratings5' + search).then(function (response5) {
                 return response5.json();
             }).then(function (response5) {
                 return _this2.setState({ ratings5: response5.data });
-            });
+            })))));
         }
 
         // This sends ratings to the server
