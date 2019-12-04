@@ -8,8 +8,11 @@ const express = require("express"),
 // const connection = mysql.createConnection(dbconfig.connection);
 // connection.query('USE ' + dbconfig.database);
 // const connection = mysql.createPool(dbconfig.connection);
+
+// initialize MySQL connection
 const pool = mysql.createPool(dbconfig.connection);
 
+// Add ratings to database based on query string parameters
 
 router.get('/', middleware.isLoggedIn, (req, res) => {
     const courseID = req.query.courseid;

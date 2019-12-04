@@ -12,6 +12,10 @@ const pool = mysql.createPool(dbconfig.connection);
 
 const addRatingRoute = require("./addRatings");
 
+// find all ratings for specific course, multiple SQL prepared statements to query the
+// database, then renders all data in JSON files to client (reactjs) to render
+
+
 router.get("/", middleware.isLoggedIn, function (req, res) {
     var instructorID = req.query.instructorid;
     var courseID = req.query.courseid;

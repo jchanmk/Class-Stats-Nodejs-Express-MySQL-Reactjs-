@@ -17,6 +17,7 @@ const indexRoutes = require("./routes/index");
 const courseRoutes = require("./routes/course");
 
 // app.use(cors());
+// initalize npm dependencies
 app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -29,14 +30,15 @@ app.use(session({
     saveUninitialized: true
 }));
 
+// initalize passport.js for user authentication
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
+// use routes from other directories
 app.use(indexRoutes);
 app.use("/findcourse", findCourseRoutes);
 app.use("/course", courseRoutes);
-
 
 app.listen(process.env.PORT || 3000, function () {
     console.log("ClassStats Server has started...")

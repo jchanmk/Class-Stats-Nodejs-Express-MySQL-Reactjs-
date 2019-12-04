@@ -9,8 +9,7 @@ const express = require("express"),
 // connection.query('USE ' + dbconfig.database);
 const pool = mysql.createPool(dbconfig.connection);
 
-
-
+// render login page
 router.get("/", function (req, res) {
     if (req.user != null) {
         // console.log("you logged in arleady")
@@ -21,6 +20,7 @@ router.get("/", function (req, res) {
     res.render("login", { message: req.flash('loginMessage') });
 })
 
+// post request to database, initialize cookie to remember user session, login based on email
 router.post('/login', passport.authenticate('local-login', {
     successRedirect: '/home',
     failureRedirect: '/',
@@ -34,12 +34,14 @@ router.post('/login', passport.authenticate('local-login', {
     res.redirect('/');
 })
 
+// post request to database, signup user with new password
 router.post('/signup', passport.authenticate('local-signup', {
     successRedirect: '/home',
     failureRedirect: '/',
     failureFlash: true
 }));
 
+// render home screen, shows classes that user is currently taking
 router.get('/home', middleware.isLoggedIn, function (req, res) {
     const SELECT_ALL_COURSES =
         "SELECT CourseNum " +
@@ -66,6 +68,7 @@ router.get('/home', middleware.isLoggedIn, function (req, res) {
     })
 });
 
+// Find all courses student is currently taking with SQL Prepared Statement
 router.get('/home/:studentID', function (req, res) {
     var studentID = req.params.studentID;
     const SELECT_HOME_INFO =
@@ -100,6 +103,7 @@ router.get('/home/:studentID', function (req, res) {
     })
 });
 
+// Renders data for popup asking student to rate a course they have taken in the past
 router.get('/popup/:studentID', function (req, res) {
     var studentID = req.params.studentID;
     var semester = "Fall 2019"
@@ -129,6 +133,7 @@ router.get('/popup/:studentID', function (req, res) {
     })
 });
 
+// Show all departments in databse, render to HTML
 var obj = {};
 router.get("/departments", middleware.isLoggedIn, function (req, res) {
     const SELECT_ALL_DEPARTMENTS_QUERY = "SELECT * FROM Departments;";
@@ -150,6 +155,7 @@ router.get("/departments", middleware.isLoggedIn, function (req, res) {
     });
 });
 
+// Logout, remove cookie/session, render login screen
 router.get('/logout', function (req, res) {
     req.logout();
     res.redirect('/');
