@@ -16,6 +16,7 @@ class Ratings extends React.Component {
         super();
         this.state = {
             courseID: null,
+            courseHistory: [],
             ratings: [],
             ratings2: [],
             ratings3: [],
@@ -42,6 +43,11 @@ class Ratings extends React.Component {
     // Retrieves data from database, upon loading the webpage 
     getRatings() {
         let search = window.location.search;
+        fetch(ServerURL + '/course/findCourseHistory')
+            .then(response => response.json())
+            .then(response => this.setState({ courseHistory: response.data }));
+            // .then(response => console.log(response.data));
+
         fetch(ServerURL + '/course/findratings1' + search)
             .then(response => response.json())
             .then(response => this.setState({ courseID: response.courseID, ratings: response.data }));
@@ -86,16 +92,27 @@ class Ratings extends React.Component {
 
     // This sends ratings to the server
     postRatings(type, rating) {
-            const { courseID } = this.state;
-            console.log(courseID + " " + type + " " + rating)
-            fetch(ServerURL + `/course/addrating?courseid=${courseID}&type=${type}&rating=${rating}`)
-                .then(response => response)
-                .then(response => this.getRatings())
-                .catch(err => console.log(err))
+        const { courseID } = this.state;
+        console.log(courseID + " " + type + " " + rating)
+        fetch(ServerURL + `/course/addrating?courseid=${courseID}&type=${type}&rating=${rating}`)
+            .then(response => response)
+            .then(response => this.getRatings())
+            .catch(err => console.log(err))
     }
 
     // identify the type of user rating and then send it to the server in postRatings()
     userRating(type, rating) {
+        // this for loop checks to see if the user submitting the rating has taken the class before
+        // if they haven't they cannot submit a rating
+
+        for (var i = 0; i < this.state.courseHistory.length; i++){
+            if(this.state.courseHistory[i].CourseNum == this.state.courseID){
+                break;
+            } else if(i == this.state.courseHistory.length-1){
+                return
+            }
+        }
+
         if (type === "classEnjoyment" && !this.state.classEnjoyment) {
             this.setState({ classEnjoyment: true, userRating: rating })
         } else if (type === "classUsefulness" && !this.state.classUsefulness) {

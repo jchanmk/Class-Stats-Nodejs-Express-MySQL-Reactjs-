@@ -42,8 +42,35 @@ router.get("/", middleware.isLoggedIn, function (req, res) {
     });
 })
 
+router.get("/findCourseHistory", (req, res) => {
+    console.log(req.user.StudentID);
+    // console.log("in course history")
+    const studentID = req.user.StudentID;
+
+    const SELECT_COURSE_HISTORY =
+        "SELECT CourseNum FROM Takes " +
+        "WHERE StudentNUM = ? ;";
+
+    pool.getConnection(function (err, connection) {
+        if (err) throw err;
+        connection.query(SELECT_COURSE_HISTORY, [studentID], (err, results) => {
+            connection.release();
+            console.log(results)
+            if (err) {
+                console.log("ERROR IN SQL: " + err)
+                return res.send(err)
+            } else {
+                return res.json({
+                    data: results
+                })
+            }
+        });
+    });
+});
+
 router.get("/findratings1", (req, res) => {
-    console.log("1. in here")
+    // console.log("1. in here");
+    // console.log(req.user.StudentID);
     const courseID = req.query.courseid;
     const SELECT_ALL_RATINGS =
         "SELECT Rating/Class_Enjoyment.Count AS ClassEnjoyment, " +
@@ -55,11 +82,11 @@ router.get("/findratings1", (req, res) => {
     pool.getConnection(function (err, connection) {
         if (err) throw err;
         connection.query(SELECT_ALL_RATINGS, [courseID], (err, results) => {
-            console.log(pool._freeConnections.indexOf(connection)); // -1
+            // console.log(pool._freeConnections.indexOf(connection)); // -1
             connection.release();
-            console.log(pool._freeConnections.indexOf(connection)); // -1
+            // console.log(pool._freeConnections.indexOf(connection)); // -1
 
-            // console.log(results)
+            console.log(results)
             if (err) {
                 console.log("ERROR IN SQL: " + err)
                 return res.send(err)
@@ -74,7 +101,7 @@ router.get("/findratings1", (req, res) => {
 });
 
 router.get("/findratings2", (req, res) => {
-    console.log("2. in here")
+    // console.log("2. in here")
 
     const instructorID = req.query.instructorid;
     const courseID = req.query.courseid;
@@ -91,9 +118,9 @@ router.get("/findratings2", (req, res) => {
     pool.getConnection(function (err, connection) {
         if (err) throw err;
         connection.query(SELECT_ALL_RATINGS, [courseID], (err, results) => {
-            console.log(pool._freeConnections.indexOf(connection)); // -1
+            // console.log(pool._freeConnections.indexOf(connection)); // -1
             connection.release();
-            console.log(pool._freeConnections.indexOf(connection)); // -1
+            // console.log(pool._freeConnections.indexOf(connection)); // -1
 
             if (err) {
                 console.log("ERROR IN SQL: " + err)
@@ -110,7 +137,7 @@ router.get("/findratings2", (req, res) => {
 });
 
 router.get("/findratings3", (req, res) => {
-    console.log("3. in here")
+    // console.log("3. in here")
 
     const instructorID = req.query.instructorid;
     const courseID = req.query.courseid;
@@ -126,9 +153,9 @@ router.get("/findratings3", (req, res) => {
     pool.getConnection(function (err, connection) {
         if (err) throw err;
         connection.query(SELECT_ALL_RATINGS, [courseID], (err, results) => {
-            console.log(pool._freeConnections.indexOf(connection)); // -1
+            // console.log(pool._freeConnections.indexOf(connection)); // -1
             connection.release();
-            console.log(pool._freeConnections.indexOf(connection)); // -1
+            // console.log(pool._freeConnections.indexOf(connection)); // -1
 
             if (err) {
                 console.log("ERROR IN SQL: " + err)
@@ -145,7 +172,7 @@ router.get("/findratings3", (req, res) => {
 });
 
 router.get("/findratings4", (req, res) => {
-    console.log("4. in here")
+    // console.log("4. in here")
 
     const instructorID = req.query.instructorid;
     const courseID = req.query.courseid;
@@ -159,10 +186,10 @@ router.get("/findratings4", (req, res) => {
     pool.getConnection(function (err, connection) {
         if (err) throw err;
         connection.query(SELECT_ALL_RATINGS, [courseID], (err, results) => {
-            console.log(pool._freeConnections.indexOf(connection)); // -1
+            // console.log(pool._freeConnections.indexOf(connection)); // -1
 
             connection.release();
-            console.log(pool._freeConnections.indexOf(connection)); // -1
+            // console.log(pool._freeConnections.indexOf(connection)); // -1
 
             // console.log(results)
             if (err) {
@@ -180,7 +207,7 @@ router.get("/findratings4", (req, res) => {
 });
 
 router.get("/findratings5", (req, res) => {
-    console.log("5. in here")
+    // console.log("5. in here")
 
     const instructorID = req.query.instructorid;
     const courseID = req.query.courseid;
@@ -194,10 +221,10 @@ router.get("/findratings5", (req, res) => {
     pool.getConnection(function (err, connection) {
         if (err) throw err;
         connection.query(SELECT_ALL_RATINGS, [courseID], (err, results) => {
-            console.log(pool._freeConnections.indexOf(connection)); // -1
+            // console.log(pool._freeConnections.indexOf(connection)); // -1
 
             connection.release();
-            console.log(pool._freeConnections.indexOf(connection)); // -1
+            // console.log(pool._freeConnections.indexOf(connection)); // -1
 
             if (err) {
                 console.log("ERROR IN SQL: " + err)
