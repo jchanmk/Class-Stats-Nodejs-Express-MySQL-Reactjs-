@@ -30,6 +30,7 @@ var Ratings = function (_React$Component) {
 
         _this.state = {
             courseID: null,
+            courseHistory: [],
             ratings: [],
             ratings2: [],
             ratings3: [],
@@ -64,6 +65,13 @@ var Ratings = function (_React$Component) {
             var _this2 = this;
 
             var search = window.location.search;
+            fetch(ServerURL + '/course/findCourseHistory').then(function (response) {
+                return response.json();
+            }).then(function (response) {
+                return _this2.setState({ courseHistory: response.data });
+            });
+            // .then(response => console.log(response.data));
+
             fetch(ServerURL + '/course/findratings1' + search).then(function (response) {
                 return response.json();
             }).then(function (response) {
@@ -117,14 +125,12 @@ var Ratings = function (_React$Component) {
         // }
 
         // This sends ratings to the server
-        // figure out a way to do without setTimeout, maybe do a promise 
 
     }, {
         key: "postRatings",
         value: function postRatings(type, rating) {
             var _this3 = this;
 
-            // setTimeout(() => {
             var courseID = this.state.courseID;
 
             console.log(courseID + " " + type + " " + rating);
@@ -135,11 +141,24 @@ var Ratings = function (_React$Component) {
             }).catch(function (err) {
                 return console.log(err);
             });
-            // }, 500)
         }
+
+        // identify the type of user rating and then send it to the server in postRatings()
+
     }, {
         key: "userRating",
         value: function userRating(type, rating) {
+            // this for loop checks to see if the user submitting the rating has taken the class before
+            // if they haven't they cannot submit a rating
+
+            for (var i = 0; i < this.state.courseHistory.length; i++) {
+                if (this.state.courseHistory[i].CourseNum == this.state.courseID) {
+                    break;
+                } else if (i == this.state.courseHistory.length - 1) {
+                    return;
+                }
+            }
+
             if (type === "classEnjoyment" && !this.state.classEnjoyment) {
                 this.setState({ classEnjoyment: true, userRating: rating });
             } else if (type === "classUsefulness" && !this.state.classUsefulness) {
@@ -161,11 +180,13 @@ var Ratings = function (_React$Component) {
             } else if (type === "profApproach" && !this.state.profApproach) {
                 this.setState({ profApproach: true, userRating: rating });
             } else {
-                // console.log("hi")
                 return;
             }
             this.postRatings(type, rating);
         }
+
+        // renders the ratings with reactjs and ratings stored in state
+
     }, {
         key: "render",
         value: function render() {
