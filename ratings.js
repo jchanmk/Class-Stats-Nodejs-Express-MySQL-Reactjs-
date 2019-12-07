@@ -54,7 +54,7 @@ var Ratings = function (_React$Component) {
         key: "componentDidMount",
         value: function componentDidMount() {
             var type = 1;
-            this.getRatingsTest();
+            this.getRatings(type);
         }
 
         // Retrieves data from database, upon loading the webpage 
@@ -65,13 +65,15 @@ var Ratings = function (_React$Component) {
             var _this2 = this;
 
             var search = window.location.search;
-            // if (type === 1) {
-            //     console.log("getting course history")
-            //     fetch(ServerURL + '/course/findCourseHistory')
-            //         .then(response => response.json())
-            //         .then(response => this.setState({ courseHistory: response.data }));
-            //     // .then(response => console.log(response.data));
-            // }
+            if (type === 1) {
+                console.log("getting course history");
+                fetch(ServerURL + '/course/findCourseHistory').then(function (response) {
+                    return response.json();
+                }).then(function (response) {
+                    return _this2.setState({ courseHistory: response.data });
+                });
+                // .then(response => console.log(response.data));
+            }
 
             if (type === "classEnjoyment" || type === "classUsefulness" || type === 1) {
                 console.log("in here fetch class enjoyment");
@@ -115,45 +117,34 @@ var Ratings = function (_React$Component) {
                 });
             }
         }
-    }, {
-        key: "getRatingsTest",
-        value: function getRatingsTest() {
-            var _this3 = this;
+        // getRatings() {
+        //     let search = window.location.search;
+        //     fetch(ServerURL + '/course/findratings1' + search)
+        //         .then(response => response.json())
+        //         .then(response => this.setState({ courseID: response.courseID, ratings: response.data }),
 
-            var search = window.location.search;
-            fetch(ServerURL + '/course/findratings1' + search).then(function (response) {
-                return response.json();
-            }).then(function (response) {
-                return _this3.setState({ courseID: response.courseID, ratings: response.data });
-            }, fetch(ServerURL + '/course/findCourseHistory').then(function (response) {
-                return response.json();
-            }).then(function (response) {
-                return _this3.setState({ courseHistory: response.data });
-            }, fetch(ServerURL + '/course/findratings2' + search).then(function (response2) {
-                return response2.json();
-            }).then(function (response2) {
-                return _this3.setState({ ratings2: response2.data });
-            }, fetch(ServerURL + '/course/findratings3' + search).then(function (response3) {
-                return response3.json();
-            }).then(function (response3) {
-                return _this3.setState({ ratings3: response3.data });
-            }, fetch(ServerURL + '/course/findratings4' + search).then(function (response4) {
-                return response4.json();
-            }).then(function (response4) {
-                return _this3.setState({ ratings4: response4.data });
-            }, fetch(ServerURL + '/course/findratings5' + search).then(function (response5) {
-                return response5.json();
-            }).then(function (response5) {
-                return _this3.setState({ ratings5: response5.data });
-            }))))));
-        }
+        //         fetch(ServerURL + '/course/findratings2' + search)
+        //         .then(response2 => response2.json())
+        //         .then(response2 => this.setState({ ratings2: response2.data }),
+
+        //     fetch(ServerURL + '/course/findratings3' + search)
+        //         .then(response3 => response3.json())
+        //         .then(response3 => this.setState({ ratings3: response3.data }),
+
+        //     fetch(ServerURL + '/course/findratings4' + search)
+        //         .then(response4 => response4.json())
+        //         .then(response4 => this.setState({ ratings4: response4.data }),
+        //     fetch(ServerURL + '/course/findratings5' + search)
+        //         .then(response5 => response5.json())
+        //         .then(response5 => this.setState({ ratings5: response5.data }))))))
+        // }
 
         // This sends ratings to the server
 
     }, {
         key: "postRatings",
         value: function postRatings(type, rating) {
-            var _this4 = this;
+            var _this3 = this;
 
             var courseID = this.state.courseID;
 
@@ -161,7 +152,7 @@ var Ratings = function (_React$Component) {
             fetch(ServerURL + ("/course/addrating?courseid=" + courseID + "&type=" + type + "&rating=" + rating)).then(function (response) {
                 return response;
             }).then(function (response) {
-                return _this4.getRatings(type);
+                return _this3.getRatings(type);
             }).catch(function (err) {
                 return console.log(err);
             });
@@ -214,7 +205,7 @@ var Ratings = function (_React$Component) {
     }, {
         key: "render",
         value: function render() {
-            var _this5 = this;
+            var _this4 = this;
 
             var ratings = this.state.ratings;
             var ratings2 = this.state.ratings2;
@@ -240,7 +231,7 @@ var Ratings = function (_React$Component) {
                             ClassEnjoyment: ratings[0].ClassEnjoyment,
                             Submitted: this.state.classEnjoyment,
                             onClick: function onClick(rating) {
-                                return _this5.userRating("classEnjoyment", rating);
+                                return _this4.userRating("classEnjoyment", rating);
                             }
                         })
                     ),
@@ -251,7 +242,7 @@ var Ratings = function (_React$Component) {
                             ProfRating: ratings3[0].ProfRating,
                             Submitted: this.state.profRating,
                             onClick: function onClick(rating) {
-                                return _this5.userRating("profRating", rating);
+                                return _this4.userRating("profRating", rating);
                             }
                         })
                     )
@@ -267,7 +258,7 @@ var Ratings = function (_React$Component) {
                             NotUseful: ratings[0].NotUseful,
                             Submitted: this.state.classUsefulness,
                             onClick: function onClick(rating) {
-                                return _this5.userRating("classUsefulness", rating);
+                                return _this4.userRating("classUsefulness", rating);
                             }
                         }),
                         React.createElement(ExamDifficulty, {
@@ -276,7 +267,7 @@ var Ratings = function (_React$Component) {
                             Hard: ratings2[0].Hard,
                             Submitted: this.state.examDifficulty,
                             onClick: function onClick(rating) {
-                                return _this5.userRating("examDifficulty", rating);
+                                return _this4.userRating("examDifficulty", rating);
                             }
                         }),
                         React.createElement(AttendanceAttn, {
@@ -284,7 +275,7 @@ var Ratings = function (_React$Component) {
                             Attentive: ratings2[0].Attentive,
                             Submitted: this.state.attendanceAttn,
                             onClick: function onClick(rating) {
-                                return _this5.userRating("attendanceAttn", rating);
+                                return _this4.userRating("attendanceAttn", rating);
                             }
                         }),
                         React.createElement(ClassType, {
@@ -292,7 +283,7 @@ var Ratings = function (_React$Component) {
                             Discussion: ratings4[0].Discussion,
                             Submitted: this.state.classType,
                             onClick: function onClick(rating) {
-                                return _this5.userRating("classType", rating);
+                                return _this4.userRating("classType", rating);
                             }
                         })
                     ),
@@ -305,7 +296,7 @@ var Ratings = function (_React$Component) {
                             Hard: ratings3[0].Hard,
                             Submitted: this.state.classDifficulty,
                             onClick: function onClick(rating) {
-                                return _this5.userRating("classDifficulty", rating);
+                                return _this4.userRating("classDifficulty", rating);
                             }
                         }),
                         React.createElement(TestHeavy, {
@@ -313,7 +304,7 @@ var Ratings = function (_React$Component) {
                             Heavy: ratings4[0].Heavy,
                             Submitted: this.state.testHeavy,
                             onClick: function onClick(rating) {
-                                return _this5.userRating("testHeavy", rating);
+                                return _this4.userRating("testHeavy", rating);
                             }
                         }),
                         React.createElement(HomeworkLoad, {
@@ -321,7 +312,7 @@ var Ratings = function (_React$Component) {
                             Heavy: ratings5[0].Heavy,
                             Submitted: this.state.homeworkLoad,
                             onClick: function onClick(rating) {
-                                return _this5.userRating("homeworkLoad", rating);
+                                return _this4.userRating("homeworkLoad", rating);
                             }
                         }),
                         React.createElement(ProfApproach, {
@@ -329,7 +320,7 @@ var Ratings = function (_React$Component) {
                             No: ratings5[0].No,
                             Submitted: this.state.profApproach,
                             onClick: function onClick(rating) {
-                                return _this5.userRating("profApproach", rating);
+                                return _this4.userRating("profApproach", rating);
                             }
                         })
                     )
