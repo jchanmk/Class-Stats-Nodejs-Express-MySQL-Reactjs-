@@ -37,19 +37,19 @@ class Ratings extends React.Component {
 
     componentDidMount() {
         const type = 1;
-        this.getRatings(type);
+        this.getRatingsTest();
     }
 
     // Retrieves data from database, upon loading the webpage 
     getRatings(type) {
         let search = window.location.search;
-        if (type === 1) {
-            console.log("getting course history")
-            fetch(ServerURL + '/course/findCourseHistory')
-                .then(response => response.json())
-                .then(response => this.setState({ courseHistory: response.data }));
-            // .then(response => console.log(response.data));
-        }
+        // if (type === 1) {
+        //     console.log("getting course history")
+        //     fetch(ServerURL + '/course/findCourseHistory')
+        //         .then(response => response.json())
+        //         .then(response => this.setState({ courseHistory: response.data }));
+        //     // .then(response => console.log(response.data));
+        // }
 
         if (type === "classEnjoyment" || type === "classUsefulness" || type === 1) {
             console.log("in here fetch class enjoyment");
@@ -57,6 +57,7 @@ class Ratings extends React.Component {
                 .then(response => response.json())
                 .then(response => this.setState({ courseID: response.courseID, ratings: response.data }));
         }
+
         if (type === "examDifficulty" || type === "attendanceAttn" || type === 1) {
             console.log("in exam difficutly fetch")
             fetch(ServerURL + '/course/findratings2' + search)
@@ -82,27 +83,31 @@ class Ratings extends React.Component {
                 .then(response5 => this.setState({ ratings5: response5.data }));
         }
     }
-    // getRatings() {
-    //     let search = window.location.search;
-    //     fetch(ServerURL + '/course/findratings1' + search)
-    //         .then(response => response.json())
-    //         .then(response => this.setState({ courseID: response.courseID, ratings: response.data }),
 
-    //         fetch(ServerURL + '/course/findratings2' + search)
-    //         .then(response2 => response2.json())
-    //         .then(response2 => this.setState({ ratings2: response2.data }),
+    getRatingsTest() {
+        let search = window.location.search;
+        fetch(ServerURL + '/course/findratings1' + search)
+            .then(response => response.json())
+            .then(response => this.setState({ courseID: response.courseID, ratings: response.data }),
+            fetch(ServerURL + '/course/findCourseHistory')
+                .then(response => response.json())
+                .then(response => this.setState({ courseHistory: response.data }),
 
-    //     fetch(ServerURL + '/course/findratings3' + search)
-    //         .then(response3 => response3.json())
-    //         .then(response3 => this.setState({ ratings3: response3.data }),
+            fetch(ServerURL + '/course/findratings2' + search)
+            .then(response2 => response2.json())
+            .then(response2 => this.setState({ ratings2: response2.data }),
 
-    //     fetch(ServerURL + '/course/findratings4' + search)
-    //         .then(response4 => response4.json())
-    //         .then(response4 => this.setState({ ratings4: response4.data }),
-    //     fetch(ServerURL + '/course/findratings5' + search)
-    //         .then(response5 => response5.json())
-    //         .then(response5 => this.setState({ ratings5: response5.data }))))))
-    // }
+        fetch(ServerURL + '/course/findratings3' + search)
+            .then(response3 => response3.json())
+            .then(response3 => this.setState({ ratings3: response3.data }),
+
+        fetch(ServerURL + '/course/findratings4' + search)
+            .then(response4 => response4.json())
+            .then(response4 => this.setState({ ratings4: response4.data }),
+        fetch(ServerURL + '/course/findratings5' + search)
+            .then(response5 => response5.json())
+            .then(response5 => this.setState({ ratings5: response5.data })))))))
+    }
 
     // This sends ratings to the server
     postRatings(type, rating) {
