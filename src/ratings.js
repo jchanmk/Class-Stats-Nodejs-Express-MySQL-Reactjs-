@@ -36,37 +36,51 @@ class Ratings extends React.Component {
     }
 
     componentDidMount() {
-        this.getRatings();
-        console.log("hi, ratings js file " + ServerURL)
+        const type = 1;
+        this.getRatings(type);
     }
 
     // Retrieves data from database, upon loading the webpage 
-    getRatings() {
+    getRatings(type) {
         let search = window.location.search;
-        fetch(ServerURL + '/course/findCourseHistory')
-            .then(response => response.json())
-            .then(response => this.setState({ courseHistory: response.data }));
+        if (type === 1) {
+            console.log("getting course history")
+            fetch(ServerURL + '/course/findCourseHistory')
+                .then(response => response.json())
+                .then(response => this.setState({ courseHistory: response.data }));
             // .then(response => console.log(response.data));
+        }
 
-        fetch(ServerURL + '/course/findratings1' + search)
-            .then(response => response.json())
-            .then(response => this.setState({ courseID: response.courseID, ratings: response.data }));
+        if (type === "classEnjoyment" || type === "classUsefulness" || type === 1) {
+            console.log("in here fetch class enjoyment");
+            fetch(ServerURL + '/course/findratings1' + search)
+                .then(response => response.json())
+                .then(response => this.setState({ courseID: response.courseID, ratings: response.data }));
+        }
+        if (type === "examDifficulty" || type === "attendanceAttn" || type === 1) {
+            console.log("in exam difficutly fetch")
+            fetch(ServerURL + '/course/findratings2' + search)
+                .then(response2 => response2.json())
+                .then(response2 => this.setState({ ratings2: response2.data }));
+        }
 
-        fetch(ServerURL + '/course/findratings2' + search)
-            .then(response2 => response2.json())
-            .then(response2 => this.setState({ ratings2: response2.data }));
+        if (type === "profRating" || type === "classDifficulty" || type === 1) {
+            fetch(ServerURL + '/course/findratings3' + search)
+                .then(response3 => response3.json())
+                .then(response3 => this.setState({ ratings3: response3.data }));
+        }
 
-        fetch(ServerURL + '/course/findratings3' + search)
-            .then(response3 => response3.json())
-            .then(response3 => this.setState({ ratings3: response3.data }));
+        if (type === "testHeavy" || type === "classType" || type === 1) {
+            fetch(ServerURL + '/course/findratings4' + search)
+                .then(response4 => response4.json())
+                .then(response4 => this.setState({ ratings4: response4.data }));
+        }
 
-        fetch(ServerURL + '/course/findratings4' + search)
-            .then(response4 => response4.json())
-            .then(response4 => this.setState({ ratings4: response4.data }));
-
-        fetch(ServerURL + '/course/findratings5' + search)
-            .then(response5 => response5.json())
-            .then(response5 => this.setState({ ratings5: response5.data }));
+        if (type === "homeworkLoad" || type === "profApproach" || type === 1) {
+            fetch(ServerURL + '/course/findratings5' + search)
+                .then(response5 => response5.json())
+                .then(response5 => this.setState({ ratings5: response5.data }));
+        }
     }
     // getRatings() {
     //     let search = window.location.search;
@@ -96,7 +110,7 @@ class Ratings extends React.Component {
         console.log(courseID + " " + type + " " + rating)
         fetch(ServerURL + `/course/addrating?courseid=${courseID}&type=${type}&rating=${rating}`)
             .then(response => response)
-            .then(response => this.getRatings())
+            .then(response => this.getRatings(type))
             .catch(err => console.log(err))
     }
 
@@ -105,10 +119,10 @@ class Ratings extends React.Component {
         // this for loop checks to see if the user submitting the rating has taken the class before
         // if they haven't they cannot submit a rating
 
-        for (var i = 0; i < this.state.courseHistory.length; i++){
-            if(this.state.courseHistory[i].CourseNum == this.state.courseID){
+        for (var i = 0; i < this.state.courseHistory.length; i++) {
+            if (this.state.courseHistory[i].CourseNum == this.state.courseID) {
                 break;
-            } else if(i == this.state.courseHistory.length-1){
+            } else if (i == this.state.courseHistory.length - 1) {
                 return
             }
         }

@@ -2,7 +2,7 @@ import PercentageRating from "./PercentageRating.js"
 
 class ClassUsefulness extends React.Component {
     constructor(props) {
-        // console.log(props)
+        console.log("in class usefulness component")
         super(props);
         this.state = {
             useful: props.Useful,

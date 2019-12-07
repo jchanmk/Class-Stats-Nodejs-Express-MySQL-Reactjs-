@@ -14,9 +14,9 @@ var ProfApproach = function (_React$Component) {
     function ProfApproach(props) {
         _classCallCheck(this, ProfApproach);
 
-        var _this = _possibleConstructorReturn(this, (ProfApproach.__proto__ || Object.getPrototypeOf(ProfApproach)).call(this, props));
-        // console.log(props)
+        console.log("in prof approach component");
 
+        var _this = _possibleConstructorReturn(this, (ProfApproach.__proto__ || Object.getPrototypeOf(ProfApproach)).call(this, props));
 
         _this.state = {
             light: props.Light,

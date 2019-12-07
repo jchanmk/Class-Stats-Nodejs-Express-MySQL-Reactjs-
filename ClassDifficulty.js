@@ -14,9 +14,9 @@ var ClassDifficulty = function (_React$Component) {
     function ClassDifficulty(props) {
         _classCallCheck(this, ClassDifficulty);
 
-        var _this = _possibleConstructorReturn(this, (ClassDifficulty.__proto__ || Object.getPrototypeOf(ClassDifficulty)).call(this, props));
-        // console.log(props)
+        console.log("in class difficulty component");
 
+        var _this = _possibleConstructorReturn(this, (ClassDifficulty.__proto__ || Object.getPrototypeOf(ClassDifficulty)).call(this, props));
 
         _this.state = {
             easy: props.Easy,

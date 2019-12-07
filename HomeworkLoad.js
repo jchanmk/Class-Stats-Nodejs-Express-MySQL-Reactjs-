@@ -14,9 +14,9 @@ var HomeworkLoad = function (_React$Component) {
     function HomeworkLoad(props) {
         _classCallCheck(this, HomeworkLoad);
 
-        var _this = _possibleConstructorReturn(this, (HomeworkLoad.__proto__ || Object.getPrototypeOf(HomeworkLoad)).call(this, props));
-        // console.log(props)
+        console.log("in homework load component");
 
+        var _this = _possibleConstructorReturn(this, (HomeworkLoad.__proto__ || Object.getPrototypeOf(HomeworkLoad)).call(this, props));
 
         _this.state = {
             light: props.Light,

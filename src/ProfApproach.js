@@ -2,7 +2,7 @@ import PercentageRating from "./PercentageRating.js"
 
 class ProfApproach extends React.Component {
     constructor(props) {
-        // console.log(props)
+        console.log("in prof approach component")
         super(props);
         this.state = {
             light: props.Light,

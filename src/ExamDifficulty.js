@@ -2,7 +2,7 @@ import PercentageRating from "./PercentageRating.js"
 
 class ExamDifficulty extends React.Component {
     constructor(props) {
-        // console.log(props)
+        console.log("in exam difficulty component")
         super(props);
         this.state = {
             easy: props.Easy,

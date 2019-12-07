@@ -3,6 +3,7 @@ import PercentageRating from "./PercentageRating.js"
 class AttendanceAttn extends React.Component {
     constructor(props) {
         // console.log(props)
+        console.log("in attendance attn component")
         super(props);
         this.state = {
             inattentive: props.Inattentive,

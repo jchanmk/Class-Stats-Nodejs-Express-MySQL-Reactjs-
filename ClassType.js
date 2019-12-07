@@ -14,9 +14,9 @@ var ClassType = function (_React$Component) {
     function ClassType(props) {
         _classCallCheck(this, ClassType);
 
-        var _this = _possibleConstructorReturn(this, (ClassType.__proto__ || Object.getPrototypeOf(ClassType)).call(this, props));
-        // console.log(props)
+        console.log("in class type component");
 
+        var _this = _possibleConstructorReturn(this, (ClassType.__proto__ || Object.getPrototypeOf(ClassType)).call(this, props));
 
         _this.state = {
             inattentive: props.Inattentive,

@@ -15,7 +15,7 @@ var ProfRating = function (_React$Component) {
         _classCallCheck(this, ProfRating);
 
         var _this = _possibleConstructorReturn(this, (ProfRating.__proto__ || Object.getPrototypeOf(ProfRating)).call(this, props));
-        // console.log(props)
+        // console.log("in prof rating component")
 
 
         _this.state = {
@@ -34,6 +34,8 @@ var ProfRating = function (_React$Component) {
         key: "render",
         value: function render() {
             var _this2 = this;
+
+            console.log("in prof rating component");
 
             return React.createElement(
                 "div",

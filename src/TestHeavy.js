@@ -2,7 +2,7 @@ import PercentageRating from "./PercentageRating.js"
 
 class TestHeavy extends React.Component {
     constructor(props) {
-        // console.log(props)
+        console.log("in test heavy component")
         super(props);
         this.state = {
             light: props.Light,

@@ -14,9 +14,9 @@ var ClassUsefulness = function (_React$Component) {
     function ClassUsefulness(props) {
         _classCallCheck(this, ClassUsefulness);
 
-        var _this = _possibleConstructorReturn(this, (ClassUsefulness.__proto__ || Object.getPrototypeOf(ClassUsefulness)).call(this, props));
-        // console.log(props)
+        console.log("in class usefulness component");
 
+        var _this = _possibleConstructorReturn(this, (ClassUsefulness.__proto__ || Object.getPrototypeOf(ClassUsefulness)).call(this, props));
 
         _this.state = {
             useful: props.Useful,

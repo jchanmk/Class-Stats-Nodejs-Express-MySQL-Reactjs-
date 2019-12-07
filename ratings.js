@@ -53,54 +53,68 @@ var Ratings = function (_React$Component) {
     _createClass(Ratings, [{
         key: "componentDidMount",
         value: function componentDidMount() {
-            this.getRatings();
-            console.log("hi, ratings js file " + ServerURL);
+            var type = 1;
+            this.getRatings(type);
         }
 
         // Retrieves data from database, upon loading the webpage 
 
     }, {
         key: "getRatings",
-        value: function getRatings() {
+        value: function getRatings(type) {
             var _this2 = this;
 
             var search = window.location.search;
-            fetch(ServerURL + '/course/findCourseHistory').then(function (response) {
-                return response.json();
-            }).then(function (response) {
-                return _this2.setState({ courseHistory: response.data });
-            });
-            // .then(response => console.log(response.data));
+            if (type === 1) {
+                console.log("getting course history");
+                fetch(ServerURL + '/course/findCourseHistory').then(function (response) {
+                    return response.json();
+                }).then(function (response) {
+                    return _this2.setState({ courseHistory: response.data });
+                });
+                // .then(response => console.log(response.data));
+            }
 
-            fetch(ServerURL + '/course/findratings1' + search).then(function (response) {
-                return response.json();
-            }).then(function (response) {
-                return _this2.setState({ courseID: response.courseID, ratings: response.data });
-            });
+            if (type === "classEnjoyment" || type === "classUsefulness" || type === 1) {
+                console.log("in here fetch class enjoyment");
+                fetch(ServerURL + '/course/findratings1' + search).then(function (response) {
+                    return response.json();
+                }).then(function (response) {
+                    return _this2.setState({ courseID: response.courseID, ratings: response.data });
+                });
+            }
+            if (type === "examDifficulty" || type === "attendanceAttn" || type === 1) {
+                console.log("in exam difficutly fetch");
+                fetch(ServerURL + '/course/findratings2' + search).then(function (response2) {
+                    return response2.json();
+                }).then(function (response2) {
+                    return _this2.setState({ ratings2: response2.data });
+                });
+            }
 
-            fetch(ServerURL + '/course/findratings2' + search).then(function (response2) {
-                return response2.json();
-            }).then(function (response2) {
-                return _this2.setState({ ratings2: response2.data });
-            });
+            if (type === "profRating" || type === "classDifficulty" || type === 1) {
+                fetch(ServerURL + '/course/findratings3' + search).then(function (response3) {
+                    return response3.json();
+                }).then(function (response3) {
+                    return _this2.setState({ ratings3: response3.data });
+                });
+            }
 
-            fetch(ServerURL + '/course/findratings3' + search).then(function (response3) {
-                return response3.json();
-            }).then(function (response3) {
-                return _this2.setState({ ratings3: response3.data });
-            });
+            if (type === "testHeavy" || type === "classType" || type === 1) {
+                fetch(ServerURL + '/course/findratings4' + search).then(function (response4) {
+                    return response4.json();
+                }).then(function (response4) {
+                    return _this2.setState({ ratings4: response4.data });
+                });
+            }
 
-            fetch(ServerURL + '/course/findratings4' + search).then(function (response4) {
-                return response4.json();
-            }).then(function (response4) {
-                return _this2.setState({ ratings4: response4.data });
-            });
-
-            fetch(ServerURL + '/course/findratings5' + search).then(function (response5) {
-                return response5.json();
-            }).then(function (response5) {
-                return _this2.setState({ ratings5: response5.data });
-            });
+            if (type === "homeworkLoad" || type === "profApproach" || type === 1) {
+                fetch(ServerURL + '/course/findratings5' + search).then(function (response5) {
+                    return response5.json();
+                }).then(function (response5) {
+                    return _this2.setState({ ratings5: response5.data });
+                });
+            }
         }
         // getRatings() {
         //     let search = window.location.search;
@@ -137,7 +151,7 @@ var Ratings = function (_React$Component) {
             fetch(ServerURL + ("/course/addrating?courseid=" + courseID + "&type=" + type + "&rating=" + rating)).then(function (response) {
                 return response;
             }).then(function (response) {
-                return _this3.getRatings();
+                return _this3.getRatings(type);
             }).catch(function (err) {
                 return console.log(err);
             });

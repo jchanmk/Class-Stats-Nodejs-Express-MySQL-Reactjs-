@@ -2,7 +2,7 @@ import StarList from "./StarList.js"
 
 class ProfRating extends React.Component {
     constructor(props) {
-        // console.log(props)
+        // console.log("in prof rating component")
         super(props);
         this.state = {
             rating: props.ProfRating,
@@ -15,6 +15,8 @@ class ProfRating extends React.Component {
     }
 
     render() {
+        console.log("in prof rating component")
+
         return (
             <div className="ratings">
             <div className="row">

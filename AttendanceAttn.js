@@ -14,9 +14,10 @@ var AttendanceAttn = function (_React$Component) {
     function AttendanceAttn(props) {
         _classCallCheck(this, AttendanceAttn);
 
-        var _this = _possibleConstructorReturn(this, (AttendanceAttn.__proto__ || Object.getPrototypeOf(AttendanceAttn)).call(this, props));
         // console.log(props)
+        console.log("in attendance attn component");
 
+        var _this = _possibleConstructorReturn(this, (AttendanceAttn.__proto__ || Object.getPrototypeOf(AttendanceAttn)).call(this, props));
 
         _this.state = {
             inattentive: props.Inattentive,

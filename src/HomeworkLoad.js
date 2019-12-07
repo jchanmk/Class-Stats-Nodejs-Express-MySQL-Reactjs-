@@ -2,7 +2,7 @@ import PercentageRating from "./PercentageRating.js"
 
 class HomeworkLoad extends React.Component {
     constructor(props) {
-        // console.log(props)
+        console.log("in homework load component")
         super(props);
         this.state = {
             light: props.Light,

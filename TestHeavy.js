@@ -14,9 +14,9 @@ var TestHeavy = function (_React$Component) {
     function TestHeavy(props) {
         _classCallCheck(this, TestHeavy);
 
-        var _this = _possibleConstructorReturn(this, (TestHeavy.__proto__ || Object.getPrototypeOf(TestHeavy)).call(this, props));
-        // console.log(props)
+        console.log("in test heavy component");
 
+        var _this = _possibleConstructorReturn(this, (TestHeavy.__proto__ || Object.getPrototypeOf(TestHeavy)).call(this, props));
 
         _this.state = {
             light: props.Light,

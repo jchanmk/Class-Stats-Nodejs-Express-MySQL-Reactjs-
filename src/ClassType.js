@@ -2,7 +2,7 @@ import PercentageRating from "./PercentageRating.js"
 
 class ClassType extends React.Component {
     constructor(props) {
-        // console.log(props)
+        console.log("in class type component")
         super(props);
         this.state = {
             inattentive: props.Inattentive,
