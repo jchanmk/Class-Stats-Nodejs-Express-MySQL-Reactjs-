@@ -7,7 +7,7 @@ module.exports = {
         connectionLimit:10,
         host:'localhost',
         user:'root',
-        password:'',    // fill in your password here
+        password:'',    // fill in your password in these open quotes
         database:'ClassStats'
     }
 }
