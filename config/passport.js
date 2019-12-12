@@ -1,13 +1,12 @@
+// this file sets up user authentication with Passport.js, hashes passwords and stores in database
+// conducts several checks such as if the user is in the database, if the passwords match, etc. 
+
 const LocalStrategy = require("passport-local").Strategy;
 
 const mysql = require("mysql");
 const bcrypt = require("bcrypt-nodejs");
 const dbconfig = require("./database");
 
-// const connection = mysql.createConnection(dbconfig.connection);
-// connection.query('USE ' + dbconfig.database);
-
-// const connection = mysql.createPool(dbconfig.connection);
 const pool = mysql.createPool(dbconfig.connection);
 
 module.exports = function (passport) {
